@@ -8,7 +8,7 @@ export default {
     path: path.resolve(__dirname, 'dist/js'),
     filename: 'app.js',
   },
-  target: 'electron-renderer',
+  target: 'web',
   module: {
     rules: [
       {
