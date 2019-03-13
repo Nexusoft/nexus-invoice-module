@@ -1,0 +1,28 @@
+{
+  "name": "react_module_example",
+  "version": "0.1.0",
+  "description": "This is an example of how a Nexus Module can be built with React",
+  "devDependencies": {
+    "@babel/core": "^7.3.4",
+    "@babel/plugin-proposal-class-properties": "^7.3.4",
+    "@babel/plugin-proposal-decorators": "^7.3.0",
+    "@babel/plugin-proposal-do-expressions": "^7.2.0",
+    "@babel/plugin-proposal-export-default-from": "^7.2.0",
+    "@babel/plugin-proposal-export-namespace-from": "^7.2.0",
+    "@babel/plugin-transform-react-constant-elements": "^7.2.0",
+    "@babel/plugin-transform-react-inline-elements": "^7.2.0",
+    "@babel/preset-env": "^7.3.4",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/register": "^7.0.0",
+    "babel-loader": "^8.0.5",
+    "babel-plugin-dev-expression": "^0.2.1",
+    "babel-plugin-transform-react-pure-class-to-function": "^1.0.1",
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
+    "cross-env": "^5.2.0",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.2.3"
+  },
+  "scripts": {
+    "build": "cross-env NODE_ENV=production node -r @babel/register ./node_modules/webpack/bin/webpack --config webpack.config.js"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "react_module_example",
+  "displayName": "React Module",
+  "version": "0.1.0",
+  "apiVersion": "0.1.0",
+  "description": "This is an example of how a Nexus Module can be built with React",
+  "type": "page",
+  "entry": "dist/index.html"
+}
