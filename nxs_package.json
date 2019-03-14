@@ -6,5 +6,5 @@
   "description": "This is an example of how a Nexus Module can be built with React",
   "type": "page",
   "entry": "dist/index.html",
-  "icon": "dist/snapchat.svg"
+  "icon": "dist/react.svg"
 }
