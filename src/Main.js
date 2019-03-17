@@ -9,7 +9,7 @@ const {
     Switch,
     Select,
   },
-} = nexus;
+} = nexusWallet;
 
 const App = () => (
   <Panel title="React Module Example" icon={{ url: 'react.svg', id: 'icon' }}>

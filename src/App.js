@@ -11,7 +11,7 @@ const {
   },
   utilities: { color },
   onMessage,
-} = nexus;
+} = nexusWallet;
 
 const emotionCache = createCache({ container: document.head });
 
