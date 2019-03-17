@@ -12,7 +12,7 @@ const {
 } = nexus;
 
 const App = () => (
-  <Panel title="React Module Example">
+  <Panel title="React Module Example" icon={{ url: 'react.svg', id: 'icon' }}>
     <GlobalStyles />
     <div className="mt1">This is a Nexus Module built with React</div>
     <div className="mt1">
@@ -20,7 +20,7 @@ const App = () => (
       <Button className="space-right" skin="primary">
         Primary button
       </Button>
-      <Button className="space-right" skin="blank-light">
+      <Button className="space-right" skin="plain">
         Blank light button
       </Button>
       <Tooltip.Trigger tooltip="This is a tooltip">
