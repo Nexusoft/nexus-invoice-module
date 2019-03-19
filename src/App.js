@@ -10,7 +10,7 @@ const {
     },
   },
   utilities: { color },
-  onMessage,
+  on,
 } = nexusWallet;
 
 const emotionCache = createCache({ container: document.head });
@@ -23,7 +23,7 @@ class App extends React.Component {
 
   constructor(props) {
     super(props);
-    onMessage('initialize', (evt, { theme }) => {
+    on('initialize', (evt, { theme }) => {
       this.setState({ initialized: true, theme });
     });
   }
