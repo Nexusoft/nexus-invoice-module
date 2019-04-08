@@ -3,6 +3,7 @@ import Main from './Main';
 const {
   libraries: {
     React,
+    ReactRedux: { connect },
     emotion: {
       createCache,
       core: { CacheProvider },
@@ -10,26 +11,17 @@ const {
     },
   },
   utilities: { color },
-  on,
 } = nexusWallet;
 
 const emotionCache = createCache({ container: document.head });
 
+@connect(state => ({
+  initialized: state.initialized,
+  theme: state.theme,
+}))
 class App extends React.Component {
-  state = {
-    initialized: false,
-    theme: {},
-  };
-
-  constructor(props) {
-    super(props);
-    on('initialize', (evt, { theme }) => {
-      this.setState({ initialized: true, theme });
-    });
-  }
-
   render() {
-    const { initialized, theme } = this.state;
+    const { initialized, theme } = this.props;
     if (!initialized) return null;
 
     const themeWithMixer = {

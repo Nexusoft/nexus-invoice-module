@@ -25,6 +25,12 @@ module.exports = function(api) {
       ['@babel/preset-react', { development }],
     ],
     plugins: [
+      [
+        'babel-plugin-module-resolver',
+        {
+          root: ['./src/'],
+        },
+      ],
       '@babel/plugin-proposal-export-default-from',
       '@babel/plugin-proposal-do-expressions',
       ['@babel/plugin-proposal-decorators', { legacy: true }],

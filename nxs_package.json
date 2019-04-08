@@ -1,9 +1,9 @@
 {
-  "name": "react_module_example",
-  "displayName": "React Module",
+  "name": "react_redux_module_example",
+  "displayName": "React Redux Module",
   "version": "0.1.0",
   "specVersion": "0.1.0",
-  "description": "This is an example of how a Nexus Module can be built with React",
+  "description": "This is an example of how a Nexus Module can be built with React & Redux, showcasing some interesting features of Nexus modules",
   "type": "page",
   "entry": "dist/index.html",
   "icon": "dist/react.svg",
