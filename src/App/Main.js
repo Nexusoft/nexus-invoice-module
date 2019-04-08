@@ -5,7 +5,7 @@ const {
     React,
     ReactRedux: { connect },
   },
-  components: { GlobalStyles, Panel, Switch },
+  components: { GlobalStyles, Panel, Switch, Tooltip },
   sendMessage,
   once,
 } = nexusWallet;
@@ -24,7 +24,7 @@ const newID = (() => {
 )
 class Main extends React.Component {
   confirmToggle = () => {
-    const { showingVersion, showVersion, hideVersion } = this.props;
+    const { showingVersion } = this.props;
     const question = showingVersion
       ? 'Hide wallet version?'
       : 'Show wallet version?';
@@ -32,13 +32,27 @@ class Main extends React.Component {
     once(`confirm-answer:${questionID}`, (event, agreed) => {
       if (agreed) {
         if (showingVersion) {
-          hideVersion();
+          this.hideVersion();
         } else {
-          showVersion();
+          this.showVersion();
         }
       }
     });
     sendMessage('confirm', { id: questionID, question });
+  };
+
+  hideVersion = () => {
+    this.props.hideVersion();
+    sendMessage('update-storage', {
+      showingVersion: false,
+    });
+  };
+
+  showVersion = () => {
+    this.props.showVersion();
+    sendMessage('update-storage', {
+      showingVersion: true,
+    });
   };
 
   render() {
@@ -50,9 +64,15 @@ class Main extends React.Component {
       >
         <GlobalStyles />
         <div className="mt1">This is a Nexus Module built with React</div>
-        <div className="mt1">
+        <div className="mt1 flex center">
           Show version{' '}
-          <Switch checked={showingVersion} onChange={this.confirmToggle} />
+          <Tooltip.Trigger
+            position="right"
+            tooltip="This setting will be remembered even when you restart
+          the wallet"
+          >
+            <Switch checked={showingVersion} onChange={this.confirmToggle} />
+          </Tooltip.Trigger>
         </div>
         <div className="mt1">Connections: {coreInfo.connections}</div>
         {!!showingVersion && (
