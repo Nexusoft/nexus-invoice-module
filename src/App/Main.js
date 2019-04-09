@@ -1,4 +1,4 @@
-import { showVersion, hideVersion } from 'actions/actionCreators';
+import { showVersion, hideVersion, updateInput } from 'actions/actionCreators';
 
 const {
   libraries: {
@@ -16,18 +16,16 @@ const newID = (() => {
 })();
 
 @connect(
-  state => {
-    console.log(state);
-    return {
-      coreInfo: state.coreInfo,
-      showingVersion: state.settings.showingVersion,
-    };
-  },
-  { showVersion, hideVersion }
+  state => ({
+    coreInfo: state.coreInfo,
+    showingVersion: state.settings.showingVersion,
+    inputValue: state.ui.inputValue,
+  }),
+  { showVersion, hideVersion, updateInput }
 )
 class Main extends React.Component {
   confirmToggle = () => {
-    const { showingVersion } = this.props;
+    const { showingVersion, showVersion, hideVersion } = this.props;
     const question = showingVersion
       ? 'Hide wallet version?'
       : 'Show wallet version?';
@@ -35,31 +33,21 @@ class Main extends React.Component {
     once(`confirm-answer:${questionID}`, (event, agreed) => {
       if (agreed) {
         if (showingVersion) {
-          this.hideVersion();
+          hideVersion();
         } else {
-          this.showVersion();
+          showVersion();
         }
       }
     });
     sendMessage('confirm', { id: questionID, question });
   };
 
-  hideVersion = () => {
-    this.props.hideVersion();
-    sendMessage('update-storage', {
-      showingVersion: false,
-    });
-  };
-
-  showVersion = () => {
-    this.props.showVersion();
-    sendMessage('update-storage', {
-      showingVersion: true,
-    });
+  handleChange = e => {
+    this.props.updateInput(e.target.value);
   };
 
   render() {
-    const { coreInfo, showingVersion } = this.props;
+    const { coreInfo, showingVersion, inputValue } = this.props;
     return (
       <Panel
         title="React Module Example"
@@ -81,6 +69,13 @@ class Main extends React.Component {
         {!!showingVersion && (
           <div className="mt1">Wallet version: {coreInfo.version}</div>
         )}
+        <div className="mt1">
+          <TextField
+            value={inputValue}
+            onChange={this.handleChange}
+            placeholder="What you type in this textbox will be remembered even when you navigate away from the module"
+          />
+        </div>
       </Panel>
     );
   }

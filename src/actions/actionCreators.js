@@ -5,14 +5,6 @@ export const initialize = data => ({
   payload: data,
 });
 
-export const showVersion = () => ({
-  type: TYPE.SHOW_VERSION,
-});
-
-export const hideVersion = () => ({
-  type: TYPE.HIDE_VERSION,
-});
-
 export const updateCoreInfo = coreInfo => ({
   type: TYPE.UPDATE_CORE_INFO,
   payload: coreInfo,
@@ -21,4 +13,17 @@ export const updateCoreInfo = coreInfo => ({
 export const updateTheme = theme => ({
   type: TYPE.UPDATE_THEME,
   payload: theme,
+});
+
+export const showVersion = () => ({
+  type: TYPE.SHOW_VERSION,
+});
+
+export const hideVersion = () => ({
+  type: TYPE.HIDE_VERSION,
+});
+
+export const updateInput = inputValue => ({
+  type: TYPE.UPDATE_INPUT,
+  payload: inputValue,
 });
