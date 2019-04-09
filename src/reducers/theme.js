@@ -7,6 +7,9 @@ export default (state = initialState, action) => {
     case TYPE.INITIALIZE:
       return action.payload.theme;
 
+    case TYPE.UPDATE_THEME:
+      return action.payload;
+
     default:
       return state;
   }

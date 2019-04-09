@@ -1,6 +1,10 @@
 import configureStore from './configureStore';
 import App from './App';
-import { initialize } from './actions/actionCreators';
+import {
+  initialize,
+  updateCoreInfo,
+  updateTheme,
+} from './actions/actionCreators';
 
 const store = configureStore();
 
@@ -15,6 +19,14 @@ const {
 
 on('initialize', (evt, data) => {
   store.dispatch(initialize(data));
+});
+
+on('core-info-updated', (evt, coreInfo) => {
+  store.dispatch(updateCoreInfo(coreInfo));
+});
+
+on('theme-updated', (evt, theme) => {
+  store.dispatch(updateTheme(theme));
 });
 
 ReactDOM.render(
