@@ -1,13 +1,19 @@
 import createReducer from './reducers';
+import storageMiddleware from 'middlewares/storageMiddleware';
+import stateMiddleware from 'middlewares/stateMiddleware';
 
 const {
   libraries: {
-    Redux: { createStore, compose },
+    Redux: { createStore, compose, applyMiddleware },
   },
 } = nexusWallet;
 
 export default function configureStore() {
-  const enhancers = [];
+  const middlewares = [
+    storageMiddleware(state => state.settings),
+    stateMiddleware(state => state.ui),
+  ];
+  const enhancers = [applyMiddleware(...middlewares)];
 
   const composeEnhancers =
     process.env.NODE_ENV !== 'production' &&

@@ -5,7 +5,7 @@ const {
     React,
     ReactRedux: { connect },
   },
-  components: { GlobalStyles, Panel, Switch, Tooltip },
+  components: { GlobalStyles, Panel, Switch, Tooltip, TextField },
   sendMessage,
   once,
 } = nexusWallet;
@@ -16,10 +16,13 @@ const newID = (() => {
 })();
 
 @connect(
-  state => ({
-    coreInfo: state.coreInfo,
-    showingVersion: state.showingVersion,
-  }),
+  state => {
+    console.log(state);
+    return {
+      coreInfo: state.coreInfo,
+      showingVersion: state.settings.showingVersion,
+    };
+  },
   { showVersion, hideVersion }
 )
 class Main extends React.Component {
