@@ -8,7 +8,7 @@ const {
   components: { GlobalStyles, Panel, Switch, Tooltip, TextField },
   sendMessage,
   once,
-} = nexusWallet;
+} = NEXUS;
 
 const newID = (() => {
   let id = 0;

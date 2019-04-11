@@ -6,7 +6,7 @@ const {
   libraries: {
     Redux: { createStore, compose, applyMiddleware },
   },
-} = nexusWallet;
+} = NEXUS;
 
 export default function configureStore() {
   const middlewares = [

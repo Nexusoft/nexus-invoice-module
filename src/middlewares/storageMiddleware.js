@@ -3,7 +3,7 @@ export default getStoredData => store => next => action => {
   const result = next(action);
   const data = getStoredData(store.getState());
   if (data !== oldData) {
-    nexusWallet.sendMessage('update-storage', data);
+    NEXUS.sendMessage('update-storage', data);
   }
   return result;
 };

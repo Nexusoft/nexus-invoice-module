@@ -4,7 +4,7 @@ const {
   libraries: {
     Redux: { combineReducers },
   },
-} = nexusWallet;
+} = NEXUS;
 
 export default combineReducers({
   showingVersion,

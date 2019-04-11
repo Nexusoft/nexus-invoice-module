@@ -15,7 +15,7 @@ const {
     ReactRedux: { Provider },
   },
   on,
-} = nexusWallet;
+} = NEXUS;
 
 on('initialize', (evt, data) => {
   store.dispatch(initialize(data));
