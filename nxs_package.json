@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "specVersion": "0.1.0",
   "description": "This is an example of how a Nexus Module can be built with React & Redux, showcasing some interesting features of Nexus modules",
-  "type": "page",
+  "type": "app",
   "entry": "dist/index.html",
   "icon": "dist/react.svg",
   "files": ["dist/index.html", "dist/react.svg", "dist/js/app.js"],
