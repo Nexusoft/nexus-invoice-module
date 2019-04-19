@@ -6,8 +6,7 @@ const {
     ReactRedux: { connect },
   },
   components: { GlobalStyles, Panel, Switch, Tooltip, TextField },
-  sendMessage,
-  once,
+  ipc: { send, listenOnce },
 } = NEXUS;
 
 const newID = (() => {
@@ -30,7 +29,7 @@ class Main extends React.Component {
       ? 'Hide wallet version?'
       : 'Show wallet version?';
     const questionID = newID();
-    once(`confirm-answer:${questionID}`, (event, agreed) => {
+    listenOnce(`confirm-answer:${questionID}`, (event, agreed) => {
       if (agreed) {
         if (showingVersion) {
           hideVersion();
@@ -39,7 +38,8 @@ class Main extends React.Component {
         }
       }
     });
-    sendMessage('confirm', { id: questionID, question });
+
+    send('confirm', { id: questionID, question });
   };
 
   handleChange = e => {
