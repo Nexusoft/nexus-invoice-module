@@ -5,14 +5,14 @@ const initialState = false;
 export default (state = initialState, action) => {
   switch (action.type) {
     case TYPE.INITIALIZE: {
-      const { showingVersion } = action.payload.storageData;
-      return showingVersion !== undefined ? showingVersion : state;
+      const { showingConnections } = action.payload.storageData;
+      return showingConnections !== undefined ? showingConnections : state;
     }
 
-    case TYPE.SHOW_VERSION:
+    case TYPE.SHOW_CONNECTIONS:
       return true;
 
-    case TYPE.HIDE_VERSION:
+    case TYPE.HIDE_CONNECTIONS:
       return false;
 
     default:

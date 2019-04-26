@@ -15,12 +15,12 @@ export const updateTheme = theme => ({
   payload: theme,
 });
 
-export const showVersion = () => ({
-  type: TYPE.SHOW_VERSION,
+export const showConnections = () => ({
+  type: TYPE.SHOW_CONNECTIONS,
 });
 
-export const hideVersion = () => ({
-  type: TYPE.HIDE_VERSION,
+export const hideConnections = () => ({
+  type: TYPE.HIDE_CONNECTIONS,
 });
 
 export const updateInput = inputValue => ({

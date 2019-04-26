@@ -1,80 +1,125 @@
-import { showVersion, hideVersion, updateInput } from 'actions/actionCreators';
+import {
+  showConnections,
+  hideConnections,
+  updateInput,
+} from 'actions/actionCreators';
 
 const {
   libraries: {
     React,
     ReactRedux: { connect },
+    emotion: { styled },
   },
-  components: { GlobalStyles, Panel, Switch, Tooltip, TextField },
+  components: { GlobalStyles, Panel, Switch, Tooltip, TextField, Button },
   ipc: { send, listenOnce },
 } = NEXUS;
 
-const newID = (() => {
+const newId = (() => {
   let id = 0;
   return () => ++id;
 })();
 
+const DemoTextField = styled(TextField)({
+  maxWidth: 400,
+});
+
 @connect(
   state => ({
     coreInfo: state.coreInfo,
-    showingVersion: state.settings.showingVersion,
+    showingConnections: state.settings.showingConnections,
     inputValue: state.ui.inputValue,
   }),
-  { showVersion, hideVersion, updateInput }
+  { showConnections, hideConnections, updateInput }
 )
 class Main extends React.Component {
   confirmToggle = () => {
-    const { showingVersion, showVersion, hideVersion } = this.props;
-    const question = showingVersion
-      ? 'Hide wallet version?'
-      : 'Show wallet version?';
-    const questionID = newID();
-    listenOnce(`confirm-answer:${questionID}`, (event, agreed) => {
+    const { showingConnections, showConnections, hideConnections } = this.props;
+    const question = showingConnections
+      ? 'Hide number of connections?'
+      : 'Show number of connections?';
+    const questionId = newId();
+    listenOnce(`confirm-answer:${questionId}`, (event, agreed) => {
       if (agreed) {
-        if (showingVersion) {
-          hideVersion();
+        if (showingConnections) {
+          hideConnections();
         } else {
-          showVersion();
+          showConnections();
         }
       }
     });
 
-    send('confirm', { id: questionID, question });
+    send('confirm', { id: questionId, question });
   };
 
   handleChange = e => {
     this.props.updateInput(e.target.value);
   };
 
+  getDifficulty = () => {
+    const callId = newId();
+    listenOnce(`rpc-return:${callId}`, (event, err, response) => {
+      if (err) {
+        send('show-error-dialog', {
+          message: 'Cannot get difficulty',
+        });
+      } else {
+        send('show-success-dialog', {
+          message: 'Mining difficulty',
+          note: JSON.stringify(response, null, 2),
+        });
+      }
+    });
+
+    send('rpc-call', {
+      command: 'getdifficulty',
+      params: [[]],
+      id: callId,
+    });
+  };
+
   render() {
-    const { coreInfo, showingVersion, inputValue } = this.props;
+    const { coreInfo, showingConnections, inputValue } = this.props;
     return (
       <Panel
         title="React Module Example"
         icon={{ url: 'react.svg', id: 'icon' }}
       >
         <GlobalStyles />
-        <div className="mt1">This is a Nexus Module built with React</div>
+        <div className="mt2">
+          This showcases how a Nexus Wallet Modules can interact with the base
+          wallet.
+        </div>
+
         <div className="mt1 flex center">
-          Show version{' '}
+          Show number of connections&nbsp;&nbsp;
           <Tooltip.Trigger
             position="right"
-            tooltip="This setting will be remembered even when you restart
-          the wallet"
+            tooltip="This setting will be remembered even when the wallet is restarted"
           >
-            <Switch checked={showingVersion} onChange={this.confirmToggle} />
+            <Switch
+              checked={showingConnections}
+              onChange={this.confirmToggle}
+            />
           </Tooltip.Trigger>
         </div>
-        <div className="mt1">Connections: {coreInfo.connections}</div>
-        {!!showingVersion && (
-          <div className="mt1">Wallet version: {coreInfo.version}</div>
+        {!!showingConnections && (
+          <div className="mt1">Connections: {coreInfo.connections}</div>
         )}
-        <div className="mt1">
-          <TextField
+
+        <div className="mt2">
+          <div>
+            This textbox's content will be remembered even when you navigate
+            away from this module
+          </div>
+          <DemoTextField
             value={inputValue}
             onChange={this.handleChange}
-            placeholder="What you type in this textbox will be remembered even when you navigate away from the module"
+            placeholder="Type anything here"
           />
+        </div>
+
+        <div className="mt2">
+          <Button onClick={this.getDifficulty}>View mining difficulty</Button>
         </div>
       </Panel>
     );

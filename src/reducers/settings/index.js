@@ -1,4 +1,4 @@
-import showingVersion from './showingVersion';
+import showingConnections from './showingConnections';
 
 const {
   libraries: {
@@ -7,5 +7,5 @@ const {
 } = NEXUS;
 
 export default combineReducers({
-  showingVersion,
+  showingConnections,
 });
