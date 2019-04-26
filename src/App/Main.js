@@ -38,7 +38,7 @@ class Main extends React.Component {
       ? 'Hide number of connections?'
       : 'Show number of connections?';
     const questionId = newId();
-    listenOnce(`confirm-answer:${questionId}`, (event, agreed) => {
+    listenOnce(`confirm-answer:${questionId}`, agreed => {
       if (agreed) {
         if (showingConnections) {
           hideConnections();
@@ -57,7 +57,7 @@ class Main extends React.Component {
 
   getDifficulty = () => {
     const callId = newId();
-    listenOnce(`rpc-return:${callId}`, (event, err, response) => {
+    listenOnce(`rpc-return:${callId}`, (err, response) => {
       if (err) {
         send('show-error-dialog', {
           message: 'Cannot get difficulty',
@@ -85,12 +85,12 @@ class Main extends React.Component {
         icon={{ url: 'react.svg', id: 'icon' }}
       >
         <GlobalStyles />
-        <div className="mt2">
+        <div>
           This showcases how a Nexus Wallet Modules can interact with the base
           wallet.
         </div>
 
-        <div className="mt1 flex center">
+        <div className="mt2 flex center">
           Show number of connections&nbsp;&nbsp;
           <Tooltip.Trigger
             position="right"
@@ -102,9 +102,7 @@ class Main extends React.Component {
             />
           </Tooltip.Trigger>
         </div>
-        {!!showingConnections && (
-          <div className="mt1">Connections: {coreInfo.connections}</div>
-        )}
+        {!!showingConnections && <div>Connections: {coreInfo.connections}</div>}
 
         <div className="mt2">
           <div>

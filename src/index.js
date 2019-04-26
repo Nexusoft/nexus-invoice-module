@@ -17,15 +17,15 @@ const {
   ipc: { listen },
 } = NEXUS;
 
-listen('initialize', (evt, data) => {
+listen('initialize', data => {
   store.dispatch(initialize(data));
 });
 
-listen('core-info-updated', (evt, coreInfo) => {
+listen('core-info-updated', coreInfo => {
   store.dispatch(updateCoreInfo(coreInfo));
 });
 
-listen('theme-updated', (evt, theme) => {
+listen('theme-updated', theme => {
   store.dispatch(updateTheme(theme));
 });
 
