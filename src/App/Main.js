@@ -37,8 +37,8 @@ class Main extends React.Component {
     const question = showingConnections
       ? 'Hide number of connections?'
       : 'Show number of connections?';
-    const questionId = newId();
-    listenOnce(`confirm-answer:${questionId}`, agreed => {
+    const confirmationId = newId();
+    listenOnce(`confirm-answer:${confirmationId}`, agreed => {
       if (agreed) {
         if (showingConnections) {
           hideConnections();
@@ -48,7 +48,7 @@ class Main extends React.Component {
       }
     });
 
-    send('confirm', { id: questionId, question });
+    send('confirm', { confirmationId, question });
   };
 
   handleChange = e => {
@@ -73,7 +73,7 @@ class Main extends React.Component {
     send('rpc-call', {
       command: 'getdifficulty',
       params: [[]],
-      id: callId,
+      callId,
     });
   };
 
