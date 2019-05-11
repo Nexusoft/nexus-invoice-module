@@ -3,6 +3,7 @@ import {
   hideConnections,
   updateInput,
 } from 'actions/actionCreators';
+import axios from 'axios';
 
 const {
   libraries: {
@@ -11,7 +12,14 @@ const {
     emotion: { styled },
   },
   components: { GlobalStyles, Panel, Switch, Tooltip, TextField, Button },
-  ipc: { send, listenOnce },
+  utilities: {
+    confirm,
+    onceConfirmAnswer,
+    rpcCall,
+    onceRpcReturn,
+    showErrorDialog,
+    showSuccessDialog,
+  },
 } = NEXUS;
 
 const newId = (() => {
@@ -38,7 +46,7 @@ class Main extends React.Component {
       ? 'Hide number of connections?'
       : 'Show number of connections?';
     const confirmationId = newId();
-    listenOnce(`confirm-answer:${confirmationId}`, agreed => {
+    onceConfirmAnswer(agreed => {
       if (agreed) {
         if (showingConnections) {
           hideConnections();
@@ -46,9 +54,9 @@ class Main extends React.Component {
           showConnections();
         }
       }
-    });
+    }, confirmationId);
 
-    send('confirm', { confirmationId, question });
+    confirm({ confirmationId, question });
   };
 
   handleChange = e => {
@@ -57,20 +65,20 @@ class Main extends React.Component {
 
   getDifficulty = () => {
     const callId = newId();
-    listenOnce(`rpc-return:${callId}`, (err, response) => {
+    onceRpcReturn((err, response) => {
       if (err) {
-        send('show-error-dialog', {
+        showErrorDialog({
           message: 'Cannot get difficulty',
         });
       } else {
-        send('show-success-dialog', {
+        showSuccessDialog({
           message: 'Mining difficulty',
           note: JSON.stringify(response, null, 2),
         });
       }
-    });
+    }, callId);
 
-    send('rpc-call', {
+    rpcCall({
       command: 'getdifficulty',
       params: [[]],
       callId,

@@ -14,18 +14,18 @@ const {
     ReactDOM,
     ReactRedux: { Provider },
   },
-  ipc: { listen },
+  utilities: { onceInitialize, onCoreInfoUpdated, onThemeUpdated },
 } = NEXUS;
 
-listen('initialize', data => {
+onceInitialize(data => {
   store.dispatch(initialize(data));
 });
 
-listen('core-info-updated', coreInfo => {
+onCoreInfoUpdated(coreInfo => {
   store.dispatch(updateCoreInfo(coreInfo));
 });
 
-listen('theme-updated', theme => {
+onThemeUpdated(theme => {
   store.dispatch(updateTheme(theme));
 });
 

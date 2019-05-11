@@ -3,7 +3,7 @@ export default getStoredData => store => next => action => {
   const result = next(action);
   const data = getStoredData(store.getState());
   if (data !== oldData) {
-    NEXUS.ipc.send('update-storage', data);
+    NEXUS.utilities.updateStorage(data);
   }
   return result;
 };

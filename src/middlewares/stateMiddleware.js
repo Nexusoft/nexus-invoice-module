@@ -3,7 +3,7 @@ export default getPersistedState => store => next => action => {
   const result = next(action);
   const data = getPersistedState(store.getState());
   if (data !== oldData) {
-    NEXUS.ipc.send('update-state', data);
+    NEXUS.utilities.updateState(data);
   }
   return result;
 };
