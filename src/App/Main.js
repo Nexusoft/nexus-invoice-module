@@ -3,7 +3,6 @@ import {
   hideConnections,
   updateInput,
 } from 'actions/actionCreators';
-import axios from 'axios';
 
 const {
   libraries: {
@@ -78,11 +77,7 @@ class Main extends React.Component {
       }
     }, callId);
 
-    rpcCall({
-      command: 'getdifficulty',
-      params: [[]],
-      callId,
-    });
+    rpcCall('getdifficulty', [[]], callId);
   };
 
   render() {
