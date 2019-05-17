@@ -55,7 +55,7 @@ class Main extends React.Component {
       }
     }, confirmationId);
 
-    confirm({ confirmationId, question });
+    confirm({ question }, confirmationId);
   };
 
   handleChange = e => {
