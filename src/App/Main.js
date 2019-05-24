@@ -13,18 +13,12 @@ const {
   components: { GlobalStyles, Panel, Switch, Tooltip, TextField, Button },
   utilities: {
     confirm,
-    onceConfirmAnswer,
     rpcCall,
     onceRpcReturn,
     showErrorDialog,
     showSuccessDialog,
   },
 } = NEXUS;
-
-const newId = (() => {
-  let id = 0;
-  return () => ++id;
-})();
 
 const DemoTextField = styled(TextField)({
   maxWidth: 400,
@@ -39,45 +33,38 @@ const DemoTextField = styled(TextField)({
   { showConnections, hideConnections, updateInput }
 )
 class Main extends React.Component {
-  confirmToggle = () => {
+  confirmToggle = async () => {
     const { showingConnections, showConnections, hideConnections } = this.props;
     const question = showingConnections
       ? 'Hide number of connections?'
       : 'Show number of connections?';
-    const confirmationId = newId();
-    onceConfirmAnswer(agreed => {
-      if (agreed) {
-        if (showingConnections) {
-          hideConnections();
-        } else {
-          showConnections();
-        }
-      }
-    }, confirmationId);
 
-    confirm({ question }, confirmationId);
+    const agreed = await confirm({ question });
+    if (agreed) {
+      if (showingConnections) {
+        hideConnections();
+      } else {
+        showConnections();
+      }
+    }
   };
 
   handleChange = e => {
     this.props.updateInput(e.target.value);
   };
 
-  getDifficulty = () => {
-    const callId = newId();
-    onceRpcReturn((err, response) => {
-      if (err) {
-        showErrorDialog({
-          message: 'Cannot get difficulty',
-        });
-      } else {
-        showSuccessDialog({
-          message: 'Mining difficulty',
-          note: JSON.stringify(response, null, 2),
-        });
-      }
-    }, callId);
-
-    rpcCall('getdifficulty', [[]], callId);
+  getDifficulty = async () => {
+    try {
+      const response = await rpcCall('getdifficulty', [[]]);
+      showSuccessDialog({
+        message: 'Mining difficulty',
+        note: JSON.stringify(response, null, 2),
+      });
+    } catch (err) {
+      showErrorDialog({
+        message: 'Cannot get difficulty',
+      });
+    }
   };
 
   render() {
