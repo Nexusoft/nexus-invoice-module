@@ -1,3 +1,4 @@
+import path from 'path';
 import baseConfig from './webpack.config.babel';
 
 const port = 24011;
@@ -13,6 +14,8 @@ const config = {
     inline: true,
     compress: true,
     headers: { 'Access-Control-Allow-Origin': '*' },
+    contentBase: path.join(process.cwd(), 'dist'),
+    watchContentBase: true,
   },
 };
 
