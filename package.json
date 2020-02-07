@@ -1,6 +1,6 @@
 {
   "name": "react_module_example",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "This is an example of how a Nexus Module can be built with React",
   "devDependencies": {
     "@babel/core": "^7.8.4",

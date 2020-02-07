@@ -7,7 +7,6 @@ const publicPath = `http://localhost:${port}/`;
 const config = {
   ...baseConfig,
   devtool: 'cheap-module-eval-source-map',
-  entry: './src/index',
   devServer: {
     port,
     publicPath,
