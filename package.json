@@ -21,10 +21,12 @@
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "cross-env": "^7.0.0",
     "webpack": "^4.41.5",
-    "webpack-cli": "^3.3.10"
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.10.3"
   },
   "scripts": {
-    "build": "cross-env NODE_ENV=production node -r @babel/register ./node_modules/webpack/bin/webpack --config webpack.config.js"
+    "build": "cross-env NODE_ENV=production webpack --config webpack.config.babel.js",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --config webpack-dev.config.babel.js"
   },
   "dependencies": {}
 }
