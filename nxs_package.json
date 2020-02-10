@@ -1,15 +1,15 @@
 {
-  "name": "react_redux_module_example",
-  "displayName": "React Redux Module",
-  "version": "0.2.0",
+  "name": "nexus_interface_invoice_module",
+  "displayName": "Nexus Invoice System",
+  "version": "0.0.1",
   "targetWalletVersion": "2.2.0",
-  "description": "This is an example of how a Nexus Module can be built with React & Redux, showcasing some interesting features of Nexus modules",
+  "description": "Use Case for the Invoice System",
   "type": "app",
   "entry": "dist/index.html",
   "icon": "dist/react.svg",
   "files": ["dist/index.html", "dist/react.svg", "dist/js/app.js"],
   "author": {
-    "name": "Krysto",
-    "email": "quy.hoang@nexus.io"
+    "name": "Nexus Team",
+    "email": "developer@nexus.io"
   }
 }

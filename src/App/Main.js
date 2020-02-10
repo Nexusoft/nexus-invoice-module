@@ -70,45 +70,9 @@ class Main extends React.Component {
   render() {
     const { coreInfo, showingConnections, inputValue } = this.props;
     return (
-      <Panel
-        title="React Module Example"
-        icon={{ url: 'react.svg', id: 'icon' }}
-      >
+      <Panel title="Invoices" icon={{ url: 'react.svg', id: 'icon' }}>
         <GlobalStyles />
-        <div>
-          This showcases how a Nexus Wallet Modules can interact with the base
-          wallet.
-        </div>
-
-        <div className="mt2 flex center">
-          Show number of connections&nbsp;&nbsp;
-          <Tooltip.Trigger
-            position="right"
-            tooltip="This setting will be remembered even when the wallet is restarted"
-          >
-            <Switch
-              checked={showingConnections}
-              onChange={this.confirmToggle}
-            />
-          </Tooltip.Trigger>
-        </div>
-        {!!showingConnections && <div>Connections: {coreInfo.connections}</div>}
-
-        <div className="mt2">
-          <div>
-            This textbox's content will be remembered even when you navigate
-            away from this module
-          </div>
-          <DemoTextField
-            value={inputValue}
-            onChange={this.handleChange}
-            placeholder="Type anything here"
-          />
-        </div>
-
-        <div className="mt2">
-          <Button onClick={this.getDifficulty}>View mining difficulty</Button>
-        </div>
+        <div>Test</div>
       </Panel>
     );
   }
