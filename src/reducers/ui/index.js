@@ -1,4 +1,5 @@
 import inputValue from './inputValue';
+import invoices from './invoices';
 
 const {
   libraries: {
@@ -8,4 +9,5 @@ const {
 
 export default combineReducers({
   inputValue,
+  invoices,
 });

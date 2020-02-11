@@ -3,6 +3,7 @@ import {
   hideConnections,
   updateInput,
 } from 'actions/actionCreators';
+import Invoice from './Invoice';
 
 const {
   libraries: {
@@ -33,46 +34,18 @@ const DemoTextField = styled(TextField)({
   { showConnections, hideConnections, updateInput }
 )
 class Main extends React.Component {
-  confirmToggle = async () => {
-    const { showingConnections, showConnections, hideConnections } = this.props;
-    const question = showingConnections
-      ? 'Hide number of connections?'
-      : 'Show number of connections?';
+  constructor(props) {
+    super(props);
+  }
 
-    const agreed = await confirm({ question });
-    if (agreed) {
-      if (showingConnections) {
-        hideConnections();
-      } else {
-        showConnections();
-      }
-    }
-  };
-
-  handleChange = e => {
-    this.props.updateInput(e.target.value);
-  };
-
-  getDifficulty = async () => {
-    try {
-      const response = await rpcCall('getdifficulty', [[]]);
-      showSuccessDialog({
-        message: 'Mining difficulty',
-        note: JSON.stringify(response, null, 2),
-      });
-    } catch (err) {
-      showErrorDialog({
-        message: 'Cannot get difficulty',
-      });
-    }
-  };
+  componentDidMount() {}
 
   render() {
     const { coreInfo, showingConnections, inputValue } = this.props;
     return (
       <Panel title="Invoices" icon={{ url: 'react.svg', id: 'icon' }}>
         <GlobalStyles />
-        <div>Test</div>
+        <Invoice />
       </Panel>
     );
   }
