@@ -14,8 +14,7 @@ const {
   components: { GlobalStyles, Panel, Switch, Tooltip, TextField, Button },
   utilities: {
     confirm,
-    rpcCall,
-    onceRpcReturn,
+      
     showErrorDialog,
     showSuccessDialog,
   },

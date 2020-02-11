@@ -3,11 +3,10 @@ import store from 'store';
 import fs from 'fs-extra';
 import path from 'path';
 import Ajv from 'ajv';
-import { walletDataDir } from 'consts/paths';
 import { readJson, writeJson } from 'gui/json';
 
 const fileName = 'invoicedrafts.json';
-const filePath = path.join(walletDataDir, fileName);
+const filePath = path.join('/', fileName);
 
 function saveInvoiceDraftsToFile(invoiceDrafts) {
   console.log('Saving');

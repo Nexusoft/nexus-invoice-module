@@ -1,12 +1,10 @@
 // External
 
 // Internal Global
-import { apiPost } from 'lib/tritiumApi';
 import { loadAccounts, loadInvoices } from 'lib/user';
 import { openModal, removeModal, resetForm } from 'lib/ui';
 import { errorHandler } from 'gui/form';
 import confirmPin from 'utils/promisified/confirmPin';
-import * as color from 'gui/color';
 
 import InvoiceItems from './InvoiceItems';
 import { formatNumber } from 'gui/intl';
@@ -51,13 +49,7 @@ const {
     FormField,
     Button,
   },
-  utilities: {
-    confirm,
-    rpcCall,
-    onceRpcReturn,
-    showErrorDialog,
-    showSuccessDialog,
-  },
+  utilities: { confirm, color, apiCall, showErrorDialog, showSuccessDialog },
 } = NEXUS;
 
 __ = __context('Invoice Form');
@@ -200,7 +192,7 @@ class RecipientField extends Component {
       recipientAddress.match(/([0OIl+/])/g) === null;
 
     if (isAddress) {
-      const isAddressResult = await apiPost('system/validate/address', {
+      const isAddressResult = await apiCall('system/validate/address', {
         address: recipientAddress,
       });
       if (!isAddressResult.is_valid) {
@@ -236,7 +228,7 @@ class RecipientField extends Component {
     });
 
     const pin = await confirmPin();
-    const isSendAddress = await apiPost('system/validate/address', {
+    const isSendAddress = await apiCall('system/validate/address', {
       address: sendFrom,
     });
     if (pin) {
@@ -261,7 +253,7 @@ class RecipientField extends Component {
       if (sendDetail) params.sender_detail = sendDetail;
       if (recipientDetail) params.recipient_detail = recipientDetail;
       console.log(params);
-      const asd = await apiPost('invoices/create/invoice', params);
+      const asd = await apiCall('invoices/create/invoice', params);
       console.log(asd);
       return asd;
     }

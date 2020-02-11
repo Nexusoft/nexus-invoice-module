@@ -14,7 +14,6 @@ import plusIcon from 'icon/plus.svg';
 import { loadInvoiceDrafts } from 'lib/invoiceDrafts';
 import memoize from 'gui/memoize';
 import { isMyAddress } from './selectors';
-import { apiGet } from 'lib/tritiumApi';
 import { loadInvoices } from 'lib/user';
 
 const {
@@ -39,8 +38,8 @@ const {
   },
   utilities: {
     confirm,
-    rpcCall,
-    onceRpcReturn,
+     
+    apiCall, 
     showErrorDialog,
     showSuccessDialog,
   },
@@ -210,7 +209,7 @@ class Invoice extends Component {
   }
 
   async test() {
-    const aaa = await apiGet('users/list/invoices');
+    const aaa = await apiCall('users/list/invoices', {});
     console.log(aaa);
   }
 

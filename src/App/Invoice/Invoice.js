@@ -19,8 +19,7 @@ const {
   },
   utilities: {
     confirm,
-    rpcCall,
-    onceRpcReturn,
+      
     showErrorDialog,
     showSuccessDialog,
   },

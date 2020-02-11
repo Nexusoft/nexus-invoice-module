@@ -1,8 +1,5 @@
 //Internal Dependencies
-import * as color from 'gui/color';
 import { formatDateTime } from 'gui/intl';
-import { openConfirmDialog } from 'lib/ui';
-import { apiPost } from 'lib/tritiumApi';
 
 const {
   libraries: {
@@ -27,8 +24,9 @@ const {
   },
   utilities: {
     confirm,
-    rpcCall,
-    onceRpcReturn,
+    color,
+    apiCall,
+    confirm,
     showErrorDialog,
     showSuccessDialog,
   },
@@ -219,23 +217,23 @@ class InvoiceDetailModal extends Component {
     }, 0);
 
   clickPayNow = e => {
-    openConfirmDialog({
+    confirm({
       question: __('Do you want to fulfill this invoice?'),
       note: __('Withdraw from %{accountName} account', {
         accountName: 'default',
       }),
       callbackYes: () => {
-        apiPost();
+        apiCall();
       },
     });
   };
 
   clickReject = e => {
-    openConfirmDialog({
+    confirm({
       question: __('Are you sure you want to reject this invoice?'),
       note: __(''),
       callbackYes: () => {
-        apiPost();
+        apiCall();
         this.setInvoiceStatus('Rejected');
       },
     });
