@@ -19,6 +19,7 @@ module.exports = function(api) {
         '@babel/preset-env',
         {
           targets: { electron: '4.0.5' },
+          corejs: '2',
           useBuiltIns: 'usage',
         },
       ],

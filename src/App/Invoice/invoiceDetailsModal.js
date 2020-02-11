@@ -3,7 +3,6 @@ import * as color from 'utils/color';
 import { formatDateTime } from 'lib/intl';
 import { openConfirmDialog } from 'lib/ui';
 import { apiPost } from 'lib/tritiumApi';
-import Arrow from 'components/Arrow';
 
 const {
   libraries: {
@@ -24,6 +23,7 @@ const {
     TextField,
     FormField,
     Button,
+    Arrow,
   },
   utilities: {
     confirm,

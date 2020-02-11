@@ -1,6 +1,10 @@
 import path from 'path';
 
-export default {
+import baseConfig from './webpack.config.base';
+
+import merge from 'webpack-merge';
+
+export default merge.smart(baseConfig, {
   mode: process.env.NODE_ENV,
   devtool: 'source-map',
   entry: './src/index.js',
@@ -23,4 +27,4 @@ export default {
       },
     ],
   },
-};
+});

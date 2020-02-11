@@ -1,22 +1,14 @@
 // External
-import {
-  reduxForm,
-  Field,
-  FieldArray,
-  formValueSelector,
-  getFormValues,
-  reset,
-} from 'redux-form';
 
 // Internal Global
 import { apiPost } from 'lib/tritiumApi';
 import { loadAccounts, loadInvoices } from 'lib/user';
 import { openSuccessDialog, openModal, removeModal, resetForm } from 'lib/ui';
 import { errorHandler } from 'utils/form';
-import sendIcon from 'icons/send.svg';
+import sendIcon from 'icon/send.svg';
 import { numericOnly } from 'utils/form';
 import confirmPin from 'utils/promisified/confirmPin';
-import questionIcon from 'icons/question-mark-circle.svg';
+import questionIcon from 'icon/question-mark-circle.svg';
 import * as color from 'utils/color';
 import Modal from 'components/Modal';
 
@@ -32,7 +24,7 @@ import {
 } from './selectors';
 import DateTime from 'components/DateTimePicker';
 import SuccessDialog from 'components/Dialogs/SuccessDialog';
-import { addNewDraft } from 'lib/invoiceDraft';
+import { addNewDraft } from 'lib/invoiceDrafts';
 
 const {
   libraries: {
@@ -40,6 +32,14 @@ const {
     React: { Component },
     ReactRedux: { connect },
     emotion: { styled },
+    ReduxForm: {
+      reduxForm,
+      Field,
+      FieldArray,
+      formValueSelector,
+      getFormValues,
+      reset,
+    },
   },
   components: {
     GlobalStyles,

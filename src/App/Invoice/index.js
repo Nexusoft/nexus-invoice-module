@@ -3,20 +3,19 @@ import { formatDateTime } from 'lib/intl';
 
 // Internal Global Dependencies
 import { openModal } from 'lib/ui';
-import nexusIcon from 'icons/NXS_coin.svg';
-import Arrow from 'components/Arrow';
+import nexusIcon from 'icon/NXS_coin.svg';
 
 //Invoice
 import InvoiceForm from './InvoiceForm';
 import Filters from './Filters';
 import InvoiceDetailModal from './invoiceDetailsModal';
 
-import plusIcon from 'icons/plus.svg';
+import plusIcon from 'icon/plus.svg';
+import { loadInvoiceDrafts } from 'lib/invoiceDrafts';
 import memoize from 'utils/memoize';
 import { isMyAddress } from './selectors';
 import { apiGet } from 'lib/tritiumApi';
 import { loadInvoices } from 'lib/user';
-import { loadInvoiceDrafts } from 'lib/invoiceDraft';
 
 const {
   libraries: {
@@ -36,6 +35,7 @@ const {
     TextField,
     FormField,
     Button,
+    Arrow,
   },
   utilities: {
     confirm,

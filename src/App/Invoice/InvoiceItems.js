@@ -1,8 +1,10 @@
 // Internal
-import { timing } from 'styles';
-import plusIcon from 'icons/plus.svg';
+import plusIcon from 'icon/plus.svg';
 import InvoiceItem from './invoiceItem';
-import { subtract } from 'utils/calc';
+
+const timing = {
+  normal: '300ms',
+};
 
 const {
   libraries: {
@@ -31,6 +33,7 @@ const {
     onceRpcReturn,
     showErrorDialog,
     showSuccessDialog,
+    calc: { subtract },
   },
 } = NEXUS;
 
