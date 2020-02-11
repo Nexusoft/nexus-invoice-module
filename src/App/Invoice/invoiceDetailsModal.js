@@ -1,6 +1,6 @@
 //Internal Dependencies
-import * as color from 'utils/color';
-import { formatDateTime } from 'lib/intl';
+import * as color from 'gui/color';
+import { formatDateTime } from 'gui/intl';
 import { openConfirmDialog } from 'lib/ui';
 import { apiPost } from 'lib/tritiumApi';
 

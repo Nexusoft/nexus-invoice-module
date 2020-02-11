@@ -1,5 +1,5 @@
 // External Dependencies
-import { formatDateTime } from 'lib/intl';
+import { formatDateTime } from 'gui/intl';
 
 // Internal Global Dependencies
 import { openModal } from 'lib/ui';
@@ -12,7 +12,7 @@ import InvoiceDetailModal from './invoiceDetailsModal';
 
 import plusIcon from 'icon/plus.svg';
 import { loadInvoiceDrafts } from 'lib/invoiceDrafts';
-import memoize from 'utils/memoize';
+import memoize from 'gui/memoize';
 import { isMyAddress } from './selectors';
 import { apiGet } from 'lib/tritiumApi';
 import { loadInvoices } from 'lib/user';

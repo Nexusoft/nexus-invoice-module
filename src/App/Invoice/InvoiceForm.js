@@ -3,17 +3,13 @@
 // Internal Global
 import { apiPost } from 'lib/tritiumApi';
 import { loadAccounts, loadInvoices } from 'lib/user';
-import { openSuccessDialog, openModal, removeModal, resetForm } from 'lib/ui';
-import { errorHandler } from 'utils/form';
-import sendIcon from 'icon/send.svg';
-import { numericOnly } from 'utils/form';
+import { openModal, removeModal, resetForm } from 'lib/ui';
+import { errorHandler } from 'gui/form';
 import confirmPin from 'utils/promisified/confirmPin';
-import questionIcon from 'icon/question-mark-circle.svg';
-import * as color from 'utils/color';
-import Modal from 'components/Modal';
+import * as color from 'gui/color';
 
 import InvoiceItems from './InvoiceItems';
-import { formatNumber } from 'lib/intl';
+import { formatNumber } from 'gui/intl';
 
 import {
   getAccountOptions,
@@ -22,8 +18,6 @@ import {
   getAccountInfo,
   getRecipientSuggestions,
 } from './selectors';
-import DateTime from 'components/DateTimePicker';
-import SuccessDialog from 'components/Dialogs/SuccessDialog';
 import { addNewDraft } from 'lib/invoiceDrafts';
 
 const {
@@ -49,8 +43,10 @@ const {
     AutoSuggest,
     FieldSet,
     Switch,
+    Modal,
     Tooltip,
     Select,
+    DateTime,
     TextField,
     FormField,
     Button,
@@ -275,7 +271,7 @@ class RecipientField extends Component {
     if (!result) return;
 
     removeModal(props.modalId);
-    openModal(SuccessDialog);
+    showSuccessDialog();
     loadInvoices();
     dispatch(reset('InvoiceForm'));
   },

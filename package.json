@@ -29,6 +29,10 @@
     "dev": "cross-env NODE_ENV=development webpack-dev-server --config webpack-dev.config.babel.js"
   },
   "dependencies": {
+    "ajv": "^6.11.0",
+    "electron-log": "^4.0.6",
+    "fs-extra": "^8.1.0",
+    "path": "^0.12.7",
     "redux-form": "^8.3.0",
     "webpack-merge": "^4.2.2"
   }

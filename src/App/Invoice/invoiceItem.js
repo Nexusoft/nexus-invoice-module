@@ -1,9 +1,9 @@
 // External
 
-import memoize from 'utils/memoize';
+import memoize from 'gui/memoize';
 
 // Internal
-import { formatNumber } from 'lib/intl';
+import { formatNumber } from 'gui/intl';
 
 const {
   libraries: {
