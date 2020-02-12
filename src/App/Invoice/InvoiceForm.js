@@ -1,8 +1,7 @@
 // External
 
 // Internal Global
-import { loadAccounts, loadInvoices } from 'lib/user';
-import { openModal, removeModal, resetForm } from 'lib/ui';
+import { loadInvoices, openModal, removeModal, resetForm } from 'lib/ui';
 import { errorHandler } from 'gui/form';
 import confirmPin from 'utils/promisified/confirmPin';
 

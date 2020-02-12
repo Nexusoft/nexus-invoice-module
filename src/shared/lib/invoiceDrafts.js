@@ -1,5 +1,4 @@
 import * as TYPE from 'actions/types';
-import store from 'store';
 import fs from 'fs-extra';
 import path from 'path';
 import Ajv from 'ajv';

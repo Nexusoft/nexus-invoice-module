@@ -26,7 +26,6 @@ const {
     confirm,
     color,
     apiCall,
-    confirm,
     showErrorDialog,
     showSuccessDialog,
   },

@@ -2,7 +2,7 @@
 import { formatDateTime } from 'gui/intl';
 
 // Internal Global Dependencies
-import { openModal } from 'lib/ui';
+import { loadInvoices, openModal } from 'lib/ui';
 import nexusIcon from 'icon/NXS_coin.svg';
 
 //Invoice
@@ -14,7 +14,6 @@ import plusIcon from 'icon/plus.svg';
 import { loadInvoiceDrafts } from 'lib/invoiceDrafts';
 import memoize from 'gui/memoize';
 import { isMyAddress } from './selectors';
-import { loadInvoices } from 'lib/user';
 
 const {
   libraries: {
@@ -36,13 +35,7 @@ const {
     Button,
     Arrow,
   },
-  utilities: {
-    confirm,
-     
-    apiCall, 
-    showErrorDialog,
-    showSuccessDialog,
-  },
+  utilities: { confirm, apiCall, showErrorDialog, showSuccessDialog },
 } = NEXUS;
 
 __ = __context('Invoice');
