@@ -3,7 +3,7 @@
 // Internal Global
 import { loadInvoices, openModal, removeModal, resetForm } from 'lib/ui';
 import { errorHandler } from 'gui/form';
-import confirmPin from 'utils/promisified/confirmPin';
+import confirmPin from 'component/confirmPin';
 
 import InvoiceItems from './InvoiceItems';
 import { formatNumber } from 'gui/intl';
