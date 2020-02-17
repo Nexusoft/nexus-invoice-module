@@ -3,7 +3,6 @@ import { formatDateTime } from 'gui/intl';
 
 // Internal Global Dependencies
 import { loadInvoices, openModal } from 'lib/ui';
-import nexusIcon from 'icon/NXS_coin.svg';
 
 //Invoice
 import InvoiceForm from './InvoiceForm';
@@ -227,7 +226,7 @@ class Invoice extends Component {
       status
     );
     return (
-      <Panel icon={nexusIcon} title={__('Invoice')}>
+      <>
         <Header>
           <Filters optionsOpen={this.state.optionsOpen}>
             <Button onClick={() => openModal(InvoiceForm)}>
@@ -291,7 +290,7 @@ class Invoice extends Component {
             };
           }}
         />
-      </Panel>
+      </>
     );
   }
 }
