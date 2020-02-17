@@ -35,7 +35,6 @@ const {
   components: {
     GlobalStyles,
     Icon,
-    Table,
     Panel,
     AutoSuggest,
     FieldSet,
@@ -51,7 +50,7 @@ const {
   utilities: { confirm, color, apiCall, showErrorDialog, showSuccessDialog },
 } = NEXUS;
 
-__ = __context('Invoice Form');
+const __ = input => <a>{input}</a>;
 
 // React-Redux mandatory methods
 const mapStateToProps = state => {

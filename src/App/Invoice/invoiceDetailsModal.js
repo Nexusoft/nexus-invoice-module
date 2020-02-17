@@ -11,7 +11,6 @@ const {
   components: {
     GlobalStyles,
     Icon,
-    Table,
     Modal,
     Panel,
     Switch,

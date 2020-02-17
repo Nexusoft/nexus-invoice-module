@@ -10,7 +10,6 @@ const {
   components: {
     GlobalStyles,
     Icon,
-    Table,
     Panel,
     AutoSuggest,
     FieldSet,
@@ -29,7 +28,7 @@ const {
   },
 } = NEXUS;
 
-__ = __context('Send');
+const __ = input => <a>{input}</a>;
 
 const TokenRecipientName = styled.span({
   color: 'gray',

@@ -8,7 +8,6 @@ const {
   components: {
     GlobalStyles,
     Icon,
-    Table,
     Panel,
     Switch,
     Tooltip,

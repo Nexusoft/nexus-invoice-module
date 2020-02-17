@@ -28,7 +28,7 @@ const {
   },
 } = NEXUS;
 
-__ = __context('Transactions');
+const __ = input => <a>{input}</a>;
 
 const operations = ['PENDING', 'PAID', 'REJECTED'];
 

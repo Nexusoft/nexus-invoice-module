@@ -1,5 +1,5 @@
 const {
-  Utilities: { apiCall },
+  utilities: { apiCall },
 } = NEXUS;
 
 async function listAll(endpoint, params, limit = 100) {
@@ -24,38 +24,41 @@ async function listAll(endpoint, params, limit = 100) {
 export const loadInvoices = async () => {
   try {
     const invoices = await listAll('users/list/invoices');
-    store.dispatch({ type: TYPE.SET_INVOICES, payload: invoices });
+    return { type: TYPE.SET_INVOICES, payload: invoices };
   } catch (err) {
     console.error('Failed listing Invoices', err);
   }
 };
 
 export const setInvoiceReferenceQuery = search => {
-  store.dispatch({
+  return {
     type: TYPE.SET_INVOICE_REFERENCE_QUERY,
     payload: search,
-  });
+  };
 };
 
 export const setInvoiceTimeFilter = timeSpan => {
-  store.dispatch({
+  return {
     type: TYPE.SET_INVOICE_TIME_FILTER,
     payload: timeSpan,
-  });
+  };
 };
 
 export const setInvoiceStatusFilter = status => {
-  store.dispatch({
+  return {
     type: TYPE.SET_INVOICE_STATUS_FILTER,
     payload: status,
-  });
+  };
 };
 
 export const resetForm = formName => {
-  store.dispatch(reset(formName));
+  return reset(formName);
 };
 
 export function openModal(component, props) {
+  console.log(component);
+  console.log(props);
+  return;
   store.dispatch({
     type: TYPE.CREATE_MODAL,
     payload: {
@@ -68,6 +71,7 @@ export function openModal(component, props) {
 
 // Using regular function here to avoid circular dependency which causes error
 export function removeModal(modalId) {
+  return;
   store.dispatch({
     type: TYPE.REMOVE_MODAL,
     payload: { id: modalId },

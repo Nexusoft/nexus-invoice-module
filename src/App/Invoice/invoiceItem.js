@@ -15,7 +15,6 @@ const {
   components: {
     GlobalStyles,
     Icon,
-    Table,
     Panel,
     AutoSuggest,
     FieldSet,
@@ -34,7 +33,7 @@ const {
   },
 } = NEXUS;
 
-__ = __context('Invoice Item');
+const __ = input => <a>{input}</a>;
 
 const ItemLine = styled.div({
   display: 'grid',

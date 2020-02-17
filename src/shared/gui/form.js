@@ -1,4 +1,6 @@
-import { openErrorDialog } from 'lib/ui';
+const {
+  utilities: { showErrorDialog },
+} = NEXUS;
 
 export function resolveValue(input) {
   if (input && input.target) {
@@ -15,7 +17,7 @@ export function resolveValue(input) {
 }
 
 export function handleError(error, message = __('Error')) {
-  openErrorDialog({
+  showErrorDialog({
     message,
     note: (error && error.message) || __('Unknown error'),
   });

@@ -15,6 +15,8 @@ import { loadInvoiceDrafts } from 'lib/invoiceDrafts';
 import memoize from 'gui/memoize';
 import { isMyAddress } from './selectors';
 
+import Table from 'component/Table';
+
 const {
   libraries: {
     React,
@@ -25,7 +27,6 @@ const {
   components: {
     GlobalStyles,
     Icon,
-    Table,
     Panel,
     Switch,
     Tooltip,
@@ -38,7 +39,7 @@ const {
   utilities: { confirm, apiCall, showErrorDialog, showSuccessDialog },
 } = NEXUS;
 
-__ = __context('Invoice');
+const __ = input => input;
 
 const contractStatus = ['Pending', 'Paid', 'Rejected'];
 
@@ -168,14 +169,15 @@ const OptionsArrow = styled.span({
 
 // React-Redux mandatory methods
 const mapStateToProps = state => {
-  const { userStatus } = state.core;
+  //const { userStatus } = state.core;
+  const userStatus = 'test';
   const { genesis } = userStatus || { genesis: '' };
 
   return {
-    invoiceCore: state.core.invoices,
+    invoiceCore: state.invoices,
     invoicesUI: state.ui.invoices,
     genesis: genesis,
-    accounts: state.core.accounts || [],
+    accounts: state.accounts || [],
   };
 };
 
@@ -195,7 +197,6 @@ class Invoice extends Component {
 
   // React Method (Life cycle hook)
   componentDidMount() {
-    GA.SendScreen('Invoice');
     this.test();
     loadInvoices();
     loadInvoiceDrafts();
@@ -217,6 +218,7 @@ class Invoice extends Component {
     const { accounts, genesis } = this.props;
 
     const tempInvoicec = [...invoices, ...this.props.invoiceCore];
+    console.log(Arrow);
     console.log(tempInvoicec);
     const filteredInvoices = memorizedFilters(
       tempInvoicec,
@@ -259,7 +261,7 @@ class Invoice extends Component {
                     width={10}
                   />
                 </OptionsArrow>
-                <span className="v-align">
+                <span>
                   {__(this.state.optionsOpen ? 'Less options' : 'More options')}
                 </span>
               </Button>

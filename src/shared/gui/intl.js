@@ -1,3 +1,5 @@
+const locale = 'en';
+
 const ensureSignificantDigit = (decimalDigits, num) => {
   let digits = Number(decimalDigits) || 0;
   if (num && typeof num === 'number') {

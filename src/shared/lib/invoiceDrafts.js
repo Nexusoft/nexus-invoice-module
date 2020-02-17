@@ -1,5 +1,5 @@
 import * as TYPE from 'actions/types';
-import fs from 'fs-extra';
+import fs from 'fs';
 import path from 'path';
 import Ajv from 'ajv';
 import { readJson, writeJson } from 'gui/json';
@@ -32,7 +32,8 @@ const loadInvoiceDraftsFile = () => {
   const ajv = new Ajv();
   const validate = ajv.compile(schema);
 
-  if (fs.existsSync(filePath)) {
+  //if (fs.existsSync(filePath)) {
+  if (false) {
     const json = readJson(filePath);
     console.log('Reaading File');
     console.log(json);
@@ -55,49 +56,37 @@ const loadInvoiceDraftsFile = () => {
       return {};
     }
   } else {
-    writeJson(filePath, {
-      invoiceDrafts: {},
-    });
+    //writeJson(filePath, {
+    //  invoiceDrafts: {},
+    //});
     return {};
   }
 };
 
-export const loadInvoiceDrafts = () => {
-  const invoices = loadInvoiceDraftsFile();
-  store.dispatch({
+export const loadInvoiceDrafts = invoices => {
+  return {
     type: TYPE.LOAD_INVOICE_DRAFTS,
     payload: invoices,
-  });
+  };
 };
 
 export const addNewDraft = draft => {
-  const result = store.dispatch({
+  return {
     type: TYPE.ADD_NEW_INVOICE_DRAFT,
     payload: draft,
-  });
-  const { invoiceDrafts } = store.getState();
-  console.log(invoiceDrafts);
-  console.log(result);
-  saveInvoiceDraftsToFile(invoiceDrafts);
-  return result;
+  };
 };
 
 export const updateDraft = (name, contact) => {
-  const result = store.dispatch({
+  return {
     type: TYPE.UPDATE_INVOICE_DRAFT,
     payload: { name, contact },
-  });
-  const { invoiceDrafts } = store.getState();
-  saveInvoiceDraftsToFile(invoiceDrafts);
-  return result;
+  };
 };
 
 export const deleteDraft = name => {
-  const result = store.dispatch({
+  return {
     type: TYPE.DELETE_INVOICE_DRAFT,
     payload: name,
-  });
-  const { invoiceDrafts } = store.getState();
-  saveInvoiceDraftsToFile(invoiceDrafts);
-  return result;
+  };
 };

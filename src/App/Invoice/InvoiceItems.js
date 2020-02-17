@@ -16,7 +16,6 @@ const {
   components: {
     GlobalStyles,
     Icon,
-    Table,
     Panel,
     AutoSuggest,
     FieldSet,
@@ -29,14 +28,13 @@ const {
   },
   utilities: {
     confirm,
-      
+
     showErrorDialog,
     showSuccessDialog,
-    calc: { subtract },
   },
 } = NEXUS;
 
-__ = __context('Invoice Item List');
+const __ = input => <a>{input}</a>;
 
 const RemoveButton = styled.div(({ theme }) => ({
   left: `0.75em`,

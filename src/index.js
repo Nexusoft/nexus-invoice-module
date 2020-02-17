@@ -29,6 +29,8 @@ onThemeUpdated(theme => {
   store.dispatch(updateTheme(theme));
 });
 
+console.log(store);
+
 ReactDOM.render(
   <Provider store={store}>
     <App />
