@@ -1,6 +1,6 @@
 import * as TYPE from 'actions/types';
 
-const initialState = {};
+const initialState = [];
 
 function fromArray(contacts) {
   return contacts.reduce(
@@ -11,6 +11,9 @@ function fromArray(contacts) {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case TYPE.INITIALIZE: {
+      return action.payload.storageData;
+    }
     case TYPE.LOAD_INVOICE_DRAFTS: {
       return action.payload;
     }

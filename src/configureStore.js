@@ -1,6 +1,7 @@
 import createReducer from './reducers';
 import storageMiddleware from 'middlewares/storageMiddleware';
 import stateMiddleware from 'middlewares/stateMiddleware';
+import thunk from 'redux-thunk';
 
 const {
   libraries: {
@@ -10,6 +11,7 @@ const {
 
 export default function configureStore() {
   const middlewares = [
+    thunk,
     storageMiddleware(state => state.settings),
     stateMiddleware(state => state.ui),
   ];

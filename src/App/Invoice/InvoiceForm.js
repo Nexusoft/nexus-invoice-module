@@ -59,10 +59,10 @@ const mapStateToProps = state => {
     ...state.core,
     suggestions: getRecipientSuggestions(
       state.addressBook,
-      state.core.accounts
+      state.user.accounts
     ),
-    username: state.core.userStatus.username,
-    accountOptions: getAccountOptions(state.core.accounts),
+    username: state.user.username,
+    accountOptions: getAccountOptions(state.user.accounts),
     copy: getFormValues('InvoiceForm')(state),
     items: valueSelector(state, 'items') || [],
   };
@@ -274,7 +274,7 @@ class InvoiceForm extends Component {
   }
 
   componentDidMount() {
-    loadAccounts();
+    // loadAccounts();
   }
 
   /**
@@ -328,6 +328,7 @@ class InvoiceForm extends Component {
 
     return (
       <Modal
+        removeModal={this.props.removeModal}
         style={{
           width: '90%',
           maxHeight: '90%',

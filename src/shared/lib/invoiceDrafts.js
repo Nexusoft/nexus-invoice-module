@@ -7,6 +7,10 @@ import { readJson, writeJson } from 'gui/json';
 const fileName = 'invoicedrafts.json';
 const filePath = path.join('/', fileName);
 
+const {
+  utilities: { updateStorage },
+} = NEXUS;
+
 function saveInvoiceDraftsToFile(invoiceDrafts) {
   console.log('Saving');
   console.log(invoiceDrafts);
@@ -82,6 +86,7 @@ export const updateDraft = (name, contact) => {
     type: TYPE.UPDATE_INVOICE_DRAFT,
     payload: { name, contact },
   };
+  updateStorage(results);
 };
 
 export const deleteDraft = name => {

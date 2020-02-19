@@ -4,6 +4,9 @@ import {
   updateInput,
 } from 'actions/actionCreators';
 import Invoice from './Invoice';
+import { ClosePopUp } from 'lib/ui';
+
+import nexusIcon from 'icon/NXS_coin.svg';
 
 const {
   libraries: {
@@ -14,7 +17,7 @@ const {
   components: { GlobalStyles, Panel, Switch, Tooltip, TextField, Button },
   utilities: {
     confirm,
-      
+
     showErrorDialog,
     showSuccessDialog,
   },
@@ -29,8 +32,9 @@ const DemoTextField = styled(TextField)({
     coreInfo: state.coreInfo,
     showingConnections: state.settings.showingConnections,
     inputValue: state.ui.inputValue,
+    PopUp: state.popUps,
   }),
-  { showConnections, hideConnections, updateInput }
+  { showConnections, hideConnections, updateInput, ClosePopUp }
 )
 class Main extends React.Component {
   constructor(props) {
@@ -40,11 +44,17 @@ class Main extends React.Component {
   componentDidMount() {}
 
   render() {
-    const { coreInfo, showingConnections, inputValue } = this.props;
+    const { PopUp } = this.props;
     return (
-      <Panel title="Invoices" icon={{ url: 'react.svg', id: 'icon' }}>
+      <Panel title="Invoices" icon={nexusIcon}>
         <GlobalStyles />
         <Invoice />
+        {PopUp ? (
+          <PopUp.div
+            {...PopUp.props}
+            removeModal={() => this.props.ClosePopUp()}
+          />
+        ) : null}
       </Panel>
     );
   }

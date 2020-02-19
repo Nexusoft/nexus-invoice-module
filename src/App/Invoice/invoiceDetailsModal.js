@@ -21,14 +21,10 @@ const {
     Button,
     Arrow,
   },
-  utilities: {
-    confirm,
-    color,
-    apiCall,
-    showErrorDialog,
-    showSuccessDialog,
-  },
+  utilities: { confirm, color, apiCall, showErrorDialog, showSuccessDialog },
 } = NEXUS;
+
+const __ = input => input;
 
 const timeFormatOptions = {
   year: 'numeric',
@@ -282,7 +278,10 @@ class InvoiceDetailModal extends Component {
     this.calculateTotal(items);
     console.log(items);
     return (
-      <ModalInternal assignClose={closeModal => (this.closeModal = closeModal)}>
+      <ModalInternal
+        removeModal={this.props.removeModal}
+        assignClose={closeModal => (this.closeModal = closeModal)}
+      >
         <StatusTag status={status}>
           <h2>{status}</h2>
         </StatusTag>

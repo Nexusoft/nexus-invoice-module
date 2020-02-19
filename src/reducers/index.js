@@ -5,6 +5,8 @@ import settings from './settings';
 import ui from './ui';
 import invoiceDrafts from './invoiceDrafts';
 import invoices from './invoices';
+import popUps from './popUps';
+import user from './user';
 
 const {
   libraries: {
@@ -21,5 +23,7 @@ export default function createReducer() {
     ui,
     invoiceDrafts,
     invoices,
+    popUps,
+    user,
   });
 }

@@ -2,7 +2,7 @@
 import { formatDateTime } from 'gui/intl';
 
 // Internal Global Dependencies
-import { loadInvoices, openModal } from 'lib/ui';
+import { loadInvoices, openModal, OpenPopUp, LoadAccounts } from 'lib/ui';
 
 //Invoice
 import InvoiceForm from './InvoiceForm';
@@ -35,7 +35,13 @@ const {
     Button,
     Arrow,
   },
-  utilities: { confirm, apiCall, showErrorDialog, showSuccessDialog },
+  utilities: {
+    updateStorage,
+    confirm,
+    apiCall,
+    showErrorDialog,
+    showSuccessDialog,
+  },
 } = NEXUS;
 
 const __ = input => input;
@@ -177,9 +183,15 @@ const mapStateToProps = state => {
     invoicesUI: state.ui.invoices,
     genesis: genesis,
     accounts: state.accounts || [],
+    drafts: state.invoiceDrafts,
   };
 };
 
+@connect(mapStateToProps, {
+  OpenPopUp,
+  LoadAccounts,
+  loadInvoices,
+})
 /**
  * Invoice Page
  *
@@ -197,7 +209,9 @@ class Invoice extends Component {
   // React Method (Life cycle hook)
   componentDidMount() {
     this.test();
-    loadInvoices();
+    this.props.LoadAccounts();
+    this.props.loadInvoices();
+    updateStorage([...this.props.drafts, { case: 'asdada' }]);
     loadInvoiceDrafts();
   }
 
@@ -229,7 +243,12 @@ class Invoice extends Component {
       <>
         <Header>
           <Filters optionsOpen={this.state.optionsOpen}>
-            <Button onClick={() => openModal(InvoiceForm)}>
+            <Button
+              onClick={
+                () => this.props.OpenPopUp(InvoiceForm)
+                //this.props.OpenPopUp(<div>{'ASDASD'}</div>)
+              }
+            >
               <Icon
                 icon={plusIcon}
                 style={{
@@ -277,10 +296,11 @@ class Invoice extends Component {
             return {
               onClick: invoice
                 ? () => {
-                    openModal(InvoiceDetailModal, {
+                    this.props.OpenPopUp(InvoiceDetailModal, {
                       invoice,
                       isMine: isMyAddress(accounts, genesis, invoice.recipient),
                     });
+                    //this.props.OpenPopUp(InvoiceDetailModal);
                   }
                 : undefined,
               style: {
@@ -296,4 +316,4 @@ class Invoice extends Component {
 }
 
 // Mandatory React-Redux method
-export default connect(mapStateToProps)(Invoice);
+export default Invoice;
