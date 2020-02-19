@@ -10,7 +10,7 @@ import Filters from './Filters';
 import InvoiceDetailModal from './invoiceDetailsModal';
 
 import plusIcon from 'icon/plus.svg';
-import { loadInvoiceDrafts } from 'lib/invoiceDrafts';
+import { loadInvoiceDrafts, addNewDraft } from 'lib/invoiceDrafts';
 import memoize from 'gui/memoize';
 import { isMyAddress } from './selectors';
 
@@ -190,6 +190,7 @@ const mapStateToProps = state => {
 @connect(mapStateToProps, {
   OpenPopUp,
   LoadAccounts,
+  addNewDraft,
   loadInvoices,
 })
 /**
@@ -211,7 +212,13 @@ class Invoice extends Component {
     this.test();
     this.props.LoadAccounts();
     this.props.loadInvoices();
-    updateStorage([...this.props.drafts, { case: 'asdada' }]);
+    this.props.addNewDraft({
+      name: 'test01',
+      status: 'TEST',
+      created: 199552403,
+      items: [{ name: 'item1' }, { name: 'item2' }],
+    });
+    //updateStorage([...this.props.drafts]);
     loadInvoiceDrafts();
   }
 
@@ -226,13 +233,21 @@ class Invoice extends Component {
     });
   };
 
+  returnDrafts() {
+    const { drafts } = this.props;
+    return Object.keys(drafts).map(e => {
+      return drafts[e];
+    });
+  }
+
   render() {
     const { referenceQuery, status, timespan } = this.props.invoicesUI;
     const { accounts, genesis } = this.props;
-
-    const tempInvoicec = [...invoices, ...this.props.invoiceCore];
-    console.log(Arrow);
-    console.log(tempInvoicec);
+    const drafts = this.returnDrafts();
+    const tempInvoicec = [...invoices, ...this.props.invoiceCore, ...drafts];
+    //console.log(this.returnDrafts());
+    //console.log(Arrow);
+    //console.log(tempInvoicec);
     const filteredInvoices = memorizedFilters(
       tempInvoicec,
       referenceQuery,

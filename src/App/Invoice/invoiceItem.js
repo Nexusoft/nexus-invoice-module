@@ -11,6 +11,14 @@ const {
     React: { Component },
     ReactRedux: { connect },
     emotion: { styled },
+    ReduxForm: {
+      reduxForm,
+      Field,
+      FieldArray,
+      formValueSelector,
+      getFormValues,
+      reset,
+    },
   },
   components: {
     GlobalStyles,
@@ -27,13 +35,13 @@ const {
   },
   utilities: {
     confirm,
-      
+
     showErrorDialog,
     showSuccessDialog,
   },
 } = NEXUS;
 
-const __ = input => <a>{input}</a>;
+const __ = input => input;
 
 const ItemLine = styled.div({
   display: 'grid',

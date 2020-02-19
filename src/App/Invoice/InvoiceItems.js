@@ -11,6 +11,14 @@ const {
     React,
     React: { Component },
     ReactRedux: { connect },
+    ReduxForm: {
+      reduxForm,
+      Field,
+      FieldArray,
+      formValueSelector,
+      getFormValues,
+      reset,
+    },
     emotion: { styled },
   },
   components: {
@@ -34,7 +42,7 @@ const {
   },
 } = NEXUS;
 
-const __ = input => <a>{input}</a>;
+const __ = input => input;
 
 const RemoveButton = styled.div(({ theme }) => ({
   left: `0.75em`,

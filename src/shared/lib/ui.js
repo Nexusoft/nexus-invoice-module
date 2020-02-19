@@ -1,5 +1,8 @@
 import * as TYPE from 'actions/types';
 const {
+  libraries: {
+    ReduxForm: { reset },
+  },
   utilities: { apiCall },
 } = NEXUS;
 

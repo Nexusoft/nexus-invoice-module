@@ -50,7 +50,7 @@ const {
   utilities: { confirm, color, apiCall, showErrorDialog, showSuccessDialog },
 } = NEXUS;
 
-const __ = input => <a>{input}</a>;
+const __ = input => input;
 
 // React-Redux mandatory methods
 const mapStateToProps = state => {
@@ -129,7 +129,7 @@ class RecipientField extends Component {
  * @class SendForm
  * @extends {Component}
  */
-@connect(mapStateToProps)
+@connect(mapStateToProps, { addNewDraft })
 @reduxForm({
   form: 'InvoiceForm',
   destroyOnUnmount: false,
@@ -145,6 +145,7 @@ class RecipientField extends Component {
     items: [{ description: '', units: 1, unitPrice: 0 }],
   },
   validate: values => {
+    return null;
     const errors = {};
     const {
       invoiceDescription,
@@ -169,7 +170,7 @@ class RecipientField extends Component {
     return errors;
   },
   asyncValidate: async values => {
-    console.log(values);
+    //console.log(values);
     return null;
     const {
       invoiceDescription,
@@ -308,9 +309,9 @@ class InvoiceForm extends Component {
 
   saveAsDraft() {
     console.error(this.props);
-    addNewDraft(this.props.copy);
-    resetForm('InvoiceForm');
-    //this.props.reset();
+    this.props.addNewDraft(this.props.copy);
+    reset('InvoiceForm');
+    this.props.removeModal();
   }
 
   render() {
@@ -325,7 +326,6 @@ class InvoiceForm extends Component {
     } = this.props;
 
     const { onSubmitSuccess, onSubmitFail, ...other } = this.props;
-
     return (
       <Modal
         removeModal={this.props.removeModal}

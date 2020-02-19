@@ -11,6 +11,7 @@ import user from './user';
 const {
   libraries: {
     Redux: { combineReducers },
+    ReduxForm: { reducer },
   },
 } = NEXUS;
 
@@ -25,5 +26,6 @@ export default function createReducer() {
     invoices,
     popUps,
     user,
+    form: reducer,
   });
 }

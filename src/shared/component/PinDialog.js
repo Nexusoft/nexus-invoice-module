@@ -33,7 +33,7 @@ const {
   utilities: { confirm, color, apiCall, showErrorDialog, showSuccessDialog },
 } = NEXUS;
 
-const __ = input => <a>{input}</a>;
+const __ = input => input;
 
 const PinInput = styled.input({
   margin: '1em auto 2.5em',

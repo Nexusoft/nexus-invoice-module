@@ -74,18 +74,21 @@ export const loadInvoiceDrafts = invoices => {
   };
 };
 
-export const addNewDraft = draft => {
-  return {
+export const addNewDraft = draft => async dispatch => {
+  const results = dispatch({
     type: TYPE.ADD_NEW_INVOICE_DRAFT,
     payload: draft,
-  };
+  });
+  console.log(results);
+  updateStorage(results);
 };
 
-export const updateDraft = (name, contact) => {
-  return {
+export const updateDraft = (name, contact) => async dispatch => {
+  const results = dispatch({
     type: TYPE.UPDATE_INVOICE_DRAFT,
     payload: { name, contact },
-  };
+  });
+  console.log(results);
   updateStorage(results);
 };
 
