@@ -47,7 +47,14 @@ const {
     FormField,
     Button,
   },
-  utilities: { confirm, color, apiCall, showErrorDialog, showSuccessDialog },
+  utilities: {
+    confirm,
+    color,
+    apiCall,
+    showErrorDialog,
+    showSuccessDialog,
+    updateStorage,
+  },
 } = NEXUS;
 
 const __ = input => input;
@@ -65,6 +72,18 @@ const mapStateToProps = state => {
     accountOptions: getAccountOptions(state.user.accounts),
     copy: getFormValues('InvoiceForm')(state),
     items: valueSelector(state, 'items') || [],
+    drafts: state.invoiceDrafts,
+    initialValues: state.ui.draftEdit || {
+      invoiceDescription: '',
+      invoiceNumber: 0,
+      invoiceReference: '',
+      invoiceDueDate: '',
+      sendFrom: '',
+      sendDetail: '',
+      recipientAddress: '',
+      recipientDetail: '',
+      items: [{ description: '', units: 1, unitPrice: 0 }],
+    },
   };
 };
 
@@ -133,17 +152,7 @@ class RecipientField extends Component {
 @reduxForm({
   form: 'InvoiceForm',
   destroyOnUnmount: false,
-  initialValues: {
-    invoiceDescription: '',
-    invoiceNumber: 0,
-    invoiceReference: '',
-    invoiceDueDate: '',
-    sendFrom: '',
-    sendDetail: '',
-    recipientAddress: '',
-    recipientDetail: '',
-    items: [{ description: '', units: 1, unitPrice: 0 }],
-  },
+
   validate: values => {
     return null;
     const errors = {};
@@ -311,6 +320,7 @@ class InvoiceForm extends Component {
     console.error(this.props);
     this.props.addNewDraft(this.props.copy);
     reset('InvoiceForm');
+    updateStorage(this.props.drafts);
     this.props.removeModal();
   }
 

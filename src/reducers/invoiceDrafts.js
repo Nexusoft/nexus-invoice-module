@@ -21,6 +21,7 @@ export default (state = initialState, action) => {
       const payload = {
         ...action.payload,
         draftTimeStamp: new Date().getTime(),
+        status: 'DRAFT',
       };
       const draftInvoices = [...Object.values(state), payload];
       return fromArray(draftInvoices);

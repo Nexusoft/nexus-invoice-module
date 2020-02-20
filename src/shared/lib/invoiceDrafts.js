@@ -67,6 +67,20 @@ const loadInvoiceDraftsFile = () => {
   }
 };
 
+export const setDraftToEdit = draft => async dispatch => {
+  dispatch({
+    type: TYPE.SET_DRAFT_TO_EDIT,
+    payload: draft,
+  });
+};
+
+export const removeDraftToEdit = () => async dispatch => {
+  dispatch({
+    type: TYPE.REMOVE_DRAFT_TO_EDIT,
+    payload: null,
+  });
+};
+
 export const loadInvoiceDrafts = invoices => {
   return {
     type: TYPE.LOAD_INVOICE_DRAFTS,
@@ -84,12 +98,10 @@ export const addNewDraft = draft => async dispatch => {
 };
 
 export const updateDraft = (name, contact) => async dispatch => {
-  const results = dispatch({
+  dispatch({
     type: TYPE.UPDATE_INVOICE_DRAFT,
     payload: { name, contact },
   });
-  console.log(results);
-  updateStorage(results);
 };
 
 export const deleteDraft = name => {

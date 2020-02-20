@@ -10,7 +10,11 @@ import Filters from './Filters';
 import InvoiceDetailModal from './invoiceDetailsModal';
 
 import plusIcon from 'icon/plus.svg';
-import { loadInvoiceDrafts, addNewDraft } from 'lib/invoiceDrafts';
+import {
+  loadInvoiceDrafts,
+  addNewDraft,
+  setDraftToEdit,
+} from 'lib/invoiceDrafts';
 import memoize from 'gui/memoize';
 import { isMyAddress } from './selectors';
 
@@ -192,6 +196,7 @@ const mapStateToProps = state => {
   LoadAccounts,
   addNewDraft,
   loadInvoices,
+  setDraftToEdit,
 })
 /**
  * Invoice Page
@@ -213,12 +218,12 @@ class Invoice extends Component {
     this.props.LoadAccounts();
     this.props.loadInvoices();
     this.props.addNewDraft({
-      name: 'test01',
+      name: 'test02',
       status: 'TEST',
       created: 199552403,
       items: [{ name: 'item1' }, { name: 'item2' }],
     });
-    //updateStorage([...this.props.drafts]);
+    updateStorage({});
     loadInvoiceDrafts();
   }
 
@@ -239,6 +244,12 @@ class Invoice extends Component {
       return drafts[e];
     });
   }
+
+  openDraftToEdit = draft => {
+    console.log(draft);
+    this.props.setDraftToEdit(draft);
+    this.props.OpenPopUp(InvoiceForm);
+  };
 
   render() {
     const { referenceQuery, status, timespan } = this.props.invoicesUI;
@@ -311,10 +322,17 @@ class Invoice extends Component {
             return {
               onClick: invoice
                 ? () => {
-                    this.props.OpenPopUp(InvoiceDetailModal, {
-                      invoice,
-                      isMine: isMyAddress(accounts, genesis, invoice.recipient),
-                    });
+                    console.log(invoice);
+                    invoice.status === 'DRAFT'
+                      ? this.openDraftToEdit(invoice)
+                      : this.props.OpenPopUp(InvoiceDetailModal, {
+                          invoice,
+                          isMine: isMyAddress(
+                            accounts,
+                            genesis,
+                            invoice.recipient
+                          ),
+                        });
                     //this.props.OpenPopUp(InvoiceDetailModal);
                   }
                 : undefined,
