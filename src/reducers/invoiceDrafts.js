@@ -18,14 +18,23 @@ export default (state = initialState, action) => {
       return action.payload;
     }
     case TYPE.ADD_NEW_INVOICE_DRAFT: {
-      const payload = {
-        ...action.payload,
-        draftTimeStamp: new Date().getTime(),
-        created: new Date().getTime() / 1000,
-        status: 'DRAFT',
-      };
-      const draftInvoices = [...Object.values(state), payload];
-      return fromArray(draftInvoices);
+      //Created === Last time edited
+      if (state[action.payload.draftTimeStamp]) {
+        state[action.payload.draftTimeStamp] = {
+          ...action.payload,
+          created: new Date().getTime() / 1000,
+        };
+        return state;
+      } else {
+        const payload = {
+          ...action.payload,
+          draftTimeStamp: new Date().getTime(),
+          created: new Date().getTime() / 1000,
+          status: 'DRAFT',
+        };
+        const draftInvoices = [...Object.values(state), payload];
+        return fromArray(draftInvoices);
+      }
     }
 
     case TYPE.UPDATE_INVOICE_DRAFT: {
