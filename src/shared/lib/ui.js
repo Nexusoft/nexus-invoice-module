@@ -85,26 +85,3 @@ export const ClosePopUp = () => async dispatch => {
     payload: null,
   });
 };
-
-export function openModal(component, props) {
-  console.log(component);
-  console.log(props);
-  return;
-  store.dispatch({
-    type: TYPE.CREATE_MODAL,
-    payload: {
-      id: newModalId(),
-      component,
-      props,
-    },
-  });
-}
-
-// Using regular function here to avoid circular dependency which causes error
-export function removeModal(modalId) {
-  return;
-  store.dispatch({
-    type: TYPE.REMOVE_MODAL,
-    payload: { id: modalId },
-  });
-}

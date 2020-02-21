@@ -1,7 +1,7 @@
 // External
 
 // Internal Global
-import { loadInvoices, openModal, removeModal, resetForm } from 'lib/ui';
+import { loadInvoices } from 'lib/ui';
 import { errorHandler } from 'gui/form';
 import confirmPin from 'component/confirmPin';
 
@@ -15,7 +15,7 @@ import {
   getAccountInfo,
   getRecipientSuggestions,
 } from './selectors';
-import { addNewDraft } from 'lib/invoiceDrafts';
+import { addNewDraft, removeDraftToEdit } from 'lib/invoiceDrafts';
 
 const {
   libraries: {
@@ -59,6 +59,18 @@ const {
 
 const __ = input => input;
 
+const formInitialValues = {
+  invoiceDescription: '',
+  invoiceNumber: 0,
+  invoiceReference: '',
+  invoiceDueDate: '',
+  sendFrom: '',
+  sendDetail: '',
+  recipientAddress: '',
+  recipientDetail: '',
+  items: [{ description: '', units: 1, unitPrice: 0 }],
+};
+
 // React-Redux mandatory methods
 const mapStateToProps = state => {
   const valueSelector = formValueSelector('InvoiceForm');
@@ -73,17 +85,8 @@ const mapStateToProps = state => {
     copy: getFormValues('InvoiceForm')(state),
     items: valueSelector(state, 'items') || [],
     drafts: state.invoiceDrafts,
-    initialValues: state.ui.draftEdit || {
-      invoiceDescription: '',
-      invoiceNumber: 0,
-      invoiceReference: '',
-      invoiceDueDate: '',
-      sendFrom: '',
-      sendDetail: '',
-      recipientAddress: '',
-      recipientDetail: '',
-      items: [{ description: '', units: 1, unitPrice: 0 }],
-    },
+    draftToEditBool: !!state.ui.draftEdit,
+    initialValues: state.ui.draftEdit || formInitialValues,
   };
 };
 
@@ -148,10 +151,10 @@ class RecipientField extends Component {
  * @class SendForm
  * @extends {Component}
  */
-@connect(mapStateToProps, { addNewDraft })
+@connect(mapStateToProps, { addNewDraft, removeDraftToEdit })
 @reduxForm({
   form: 'InvoiceForm',
-  destroyOnUnmount: false,
+  destroyOnUnmount: true,
 
   validate: values => {
     return null;
@@ -270,7 +273,7 @@ class RecipientField extends Component {
     console.error(result);
     if (!result) return;
 
-    removeModal(props.modalId);
+    //removeModal(props.modalId);
     showSuccessDialog();
     loadInvoices();
     dispatch(reset('InvoiceForm'));
@@ -285,6 +288,10 @@ class InvoiceForm extends Component {
 
   componentDidMount() {
     // loadAccounts();
+    console.log(this.props.draftToEditBool);
+    if (this.props.draftToEditBool) {
+      this.props.removeDraftToEdit();
+    }
   }
 
   /**
@@ -319,7 +326,7 @@ class InvoiceForm extends Component {
   saveAsDraft() {
     console.error(this.props);
     this.props.addNewDraft(this.props.copy);
-    reset('InvoiceForm');
+    this.props.reset('InvoiceForm');
     updateStorage(this.props.drafts);
     this.props.removeModal();
   }
