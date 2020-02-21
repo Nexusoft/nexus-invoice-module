@@ -21,6 +21,7 @@ export default (state = initialState, action) => {
       const payload = {
         ...action.payload,
         draftTimeStamp: new Date().getTime(),
+        created: new Date().getTime() / 1000,
         status: 'DRAFT',
       };
       const draftInvoices = [...Object.values(state), payload];

@@ -64,13 +64,24 @@ const timeFormatOptions = {
   hour12: false,
 };
 
+const ItalicText = styled.a({
+  fontStyle: 'italic',
+});
+
 const tableColumns = [
   {
     id: 'created',
     Header: __('Time'),
     accessor: 'created',
-    Cell: cell =>
-      cell.value ? formatDateTime(cell.value * 1000, timeFormatOptions) : '',
+    Cell: cell => {
+      const timeValue = cell.value
+        ? formatDateTime(cell.value * 1000, timeFormatOptions)
+        : '';
+      if (cell.original.status === 'DRAFT') {
+        return <ItalicText>{timeValue}</ItalicText>;
+      }
+      return timeValue;
+    },
     width: 180,
   },
   {
