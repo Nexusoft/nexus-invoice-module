@@ -234,7 +234,7 @@ class RecipientField extends Component {
       return {
         description: e.description,
         units: e.units,
-        unit_price: e.unitPrice,
+        unit_amount: e.unitPrice,
       };
     });
 
@@ -337,12 +337,8 @@ class InvoiceForm extends Component {
       change,
       handleSubmit,
       submitting,
-      input,
-      meta,
       suggestions,
     } = this.props;
-
-    const { onSubmitSuccess, onSubmitFail, ...other } = this.props;
     return (
       <Modal
         removeModal={this.props.removeModal}
@@ -359,7 +355,7 @@ class InvoiceForm extends Component {
               <FormField label={__('Description')}>
                 <Field
                   component={TextField.RF}
-                  props={{ ...other, multiline: true, rows: 1 }}
+                  props={{ multiline: true, rows: 1 }}
                   name="invoiceDescription"
                   placeholder="Description"
                 />
@@ -405,7 +401,7 @@ class InvoiceForm extends Component {
                   <Field
                     component={TextField.RF}
                     name="sendDetail"
-                    props={{ ...other, multiline: true, rows: 1 }}
+                    props={{ multiline: true, rows: 1 }}
                     placeholder="Name/Address/phoneNumber etc"
                   />
                 </FormField>
@@ -424,7 +420,7 @@ class InvoiceForm extends Component {
                   <Field
                     component={TextField.RF}
                     name="recipientDetail"
-                    props={{ ...other, multiline: true, rows: 1 }}
+                    props={{ multiline: true, rows: 1 }}
                     placeholder="Name/Address/phoneNumber etc"
                   />
                 </FormField>

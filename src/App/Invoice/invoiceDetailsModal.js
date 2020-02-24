@@ -78,7 +78,7 @@ const ItemsContainter = styled.div(({ theme }) => ({
   padding: '1em 0em 0em 0.25em',
   backgroundColor: color.darken(theme.background, 0.5),
 }));
-const InvoiceItem = ({ description, unit_price, units, itemTotal }) => (
+const InvoiceItem = ({ description, unit_amount, units, itemTotal }) => (
   <div
     style={{
       display: 'grid',
@@ -88,7 +88,7 @@ const InvoiceItem = ({ description, unit_price, units, itemTotal }) => (
     }}
   >
     <div>{description}</div>
-    <div>{unit_price}</div>
+    <div>{unit_amount}</div>
     <div>{units}</div>
     <div>{itemTotal}</div>
   </div>
@@ -115,9 +115,9 @@ const InvoiceItems = ({ items }) => {
         {items.map(e => (
           <InvoiceItem
             description={e.description}
-            unit_price={e.unit_price}
+            unit_amount={e.unit_amount}
             units={e.units}
-            itemTotal={e.unit_price * e.units}
+            itemTotal={e.unit_amount * e.units}
           />
         ))}
       </div>
@@ -207,7 +207,7 @@ class InvoiceDetailModal extends Component {
 
   calculateTotal = items =>
     items.reduce((total, element) => {
-      return total + element.units * element.unit_price;
+      return total + element.units * element.unit_amount;
     }, 0);
 
   clickPayNow = e => {

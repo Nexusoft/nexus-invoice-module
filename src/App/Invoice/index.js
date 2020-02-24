@@ -122,46 +122,21 @@ const invoices = [
     recipient:
       'a1537d5c089ebe309887bcf6a9c2e219ca64257922ce91455c2ca86617536a2d',
     recipient_detail: '1111 North Street \n LA California N USA',
-    status: 'Pending',
+    status: 'TEST',
     sender_detail: '1234 Main Street \n Phx Arizona \n USA',
     items: [
-      { description: 'Item1', unit_price: '2.0421', units: '4' },
-      { description: 'Item2', unit_price: '20', units: '1' },
-      { description: 'Item3', unit_price: '1.62342', units: '6' },
-      { description: 'Item4', unit_price: '0.1355', units: '19' },
-      { description: 'Item5', unit_price: '12', units: '3' },
-      { description: 'Item6', unit_price: '5.3', units: '2' },
-      { description: 'Item2', unit_price: '20', units: '1' },
-      { description: 'Item3', unit_price: '1.62342', units: '6' },
-      { description: 'Item4', unit_price: '0.1355', units: '19' },
-      { description: 'Item5', unit_price: '12', units: '3' },
-      { description: 'Item6', unit_price: '5.3', units: '2' },
+      { description: 'Item1', unit_amount: '2.0421', units: '4' },
+      { description: 'Item2', unit_amount: '20', units: '1' },
+      { description: 'Item3', unit_amount: '1.62342', units: '6' },
+      { description: 'Item4', unit_amount: '0.1355', units: '19' },
+      { description: 'Item5', unit_amount: '12', units: '3' },
+      { description: 'Item6', unit_amount: '5.3', units: '2' },
+      { description: 'Item2', unit_amount: '20', units: '1' },
+      { description: 'Item3', unit_amount: '1.62342', units: '6' },
+      { description: 'Item4', unit_amount: '0.1355', units: '19' },
+      { description: 'Item5', unit_amount: '12', units: '3' },
+      { description: 'Item6', unit_amount: '5.3', units: '2' },
     ],
-  },
-  {
-    created: '19925562103',
-    reference: 'aTest2',
-    address: '8MAF92nNAkk3288Skfn1n44kksn356n2k1',
-    recipient: '2kaDJ92n1fj4n85Nj5n38fj28',
-    status: 'Rejected',
-    items: [{ description: 'Item1', unit_price: '2.0421', units: '4' }],
-  },
-  {
-    created: '1992324203',
-    paidOn: '1992334203',
-    reference: 'uTest3',
-    address: '8MAF92nNAkk3288Skfn1n44kksn356n2k1',
-    recipient: '2kaDJ92n1fj4n85Nj5n38fj28',
-    status: 'Paid',
-    items: [{ description: 'Item1', unit_price: '2.0421', units: '4' }],
-  },
-  {
-    created: '19923240993',
-    reference: 'pTest4',
-    address: '8MAF92nNAkk3288Skfn1n44kksn356n2k1',
-    recipient: '2kaDJ92n1fj4n85Nj5n38fj28',
-    status: 'Pending',
-    items: [{ description: 'Item1', unit_price: '2.0421', units: '4' }],
   },
 ];
 
@@ -228,12 +203,6 @@ class Invoice extends Component {
     this.test();
     this.props.LoadAccounts();
     this.props.loadInvoices();
-    this.props.addNewDraft({
-      name: 'test02',
-      status: 'TEST',
-      created: 199552403,
-      items: [{ name: 'item1' }, { name: 'item2' }],
-    });
     updateStorage({});
     loadInvoiceDrafts();
   }
