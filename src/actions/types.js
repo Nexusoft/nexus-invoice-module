@@ -21,6 +21,8 @@ export const SET_POP_UP = 'SET_POP_UP';
 export const CLOSE_POP_UP = 'CLOSE_POP_UP';
 
 export const SET_USER_ACCOUNTS = 'SET_USER_ACCOUNTS';
+export const SET_USERNAME = 'SET_USERNAME';
+export const SET_GENESIS = 'SET_GENESIS';
 
 export const SET_DRAFT_TO_EDIT = 'SET_DRAFT_TO_EDIT';
 export const REMOVE_DRAFT_TO_EDIT = 'REMOVE_DRAFT_TO_EDIT';

@@ -5,6 +5,7 @@ import {
 } from 'actions/actionCreators';
 import Invoice from './Invoice';
 import { ClosePopUp } from 'lib/ui';
+import { SetUserName } from 'lib/user';
 
 import nexusIcon from 'icon/NXS_coin.svg';
 
@@ -34,14 +35,16 @@ const DemoTextField = styled(TextField)({
     inputValue: state.ui.inputValue,
     PopUp: state.popUps,
   }),
-  { showConnections, hideConnections, updateInput, ClosePopUp }
+  { showConnections, hideConnections, updateInput, ClosePopUp, SetUserName }
 )
 class Main extends React.Component {
   constructor(props) {
     super(props);
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    this.props.SetUserName();
+  }
 
   render() {
     const { PopUp } = this.props;
