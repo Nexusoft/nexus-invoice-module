@@ -21,7 +21,14 @@ const {
     Button,
     Arrow,
   },
-  utilities: { confirm, color, apiCall, showErrorDialog, showSuccessDialog },
+  utilities: {
+    confirm,
+    color,
+    apiCall,
+    sendNXS,
+    showErrorDialog,
+    showSuccessDialog,
+  },
 } = NEXUS;
 
 const __ = input => input;
@@ -145,11 +152,11 @@ const StatusTag = styled.div(
 
   ({ theme, status }) => {
     switch (status) {
-      case 'Pending':
+      case 'OUTSTANDING':
         return { borderBottom: `70px solid ${theme.background}` };
-      case 'Rejected':
+      case 'CANCELLED':
         return { borderBottom: `70px solid ${theme.danger}` };
-      case 'Paid':
+      case 'PAID':
         return { borderBottom: `70px solid ${theme.primary}` };
       default:
         return { borderBottom: `70px solid ${theme.background}` };
@@ -210,27 +217,31 @@ class InvoiceDetailModal extends Component {
       return total + element.units * element.unit_amount;
     }, 0);
 
-  clickPayNow = e => {
-    confirm({
+  clickPayNow = async e => {
+    const result = await confirm({
       question: __('Do you want to fulfill this invoice?'),
-      note: __('Withdraw from %{accountName} account', {
-        accountName: 'default',
-      }),
-      callbackYes: () => {
-        apiCall();
-      },
+      note: __('You will be sent to the send page.'),
     });
+    if (result) {
+      console.log('Send NXS');
+      sendNXS([this.props.invoice.address], null);
+    }
   };
 
-  clickReject = e => {
-    confirm({
+  clickReject = async e => {
+    const result = await confirm({
       question: __('Are you sure you want to reject this invoice?'),
       note: __(''),
-      callbackYes: () => {
-        apiCall();
-        this.setInvoiceStatus('Rejected');
-      },
     });
+
+    if (result) {
+      const params = {
+        address: this.props.invoice.address,
+        pin: pin,
+      };
+      apiCall('invoices/cancel/invoice', params);
+      this.setInvoiceStatus('Rejected');
+    }
   };
 
   isPastDue() {
@@ -361,7 +372,7 @@ class InvoiceDetailModal extends Component {
               <Button skin="primary" onClick={() => this.closeModal()}>
                 {'Close'}
               </Button>
-              {status !== 'Paid' && status !== 'Draft' && (
+              {status !== 'PAID' && status !== 'Draft' && (
                 <Tooltip.Trigger
                   tooltip={__(
                     'Reject this invoice, preventing the recipient from paying it.'

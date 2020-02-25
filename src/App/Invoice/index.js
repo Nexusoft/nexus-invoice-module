@@ -164,14 +164,10 @@ const OptionsArrow = styled.span({
 
 // React-Redux mandatory methods
 const mapStateToProps = state => {
-  //const { userStatus } = state.core;
-  const userStatus = 'test';
-  const { genesis } = userStatus || { genesis: '' };
-
   return {
     invoiceCore: state.invoices,
     invoicesUI: state.ui.invoices,
-    genesis: genesis,
+    genesis: state.user.genesis,
     accounts: state.accounts || [],
     drafts: state.invoiceDrafts,
   };
