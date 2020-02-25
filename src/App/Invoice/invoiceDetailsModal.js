@@ -224,7 +224,16 @@ class InvoiceDetailModal extends Component {
     });
     if (result) {
       console.log('Send NXS');
-      sendNXS([this.props.invoice.address], null);
+      sendNXS(
+        [
+          {
+            address: this.props.invoice.address,
+            amount: this.calculateTotal(this.props.invoice.items),
+          },
+        ],
+        '',
+        true
+      );
     }
   };
 
