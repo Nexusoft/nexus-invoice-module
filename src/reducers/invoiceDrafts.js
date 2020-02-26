@@ -55,7 +55,10 @@ export default (state = initialState, action) => {
 
     case TYPE.DELETE_INVOICE_DRAFT: {
       const invoicedrafts = { ...state };
-      delete invoicedrafts[action.payload];
+      if (invoicedrafts[action.payload]) {
+        delete invoicedrafts[action.payload];
+      }
+
       return invoicedrafts;
     }
     default:

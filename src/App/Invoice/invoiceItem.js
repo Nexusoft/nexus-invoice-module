@@ -9,36 +9,10 @@ const {
   libraries: {
     React,
     React: { Component },
-    ReactRedux: { connect },
     emotion: { styled },
-    ReduxForm: {
-      reduxForm,
-      Field,
-      FieldArray,
-      formValueSelector,
-      getFormValues,
-      reset,
-    },
+    ReduxForm: { Field },
   },
-  components: {
-    GlobalStyles,
-    Icon,
-    Panel,
-    AutoSuggest,
-    FieldSet,
-    Switch,
-    Tooltip,
-    Select,
-    TextField,
-    FormField,
-    Button,
-  },
-  utilities: {
-    confirm,
-
-    showErrorDialog,
-    showSuccessDialog,
-  },
+  components: { TextField, FormField },
 } = NEXUS;
 
 const __ = input => input;

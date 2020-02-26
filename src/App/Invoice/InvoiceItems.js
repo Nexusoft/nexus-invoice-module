@@ -9,37 +9,10 @@ const timing = {
 const {
   libraries: {
     React,
-    React: { Component },
-    ReactRedux: { connect },
-    ReduxForm: {
-      reduxForm,
-      Field,
-      FieldArray,
-      formValueSelector,
-      getFormValues,
-      reset,
-    },
+    ReduxForm: { Field },
     emotion: { styled },
   },
-  components: {
-    GlobalStyles,
-    Icon,
-    Panel,
-    AutoSuggest,
-    FieldSet,
-    Switch,
-    Tooltip,
-    Select,
-    TextField,
-    FormField,
-    Button,
-  },
-  utilities: {
-    confirm,
-
-    showErrorDialog,
-    showSuccessDialog,
-  },
+  components: { GlobalStyles, Icon, Tooltip, Button },
 } = NEXUS;
 
 const __ = input => input;

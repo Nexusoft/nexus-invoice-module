@@ -1,7 +1,7 @@
 // External
 
 // Internal Global
-import { loadInvoices } from 'lib/ui';
+import { loadInvoices, OpenPopUp, ClosePopUp } from 'lib/ui';
 import { errorHandler } from 'gui/form';
 import confirmPin from 'component/confirmPin';
 
@@ -15,7 +15,7 @@ import {
   getAccountInfo,
   getRecipientSuggestions,
 } from './selectors';
-import { addNewDraft, removeDraftToEdit } from 'lib/invoiceDrafts';
+import { addNewDraft, removeDraftToEdit, deleteDraft } from 'lib/invoiceDrafts';
 
 const {
   libraries: {
@@ -151,7 +151,13 @@ class RecipientField extends Component {
  * @class SendForm
  * @extends {Component}
  */
-@connect(mapStateToProps, { addNewDraft, removeDraftToEdit })
+@connect(mapStateToProps, {
+  addNewDraft,
+  removeDraftToEdit,
+  OpenPopUp,
+  deleteDraft,
+  ClosePopUp,
+})
 @reduxForm({
   form: 'InvoiceForm',
   destroyOnUnmount: true,
@@ -238,7 +244,8 @@ class RecipientField extends Component {
       };
     });
 
-    const pin = await confirmPin();
+    console.log(props.OpenPopUp);
+    const pin = '1234'; //await confirmPin('Pin', props.OpenPopUp);
     const isSendAddress = await apiCall('system/validate/address', {
       address: sendFrom,
     });
@@ -264,19 +271,20 @@ class RecipientField extends Component {
       if (sendDetail) params.sender_detail = sendDetail;
       if (recipientDetail) params.recipient_detail = recipientDetail;
       console.log(params);
-      const asd = await apiCall('invoices/create/invoice', params);
-      console.log(asd);
-      return asd;
+      //const asd = await apiCall('invoices/create/invoice', params);
+      //console.log(asd);
+      console.error(props);
+      return true;
     }
   },
   onSubmitSuccess: (result, dispatch, props) => {
     console.error(result);
     if (!result) return;
-
-    //removeModal(props.modalId);
-    showSuccessDialog();
+    props.deleteDraft(props.values.draftTimeStamp);
+    showSuccessDialog({ message: 'Invoice Sent', note: 'Pass' });
     loadInvoices();
     dispatch(reset('InvoiceForm'));
+    props.ClosePopUp();
   },
   onSubmitFail: errorHandler(__('Error sending NXS')),
 })
@@ -292,6 +300,11 @@ class InvoiceForm extends Component {
     if (this.props.draftToEditBool) {
       this.props.removeDraftToEdit();
     }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.error(prevProps);
+    console.error(this.props);
   }
 
   /**
@@ -350,6 +363,7 @@ class InvoiceForm extends Component {
       >
         <Modal.Header>{'New Invoice'}</Modal.Header>
         <Modal.Body>
+          <input onChange={e => change('invoiceDescription', e.target.value)} />
           <FormComponent onSubmit={handleSubmit}>
             <InvoiceDataSection legend={__('Details')}>
               <FormField label={__('Description')}>
