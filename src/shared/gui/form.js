@@ -2,6 +2,8 @@ const {
   utilities: { showErrorDialog },
 } = NEXUS;
 
+const __ = input => input;
+
 export function resolveValue(input) {
   if (input && input.target) {
     const el = input.target;
@@ -25,6 +27,9 @@ export function handleError(error, message = __('Error')) {
 
 export function errorHandler(message) {
   return (errors, dispatch, submitError) => {
+    console.error(errors);
+    console.error(dispatch);
+    console.error(submitError);
     // If errors object has some values it means the form validation failed
     // In that case, no need to open an error dialog
     if (!errors || !Object.keys(errors).length) {

@@ -62,7 +62,7 @@ const formOptions = {
 };
 
 const PinDialog = ({ handleSubmit, confirmLabel = __('Confirm'), onClose }) => (
-  <Modal style={{ maxWidth: 350 }} onClose={onClose}>
+  <Modal style={{ maxWidth: 350 }} onClose={onClose} removeModal={onClose}>
     {closeModal => (
       <>
         <Modal.Header>{__('Enter PIN')}</Modal.Header>

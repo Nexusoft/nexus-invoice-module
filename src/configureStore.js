@@ -11,9 +11,9 @@ const {
 
 export default function configureStore() {
   const middlewares = [
+    storageMiddleware(state => state.invoiceDrafts),
+    stateMiddleware(state => state),
     thunk,
-    storageMiddleware(state => state.settings),
-    stateMiddleware(state => state.ui),
   ];
   const enhancers = [applyMiddleware(...middlewares)];
 

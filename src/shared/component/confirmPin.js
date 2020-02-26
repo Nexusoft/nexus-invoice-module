@@ -1,9 +1,9 @@
 import PinDialog from './PinDialog';
-import { openModal } from 'lib/ui';
 
-export default function confirmPin({ confirmLabel } = {}) {
+export default function confirmPin({ confirmLabel } = {}, OpenPopUp) {
+  console.log(OpenPopUp);
   return new Promise((resolve, reject) => {
-    openModal(PinDialog, {
+    OpenPopUp(PinDialog, {
       confirmLabel,
       submitPin: pin => {
         resolve(pin);
