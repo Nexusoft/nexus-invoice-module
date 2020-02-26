@@ -1,6 +1,8 @@
 //Internal Dependencies
 import { formatDateTime } from 'gui/intl';
 
+import { loadInvoices, ClosePopUp } from 'lib/ui';
+
 const {
   libraries: {
     React,
@@ -246,10 +248,17 @@ class InvoiceDetailModal extends Component {
     if (result) {
       const params = {
         address: this.props.invoice.address,
-        pin: pin,
+        pin: '1234',
       };
-      apiCall('invoices/cancel/invoice', params);
-      this.setInvoiceStatus('Rejected');
+
+      try {
+        const result = await apiCall('invoices/cancel/invoice', params);
+        this.props.loadInvoices();
+        this.props.ClosePopUp();
+      } catch (error) {
+        //show error
+        console.error(error);
+      }
     }
   };
 
@@ -369,9 +378,11 @@ class InvoiceDetailModal extends Component {
               <Button skin="primary" onClick={() => this.closeModal()}>
                 {'Close'}
               </Button>
-              <Button skin="primary" onClick={this.clickPayNow}>
-                {'Pay'}
-              </Button>
+              {status === 'OUTSTANDING' && (
+                <Button skin="primary" onClick={this.clickPayNow}>
+                  {'Pay'}
+                </Button>
+              )}
             </div>
           ) : (
             <div
@@ -381,7 +392,7 @@ class InvoiceDetailModal extends Component {
               <Button skin="primary" onClick={() => this.closeModal()}>
                 {'Close'}
               </Button>
-              {status !== 'PAID' && status !== 'Draft' && (
+              {status === 'OUTSTANDING' && (
                 <Tooltip.Trigger
                   tooltip={__(
                     'Reject this invoice, preventing the recipient from paying it.'
@@ -405,5 +416,8 @@ class InvoiceDetailModal extends Component {
     );
   }
 }
+const mapStateToProps = ({}) => ({});
 
-export default InvoiceDetailModal;
+export default connect(mapStateToProps, { loadInvoices, ClosePopUp })(
+  InvoiceDetailModal
+);
