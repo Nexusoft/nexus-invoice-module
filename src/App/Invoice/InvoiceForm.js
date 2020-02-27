@@ -7,6 +7,7 @@ import confirmPin from 'component/confirmPin';
 
 import InvoiceItems from './InvoiceItems';
 import { formatNumber } from 'gui/intl';
+import trashIcon from 'icon/trash.svg';
 
 import {
   getAccountOptions,
@@ -346,6 +347,19 @@ class InvoiceForm extends Component {
     this.props.removeModal();
   }
 
+  removeDraft = async () => {
+    const result = await confirm({
+      question: __('Do you want to delete this draft invoice?'),
+      note: __('This can not be undone'),
+    });
+    if (result) {
+      this.props.deleteDraft(this.props.copy.draftTimeStamp);
+      this.props.reset('InvoiceForm');
+      updateStorage(this.props.drafts);
+      this.props.removeModal();
+    }
+  };
+
   render() {
     const {
       accountOptions,
@@ -354,6 +368,8 @@ class InvoiceForm extends Component {
       submitting,
       suggestions,
     } = this.props;
+    const isDraft = this.props.copy && this.props.copy.draftTimeStamp;
+    console.log(this.props);
     return (
       <Modal
         removeModal={this.props.removeModal}
@@ -363,9 +379,41 @@ class InvoiceForm extends Component {
           height: '90%',
         }}
       >
-        <Modal.Header>{'New Invoice'}</Modal.Header>
+        <Modal.Header>
+          {isDraft ? 'Edit Draft Invoice' : 'New Invoice'}{' '}
+          {isDraft && (
+            <div
+              style={{
+                display: 'inline',
+                right: '0%',
+                position: 'absolute',
+                top: '0%',
+                marginTop: '.25em',
+              }}
+            >
+              <Button
+                square
+                skin={'plain'}
+                onClick={() => {
+                  this.removeDraft();
+                }}
+              >
+                {' '}
+                <Icon
+                  icon={trashIcon}
+                  style={{
+                    fontSize: '.8em',
+                    opacity: 0.7,
+                    overflow: 'visible',
+                    marginRight: '0.25em',
+                  }}
+                />
+              </Button>
+            </div>
+          )}
+        </Modal.Header>
+
         <Modal.Body>
-          <input onChange={e => change('invoiceDescription', e.target.value)} />
           <FormComponent onSubmit={handleSubmit}>
             <InvoiceDataSection legend={__('Details')}>
               <FormField label={__('Description')}>
