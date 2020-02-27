@@ -51,6 +51,7 @@ const {
     confirm,
     color,
     apiCall,
+    secureApiCall,
     showErrorDialog,
     showSuccessDialog,
     updateStorage,
@@ -251,7 +252,6 @@ class RecipientField extends Component {
     });
     if (pin) {
       const params = {
-        pin,
         extra_field: 'Extra',
         reference: invoiceReference,
         description: invoiceDescription,
@@ -273,8 +273,10 @@ class RecipientField extends Component {
       console.log(params);
       //const asd = await apiCall('invoices/create/invoice', params);
       //console.log(asd);
+      const ddd = await secureApiCall('invoices/create/invoice', params);
+      console.log(ddd);
       console.error(props);
-      return true;
+      return ddd;
     }
   },
   onSubmitSuccess: (result, dispatch, props) => {

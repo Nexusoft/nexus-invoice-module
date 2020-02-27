@@ -28,6 +28,7 @@ const {
     color,
     apiCall,
     sendNXS,
+    secureApiCall,
     showErrorDialog,
     showSuccessDialog,
   },
@@ -222,20 +223,24 @@ class InvoiceDetailModal extends Component {
   clickPayNow = async e => {
     const result = await confirm({
       question: __('Do you want to fulfill this invoice?'),
-      note: __('You will be sent to the send page.'),
+      note: __('This will come from your default account'),
     });
     if (result) {
-      console.log('Send NXS');
-      sendNXS(
-        [
-          {
-            address: this.props.invoice.address,
-            amount: this.calculateTotal(this.props.invoice.items),
-          },
-        ],
-        '',
-        true
-      );
+      try {
+        console.log('Send NXS');
+        const params = {
+          address: this.props.invoice.address,
+          amount: this.calculateTotal(this.props.invoice.items),
+          name_from: `${this.props.username}:default`,
+        };
+        const apiResult = await secureApiCall('invoices/pay/invoice', params);
+        if (apiResult) {
+          this.props.loadInvoices();
+          this.props.ClosePopUp();
+        }
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
@@ -248,13 +253,15 @@ class InvoiceDetailModal extends Component {
     if (result) {
       const params = {
         address: this.props.invoice.address,
-        pin: '1234',
       };
 
       try {
-        const result = await apiCall('invoices/cancel/invoice', params);
-        this.props.loadInvoices();
-        this.props.ClosePopUp();
+        const result = await secureApiCall('invoices/cancel/invoice', params);
+        console.log(result);
+        if (result) {
+          this.props.loadInvoices();
+          this.props.ClosePopUp();
+        }
       } catch (error) {
         //show error
         console.error(error);
@@ -416,7 +423,9 @@ class InvoiceDetailModal extends Component {
     );
   }
 }
-const mapStateToProps = ({}) => ({});
+const mapStateToProps = state => {
+  return { username: state.user.username };
+};
 
 export default connect(mapStateToProps, { loadInvoices, ClosePopUp })(
   InvoiceDetailModal
