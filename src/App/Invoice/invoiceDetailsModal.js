@@ -146,7 +146,7 @@ const StatusTag = styled.div(
     '& > h2': {
       position: 'absolute',
       top: '85px',
-      left: '18px',
+      left: '0px',
       color: 'dimgray',
       mixBlendMode: 'darken',
       transform: 'skew(0deg, 45deg) rotate(-45deg)',
@@ -156,11 +156,24 @@ const StatusTag = styled.div(
   ({ theme, status }) => {
     switch (status) {
       case 'OUTSTANDING':
-        return { borderBottom: `70px solid ${theme.background}` };
+        return {
+          borderBottom: `70px solid ${theme.background}`,
+          '& > h2': {
+            top: '90px',
+            fontSize: '1.25em',
+            left: '-15px',
+          },
+        };
       case 'CANCELLED':
-        return { borderBottom: `70px solid ${theme.danger}` };
+        return {
+          borderBottom: `70px solid ${theme.danger}`,
+          '& > h2': { left: '-5px' },
+        };
       case 'PAID':
-        return { borderBottom: `70px solid ${theme.primary}` };
+        return {
+          borderBottom: `70px solid ${theme.primary}`,
+          '& > h2': { left: '35px' },
+        };
       default:
         return { borderBottom: `70px solid ${theme.background}` };
     }
