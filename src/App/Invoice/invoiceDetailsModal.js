@@ -244,9 +244,9 @@ class InvoiceDetailModal extends Component {
     }
   };
 
-  clickReject = async e => {
+  clickCancel = async e => {
     const result = await confirm({
-      question: __('Are you sure you want to reject this invoice?'),
+      question: __('Are you sure you want to cancel this invoice?'),
       note: __(''),
     });
 
@@ -402,12 +402,12 @@ class InvoiceDetailModal extends Component {
               {status === 'OUTSTANDING' && (
                 <Tooltip.Trigger
                   tooltip={__(
-                    'Reject this invoice, preventing the recipient from paying it.'
+                    'Cancel this invoice, preventing the recipient from paying it.'
                   )}
                   position={'top'}
                 >
-                  <Button skin="danger" onClick={this.clickReject}>
-                    {'Reject'}
+                  <Button skin="danger" onClick={this.clickCancel}>
+                    {'Cancel'}
                   </Button>
                 </Tooltip.Trigger>
               )}
