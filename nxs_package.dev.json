@@ -1,6 +1,6 @@
 {
-  "name": "_dev_react_redux_module_example",
-  "displayName": "React Redux Module Development",
+  "name": "nexus_interface_invoice_module",
+  "displayName": "Nexus Invoice System",
   "type": "app",
   "entry": "http://localhost:24011/dev.html",
   "icon": "dist/react.svg"

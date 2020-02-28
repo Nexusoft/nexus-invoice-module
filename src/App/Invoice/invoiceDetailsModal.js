@@ -82,46 +82,57 @@ const CenterValue = styled.div(({ theme }) => ({
   color: theme.mixer(0.875),
   textAlign: 'center',
 }));
+const LeftBorderDiv = styled.div(({ theme }) => ({
+  borderLeft: `1px solid ${theme.primary}`,
+  marginTop: '-1em',
+  paddingTop: '1em',
+  paddingLeft: '2px',
+}));
+
+const TableHeader = styled.div(({ theme }) => ({
+  display: 'grid',
+  gridTemplateColumns: 'auto 8em 5em 10em',
+  gridTemplateRows: 'auto',
+  gridGap: '1em 1em',
+}));
+
+const TableHeaderText = styled(LeftBorderDiv)(
+  ({ theme, padding }) => ({
+    paddingRight: `${padding}em`,
+    marginRight: `-${padding}em`,
+    backgroundColor: color.darken(theme.background, 0.75),
+    borderBottom: `1px solid ${theme.foreground}`,
+  }),
+  ({ border }) =>
+    border ? { borderLeft: 'none', paddingLeft: '5px', marginLeft: '-4px' } : {}
+);
 
 const ItemsContainter = styled.div(({ theme }) => ({
-  height: '12em',
   padding: '1em 0em 0em 0.25em',
+  border: `2px solid ${theme.primary}`,
+  borderRadius: '5px',
   backgroundColor: color.darken(theme.background, 0.5),
 }));
 const InvoiceItem = ({ description, unit_amount, units, itemTotal }) => (
-  <div
-    style={{
-      display: 'grid',
-      gridTemplateColumns: 'auto 8em 5em 10em',
-      gridTemplateRows: 'auto',
-      gridGap: '1em 1em',
-    }}
-  >
+  <>
     <div>{description}</div>
-    <div>{unit_amount}</div>
-    <div>{units}</div>
-    <div>{itemTotal}</div>
-  </div>
+    <LeftBorderDiv>{unit_amount}</LeftBorderDiv>
+    <LeftBorderDiv>{units}</LeftBorderDiv>
+    <LeftBorderDiv>{itemTotal}</LeftBorderDiv>
+  </>
 );
 
 const InvoiceItems = ({ items }) => {
   return (
     <ItemsContainter>
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'auto 8em 5em 10em',
-          gridTemplateRows: 'auto',
-          gridGap: '1em 1em',
-        }}
-      >
+      <TableHeader>
         {' '}
-        <div>{'Description'}</div>
-        <div>{'Price'}</div>
-        <div>{'Quantity'}</div>
-        <div>{'Total'}</div>
-      </div>
-      <div style={{ overflow: 'scroll', height: '9.4em' }}>
+        <TableHeaderText padding={1} border={'none'}>
+          {'Description'}
+        </TableHeaderText>
+        <TableHeaderText padding={2}>{'Price'}</TableHeaderText>
+        <TableHeaderText padding={2}>{'Quantity'}</TableHeaderText>
+        <TableHeaderText padding={0}>{'Total'}</TableHeaderText>
         {items.map(e => (
           <InvoiceItem
             description={e.description}
@@ -130,7 +141,7 @@ const InvoiceItems = ({ items }) => {
             itemTotal={e.unit_amount * e.units}
           />
         ))}
-      </div>
+      </TableHeader>
     </ItemsContainter>
   );
 };
