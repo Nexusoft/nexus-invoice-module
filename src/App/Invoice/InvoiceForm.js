@@ -1,9 +1,8 @@
 // External
 
 // Internal Global
-import { loadInvoices, OpenPopUp, ClosePopUp } from 'lib/ui';
+import { loadInvoices, ClosePopUp } from 'lib/ui';
 import { errorHandler } from 'gui/form';
-import confirmPin from 'component/confirmPin';
 
 import InvoiceItems from './InvoiceItems';
 import { formatNumber } from 'gui/intl';
@@ -34,7 +33,6 @@ const {
     },
   },
   components: {
-    GlobalStyles,
     Icon,
     Panel,
     AutoSuggest,
@@ -75,7 +73,7 @@ const formInitialValues = {
 
 // React-Redux mandatory methods
 const mapStateToProps = state => {
-  const valueSelector = formValueSelector('InvoiceForm');
+  const valueSelector = null;
   return {
     ...state.core,
     suggestions: getRecipientSuggestions(
@@ -84,8 +82,8 @@ const mapStateToProps = state => {
     ),
     username: state.user.username,
     accountOptions: getAccountOptions(state.user.accounts),
-    copy: getFormValues('InvoiceForm')(state),
-    items: valueSelector(state, 'items') || [],
+    copy: {},
+    items: [],
     drafts: state.invoiceDrafts,
     draftToEditBool: !!state.ui.draftEdit,
     initialValues: state.ui.draftEdit || formInitialValues,
@@ -146,17 +144,9 @@ class RecipientField extends Component {
     );
   }
 }
-
-/**
- * The Internal Send Form in the Send Page
- *
- * @class SendForm
- * @extends {Component}
- */
 @connect(mapStateToProps, {
   addNewDraft,
   removeDraftToEdit,
-  OpenPopUp,
   deleteDraft,
   ClosePopUp,
 })
@@ -189,38 +179,6 @@ class RecipientField extends Component {
     console.log(errors);
     return errors;
   },
-  asyncValidate: async values => {
-    //console.log(values);
-    return null;
-    const {
-      invoiceDescription,
-      invoiceNumber,
-      invoiceReference,
-      invoiceDueDate,
-      sendFrom,
-      sendDetail,
-      recipientAddress,
-      recipientDetail,
-      items,
-    } = values;
-
-    const recipientInputSize = new Blob(recipientAddress).size;
-
-    const isAddress =
-      recipientInputSize === 51 &&
-      recipientAddress.match(/([0OIl+/])/g) === null;
-
-    if (isAddress) {
-      const isAddressResult = await apiCall('system/validate/address', {
-        address: recipientAddress,
-      });
-      if (!isAddressResult.is_valid) {
-        throw { recipientAddress: [{ address: __('Invalid address') }] };
-      }
-    }
-
-    return null;
-  },
   onSubmit: async (
     {
       invoiceDescription,
@@ -246,7 +204,6 @@ class RecipientField extends Component {
       };
     });
 
-    console.log(props.OpenPopUp);
     const pin = '1234'; //await confirmPin('Pin', props.OpenPopUp);
     const isSendAddress = await apiCall('system/validate/address', {
       address: sendFrom,
@@ -291,25 +248,13 @@ class RecipientField extends Component {
   },
   onSubmitFail: errorHandler(__('Error sending NXS')),
 })
-class InvoiceForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
+class InvoiceFormBody extends Component {
+  gatherTotal() {
+    return 5;
+    return this.props.items.reduce((total, element) => {
+      return total + element.units * element.unitPrice;
+    }, 0);
   }
-
-  componentDidMount() {
-    // loadAccounts();
-    console.log(this.props.draftToEditBool);
-    if (this.props.draftToEditBool) {
-      this.props.removeDraftToEdit();
-    }
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    console.error(prevProps);
-    console.error(this.props);
-  }
-
   /**
    * Add Recipient to the queue
    *
@@ -333,10 +278,147 @@ class InvoiceForm extends Component {
     <Button onClick={this.addInvoiceItem}>{__('Add Item')}</Button>
   );
 
-  gatherTotal() {
-    return this.props.items.reduce((total, element) => {
-      return total + element.units * element.unitPrice;
-    }, 0);
+  render() {
+    const {
+      accountOptions,
+      change,
+      handleSubmit,
+      submitting,
+      suggestions,
+    } = this.props;
+    return (
+      <FormComponent onSubmit={handleSubmit}>
+        <InvoiceDataSection legend={__('Details')}>
+          <FormField label={__('Description')}>
+            <Field
+              component={TextField.RF}
+              props={{ multiline: true, rows: 1 }}
+              name="invoiceDescription"
+              placeholder="Description"
+            />
+          </FormField>
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'auto auto auto',
+              gridTemplateRows: 'auto',
+              gridGap: '1em 1em',
+            }}
+          >
+            <FormField label={__('Reference')}>
+              <Field
+                component={TextField.RF}
+                name="invoiceReference"
+                placeholder="Reference"
+              />
+            </FormField>
+            <FormField label={__('Number')}>
+              <Field
+                component={TextField.RF}
+                name="invoiceNumber"
+                placeholder="Number"
+              />
+            </FormField>
+            <FormField label={__('Due Date')}>
+              <Field component={DateTime.RF} name="invoiceDueDate" />
+            </FormField>
+          </div>
+        </InvoiceDataSection>
+        <div style={{ display: 'flex' }}>
+          <FromSection legend={__('From')}>
+            <FormField label={__('Account Payable')}>
+              <Field
+                component={Select.RF}
+                name="sendFrom"
+                placeholder={__('Select an account')}
+                options={accountOptions}
+              />
+            </FormField>
+            <FormField label={__('Sender Details')}>
+              <Field
+                component={TextField.RF}
+                name="sendDetail"
+                props={{ multiline: true, rows: 1 }}
+                placeholder="Name/Address/phoneNumber etc"
+              />
+            </FormField>
+          </FromSection>
+          <ToSection legend={__('To')}>
+            <FormField label={__('Recipient')}>
+              <Field
+                component={RecipientField}
+                name="recipientAddress"
+                change={change}
+                suggestions={suggestions}
+                placeholder="Recipient Address"
+              />
+            </FormField>
+            <FormField label={__('Recipient Details')}>
+              <Field
+                component={TextField.RF}
+                name="recipientDetail"
+                props={{ multiline: true, rows: 1 }}
+                placeholder="Name/Address/phoneNumber etc"
+              />
+            </FormField>
+          </ToSection>
+        </div>
+        <ItemListSection legend={__('Items')}>
+          <FieldArray
+            component={InvoiceItems}
+            name="items"
+            change={change}
+            addInvoiceItem={this.addInvoiceItem}
+          ></FieldArray>
+        </ItemListSection>
+
+        <Footer className="mt3 flex space-between">
+          <Button type="submit" skin="primary" disabled={submitting}>
+            {__('Submit')}
+          </Button>
+          <Button
+            skin="primary"
+            onClick={() => this.saveAsDraft()}
+            disabled={submitting}
+          >
+            {__('Save As Draft')}
+          </Button>
+          {__(`Total: ${formatNumber(this.gatherTotal(), 6)} NXS`)}
+        </Footer>
+      </FormComponent>
+    );
+  }
+}
+
+/**
+ * The Internal Send Form in the Send Page
+ *
+ * @class SendForm
+ * @extends {Component}
+ */
+@connect(
+  state => ({
+    draftToEditBool: !!state.ui.draftEdit,
+  }),
+  {
+    addNewDraft,
+    removeDraftToEdit,
+    deleteDraft,
+    ClosePopUp,
+  }
+)
+class InvoiceForm extends Component {
+  componentDidMount() {
+    // loadAccounts();
+    console.log(this.props.draftToEditBool);
+    if (this.props.draftToEditBool) {
+      this.props.removeDraftToEdit();
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.error(prevProps);
+    console.error(this.props);
   }
 
   saveAsDraft() {
@@ -369,7 +451,6 @@ class InvoiceForm extends Component {
       suggestions,
     } = this.props;
     const isDraft = this.props.copy && this.props.copy.draftTimeStamp;
-    console.log(this.props);
     return (
       <Modal
         removeModal={this.props.removeModal}
@@ -414,107 +495,7 @@ class InvoiceForm extends Component {
         </Modal.Header>
 
         <Modal.Body>
-          <FormComponent onSubmit={handleSubmit}>
-            <InvoiceDataSection legend={__('Details')}>
-              <FormField label={__('Description')}>
-                <Field
-                  component={TextField.RF}
-                  props={{ multiline: true, rows: 1 }}
-                  name="invoiceDescription"
-                  placeholder="Description"
-                />
-              </FormField>
-              <div
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'auto auto auto',
-                  gridTemplateRows: 'auto',
-                  gridGap: '1em 1em',
-                }}
-              >
-                <FormField label={__('Reference')}>
-                  <Field
-                    component={TextField.RF}
-                    name="invoiceReference"
-                    placeholder="Reference"
-                  />
-                </FormField>
-                <FormField label={__('Number')}>
-                  <Field
-                    component={TextField.RF}
-                    name="invoiceNumber"
-                    placeholder="Number"
-                  />
-                </FormField>
-                <FormField label={__('Due Date')}>
-                  <Field component={DateTime.RF} name="invoiceDueDate" />
-                </FormField>
-              </div>
-            </InvoiceDataSection>
-            <div style={{ display: 'flex' }}>
-              <FromSection legend={__('From')}>
-                <FormField label={__('Account Payable')}>
-                  <Field
-                    component={Select.RF}
-                    name="sendFrom"
-                    placeholder={__('Select an account')}
-                    options={accountOptions}
-                  />
-                </FormField>
-                <FormField label={__('Sender Details')}>
-                  <Field
-                    component={TextField.RF}
-                    name="sendDetail"
-                    props={{ multiline: true, rows: 1 }}
-                    placeholder="Name/Address/phoneNumber etc"
-                  />
-                </FormField>
-              </FromSection>
-              <ToSection legend={__('To')}>
-                <FormField label={__('Recipient')}>
-                  <Field
-                    component={RecipientField}
-                    name="recipientAddress"
-                    change={change}
-                    suggestions={suggestions}
-                    placeholder="Recipient Address"
-                  />
-                </FormField>
-                <FormField label={__('Recipient Details')}>
-                  <Field
-                    component={TextField.RF}
-                    name="recipientDetail"
-                    props={{ multiline: true, rows: 1 }}
-                    placeholder="Name/Address/phoneNumber etc"
-                  />
-                </FormField>
-              </ToSection>
-            </div>
-            <ItemListSection legend={__('Items')}>
-              <FieldArray
-                component={InvoiceItems}
-                name="items"
-                change={change}
-                addInvoiceItem={this.addInvoiceItem}
-              ></FieldArray>
-            </ItemListSection>
-
-            <Footer className="mt3 flex space-between">
-              <Button type="submit" skin="primary" disabled={submitting}>
-                {__('Submit')}
-              </Button>
-              <Button
-                skin="primary"
-                onClick={() => this.saveAsDraft()}
-                disabled={submitting}
-              >
-                {__('Save As Draft')}
-              </Button>
-              {__('Total: %{total} NXS', {
-                total: formatNumber(this.gatherTotal(), 6),
-              })}
-            </Footer>
-          </FormComponent>
+          <InvoiceFormBody />
         </Modal.Body>
       </Modal>
     );

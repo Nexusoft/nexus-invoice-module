@@ -1,8 +1,3 @@
-import {
-  showConnections,
-  hideConnections,
-  updateInput,
-} from 'actions/actionCreators';
 import Invoice from './Invoice';
 import { ClosePopUp } from 'lib/ui';
 import { SetUserName } from 'lib/user';
@@ -24,18 +19,11 @@ const {
   },
 } = NEXUS;
 
-const DemoTextField = styled(TextField)({
-  maxWidth: 400,
-});
-
 @connect(
   state => ({
     coreInfo: state.coreInfo,
-    showingConnections: state.settings.showingConnections,
-    inputValue: state.ui.inputValue,
-    PopUp: state.popUps,
   }),
-  { showConnections, hideConnections, updateInput, ClosePopUp, SetUserName }
+  { SetUserName }
 )
 class Main extends React.Component {
   constructor(props) {
@@ -47,17 +35,10 @@ class Main extends React.Component {
   }
 
   render() {
-    const { PopUp } = this.props;
     return (
       <Panel title="Invoices" icon={nexusIcon}>
         <GlobalStyles />
         <Invoice />
-        {PopUp ? (
-          <PopUp.div
-            {...PopUp.props}
-            removeModal={() => this.props.ClosePopUp()}
-          />
-        ) : null}
       </Panel>
     );
   }
