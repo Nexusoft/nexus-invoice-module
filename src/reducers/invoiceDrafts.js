@@ -1,5 +1,9 @@
 import * as TYPE from 'actions/types';
 
+const {
+  utilities: { updateStorage },
+} = NEXUS;
+
 const initialState = [];
 
 function fromArray(contacts) {
@@ -24,6 +28,7 @@ export default (state = initialState, action) => {
           ...action.payload,
           created: new Date().getTime() / 1000,
         };
+        updateStorage(state);
         return state;
       } else {
         const payload = {
@@ -33,6 +38,7 @@ export default (state = initialState, action) => {
           status: 'DRAFT',
         };
         const draftInvoices = [...Object.values(state), payload];
+        updateStorage(draftInvoices);
         return fromArray(draftInvoices);
       }
     }
@@ -49,7 +55,7 @@ export default (state = initialState, action) => {
           .sort(compareNames);
         invoicedrafts = fromArray(contacts);
       }
-
+      updateStorage(invoicedrafts);
       return invoicedrafts;
     }
 
@@ -58,7 +64,7 @@ export default (state = initialState, action) => {
       if (invoicedrafts[action.payload]) {
         delete invoicedrafts[action.payload];
       }
-
+      updateStorage(invoicedrafts);
       return invoicedrafts;
     }
     default:

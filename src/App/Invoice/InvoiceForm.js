@@ -1,12 +1,8 @@
-// External
-
-// Internal Global
 import { loadInvoices, ClosePopUp } from 'lib/ui';
 import { errorHandler } from 'gui/form';
 
 import InvoiceItems from './InvoiceItems';
 import { formatNumber } from 'gui/intl';
-import trashIcon from 'icon/trash.svg';
 
 import {
   getAccountOptions,
@@ -15,6 +11,7 @@ import {
   getAccountInfo,
   getRecipientSuggestions,
 } from './selectors';
+
 import { addNewDraft, removeDraftToEdit, deleteDraft } from 'lib/invoiceDrafts';
 
 const {
@@ -71,19 +68,16 @@ const formInitialValues = {
   items: [{ description: '', units: 1, unitPrice: 0 }],
 };
 
-// React-Redux mandatory methods
 const mapStateToProps = state => {
-  const valueSelector = null;
+  const valueSelector = formValueSelector('InvoiceForm');
   return {
-    ...state.core,
     suggestions: getRecipientSuggestions(
       state.addressBook,
       state.user.accounts
     ),
     username: state.user.username,
     accountOptions: getAccountOptions(state.user.accounts),
-    copy: {},
-    items: [],
+    items: valueSelector(state, 'items') || [],
     drafts: state.invoiceDrafts,
     draftToEditBool: !!state.ui.draftEdit,
     initialValues: state.ui.draftEdit || formInitialValues,
@@ -144,6 +138,7 @@ class RecipientField extends Component {
     );
   }
 }
+
 @connect(mapStateToProps, {
   addNewDraft,
   removeDraftToEdit,
@@ -155,7 +150,6 @@ class RecipientField extends Component {
   destroyOnUnmount: true,
 
   validate: values => {
-    return null;
     const errors = {};
     const {
       invoiceDescription,
@@ -248,7 +242,7 @@ class RecipientField extends Component {
   },
   onSubmitFail: errorHandler(__('Error sending NXS')),
 })
-class InvoiceFormBody extends Component {
+class InvoiceForm extends Component {
   gatherTotal() {
     return 5;
     return this.props.items.reduce((total, element) => {
@@ -278,6 +272,27 @@ class InvoiceFormBody extends Component {
     <Button onClick={this.addInvoiceItem}>{__('Add Item')}</Button>
   );
 
+  saveAsDraft() {
+    console.error(this.props);
+    this.props.addNewDraft(null);
+    this.props.reset('InvoiceForm');
+    //updateStorage(this.props.drafts);
+    this.props.removeModal();
+  }
+
+  removeDraft = async () => {
+    const result = await confirm({
+      question: __('Do you want to delete this draft invoice?'),
+      note: __('This can not be undone'),
+    });
+    if (result) {
+      this.props.deleteDraft();
+      this.props.reset('InvoiceForm');
+      //updateStorage(this.props.drafts);
+      this.props.removeModal();
+    }
+  };
+
   render() {
     const {
       accountOptions,
@@ -286,6 +301,7 @@ class InvoiceFormBody extends Component {
       submitting,
       suggestions,
     } = this.props;
+    console.error(getFormValues('InvoiceForm'));
     return (
       <FormComponent onSubmit={handleSubmit}>
         <InvoiceDataSection legend={__('Details')}>
@@ -320,7 +336,11 @@ class InvoiceFormBody extends Component {
               />
             </FormField>
             <FormField label={__('Due Date')}>
-              <Field component={DateTime.RF} name="invoiceDueDate" />
+              <Field
+                component={DateTime.RF}
+                time={false}
+                name="invoiceDueDate"
+              />
             </FormField>
           </div>
         </InvoiceDataSection>
@@ -386,118 +406,6 @@ class InvoiceFormBody extends Component {
           {__(`Total: ${formatNumber(this.gatherTotal(), 6)} NXS`)}
         </Footer>
       </FormComponent>
-    );
-  }
-}
-
-/**
- * The Internal Send Form in the Send Page
- *
- * @class SendForm
- * @extends {Component}
- */
-@connect(
-  state => ({
-    draftToEditBool: !!state.ui.draftEdit,
-  }),
-  {
-    addNewDraft,
-    removeDraftToEdit,
-    deleteDraft,
-    ClosePopUp,
-  }
-)
-class InvoiceForm extends Component {
-  componentDidMount() {
-    // loadAccounts();
-    console.log(this.props.draftToEditBool);
-    if (this.props.draftToEditBool) {
-      this.props.removeDraftToEdit();
-    }
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    console.error(prevProps);
-    console.error(this.props);
-  }
-
-  saveAsDraft() {
-    console.error(this.props);
-    this.props.addNewDraft(this.props.copy);
-    this.props.reset('InvoiceForm');
-    updateStorage(this.props.drafts);
-    this.props.removeModal();
-  }
-
-  removeDraft = async () => {
-    const result = await confirm({
-      question: __('Do you want to delete this draft invoice?'),
-      note: __('This can not be undone'),
-    });
-    if (result) {
-      this.props.deleteDraft(this.props.copy.draftTimeStamp);
-      this.props.reset('InvoiceForm');
-      updateStorage(this.props.drafts);
-      this.props.removeModal();
-    }
-  };
-
-  render() {
-    const {
-      accountOptions,
-      change,
-      handleSubmit,
-      submitting,
-      suggestions,
-    } = this.props;
-    const isDraft = this.props.copy && this.props.copy.draftTimeStamp;
-    return (
-      <Modal
-        removeModal={this.props.removeModal}
-        style={{
-          width: '90%',
-          maxHeight: '90%',
-          height: '90%',
-        }}
-      >
-        <Modal.Header>
-          {isDraft ? 'Edit Draft Invoice' : 'New Invoice'}{' '}
-          {isDraft && (
-            <div
-              style={{
-                display: 'inline',
-                right: '0%',
-                position: 'absolute',
-                top: '0%',
-                marginTop: '.25em',
-              }}
-            >
-              <Button
-                square
-                skin={'plain'}
-                onClick={() => {
-                  this.removeDraft();
-                }}
-              >
-                {' '}
-                <Icon
-                  icon={trashIcon}
-                  style={{
-                    fontSize: '.8em',
-                    opacity: 0.7,
-                    overflow: 'visible',
-                    marginRight: '0.25em',
-                  }}
-                />
-              </Button>
-            </div>
-          )}
-        </Modal.Header>
-
-        <Modal.Body>
-          <InvoiceFormBody />
-        </Modal.Body>
-      </Modal>
     );
   }
 }

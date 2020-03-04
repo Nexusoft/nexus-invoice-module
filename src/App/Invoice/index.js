@@ -5,7 +5,7 @@ import { formatDateTime } from 'gui/intl';
 import { loadInvoices, openModal, OpenPopUp, LoadAccounts } from 'lib/ui';
 
 //Invoice
-import InvoiceForm from './InvoiceForm';
+import InvoiceModal from './InvoiceModal';
 import Filters from './Filters';
 import InvoiceDetailModal from './invoiceDetailsModal';
 
@@ -196,16 +196,14 @@ class Invoice extends Component {
 
   // React Method (Life cycle hook)
   componentDidMount() {
-    this.test();
     this.props.LoadAccounts();
     this.props.loadInvoices();
     updateStorage({});
     loadInvoiceDrafts();
   }
 
-  async test() {
-    const aaa = await apiCall('users/list/invoices', {});
-    console.log(aaa);
+  componentDidUpdate(prevProps) {
+    loadInvoiceDrafts();
   }
 
   toggleMoreOptions = e => {
@@ -224,7 +222,7 @@ class Invoice extends Component {
   openDraftToEdit = draft => {
     console.log(draft);
     this.props.setDraftToEdit(draft);
-    this.props.OpenPopUp(InvoiceForm);
+    this.props.OpenPopUp(InvoiceModal);
   };
 
   render() {
@@ -247,7 +245,7 @@ class Invoice extends Component {
           <Filters optionsOpen={this.state.optionsOpen}>
             <Button
               onClick={
-                () => this.props.OpenPopUp(InvoiceForm)
+                () => this.props.OpenPopUp(InvoiceModal)
                 //this.props.OpenPopUp(<div>{'ASDASD'}</div>)
               }
             >

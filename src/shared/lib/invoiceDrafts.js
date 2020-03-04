@@ -88,13 +88,15 @@ export const loadInvoiceDrafts = invoices => {
   };
 };
 
-export const addNewDraft = draft => async dispatch => {
+export const addNewDraft = draft => async (dispatch, getState) => {
   const results = dispatch({
     type: TYPE.ADD_NEW_INVOICE_DRAFT,
-    payload: draft,
+    payload: getState().form['InvoiceForm'].values,
   });
-  console.log(results);
-  updateStorage(results);
+  console.log('*****');
+  console.log(getState());
+  console.log(getState().form['InvoiceForm'].values);
+  //updateStorage(getState().form['InvoiceForm'].values);
 };
 
 export const updateDraft = (name, contact) => async dispatch => {
@@ -104,9 +106,13 @@ export const updateDraft = (name, contact) => async dispatch => {
   });
 };
 
-export const deleteDraft = name => {
-  return {
+export const deleteDraft = () => async (dispatch, getState) => {
+  dispatch({
     type: TYPE.DELETE_INVOICE_DRAFT,
-    payload: name,
-  };
+    payload: getState().form['InvoiceForm'].values.draftTimeStamp,
+  });
+  dispatch({
+    type: TYPE.CLOSE_POP_UP,
+    payload: null,
+  });
 };
