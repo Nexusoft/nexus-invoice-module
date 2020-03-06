@@ -7,6 +7,7 @@ import invoiceDrafts from './invoiceDrafts';
 import invoices from './invoices';
 import popUps from './popUps';
 import user from './user';
+import addressBook from './addressBook';
 
 const {
   libraries: {
@@ -26,6 +27,7 @@ export default function createReducer() {
     invoices,
     popUps,
     user,
+    addressBook,
     form: reducer,
   });
 }
