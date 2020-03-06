@@ -16,6 +16,7 @@ export default {
     alias: {
       // because victory library requires react
       react$: path.resolve(__dirname, 'src/react.js'),
+      'react-dom$': path.resolve(__dirname, 'src/reactDOM.js'),
     },
   },
   module: {
