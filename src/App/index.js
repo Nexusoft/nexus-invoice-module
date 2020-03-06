@@ -38,13 +38,13 @@ class App extends React.Component {
     return (
       <CacheProvider value={emotionCache}>
         <ThemeProvider theme={themeWithMixer}>
-          <Main />
           {PopUp ? (
             <PopUp.div
               {...PopUp.props}
               removeModal={() => this.props.ClosePopUp()}
             />
-          ) : null}
+          ) : null}{' '}
+          <Main />
         </ThemeProvider>
       </CacheProvider>
     );

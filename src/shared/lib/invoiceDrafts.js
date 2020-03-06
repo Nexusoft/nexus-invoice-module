@@ -93,12 +93,9 @@ export const addNewDraft = draft => async (dispatch, getState) => {
     type: TYPE.ADD_NEW_INVOICE_DRAFT,
     payload: getState().form['InvoiceForm'].values,
   });
-  console.log('*****');
-  console.log(getState());
-  console.log(getState().form['InvoiceForm'].values);
-  //updateStorage(getState().form['InvoiceForm'].values);
 };
 
+//not currently used
 export const updateDraft = (name, contact) => async dispatch => {
   dispatch({
     type: TYPE.UPDATE_INVOICE_DRAFT,

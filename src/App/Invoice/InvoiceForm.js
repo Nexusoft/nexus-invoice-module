@@ -71,15 +71,9 @@ const formInitialValues = {
 const mapStateToProps = state => {
   const valueSelector = formValueSelector('InvoiceForm');
   return {
-    suggestions: getRecipientSuggestions(
-      state.addressBook,
-      state.user.accounts
-    ),
     username: state.user.username,
     accountOptions: getAccountOptions(state.user.accounts),
     items: valueSelector(state, 'items') || [],
-    drafts: state.invoiceDrafts,
-    draftToEditBool: !!state.ui.draftEdit,
     initialValues: state.ui.draftEdit || formInitialValues,
   };
 };
@@ -118,6 +112,15 @@ const Footer = styled.div({
   marginTop: '1em',
 });
 
+@connect(
+  state => ({
+    suggestions: getRecipientSuggestions(
+      state.addressBook,
+      state.user.accounts
+    ),
+  }),
+  {}
+)
 class RecipientField extends Component {
   handleSelect = element => {
     this.props.change(this.props.input.name, element);
@@ -125,6 +128,7 @@ class RecipientField extends Component {
 
   render() {
     const { input, meta, suggestions } = this.props;
+    console.error(suggestions);
     return (
       <AutoSuggest.RF
         input={input}
@@ -276,7 +280,6 @@ class InvoiceForm extends Component {
     console.error(this.props);
     this.props.addNewDraft(null);
     this.props.reset('InvoiceForm');
-    //updateStorage(this.props.drafts);
     this.props.removeModal();
   }
 
@@ -288,20 +291,12 @@ class InvoiceForm extends Component {
     if (result) {
       this.props.deleteDraft();
       this.props.reset('InvoiceForm');
-      //updateStorage(this.props.drafts);
       this.props.removeModal();
     }
   };
 
   render() {
-    const {
-      accountOptions,
-      change,
-      handleSubmit,
-      submitting,
-      suggestions,
-    } = this.props;
-    console.error(getFormValues('InvoiceForm'));
+    const { accountOptions, change, handleSubmit, submitting } = this.props;
     return (
       <FormComponent onSubmit={handleSubmit}>
         <InvoiceDataSection legend={__('Details')}>
@@ -369,7 +364,6 @@ class InvoiceForm extends Component {
                 component={RecipientField}
                 name="recipientAddress"
                 change={change}
-                suggestions={suggestions}
                 placeholder="Recipient Address"
               />
             </FormField>

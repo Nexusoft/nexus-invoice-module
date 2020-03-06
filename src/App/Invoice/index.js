@@ -170,6 +170,7 @@ const mapStateToProps = state => {
     genesis: state.user.genesis,
     accounts: state.accounts || [],
     drafts: state.invoiceDrafts,
+    isFormOpen: !!state.form.InvoiceForm,
   };
 };
 
@@ -198,7 +199,6 @@ class Invoice extends Component {
   componentDidMount() {
     this.props.LoadAccounts();
     this.props.loadInvoices();
-    updateStorage({});
     loadInvoiceDrafts();
   }
 
@@ -230,15 +230,16 @@ class Invoice extends Component {
     const { accounts, genesis } = this.props;
     const drafts = this.returnDrafts();
     const tempInvoicec = [...invoices, ...this.props.invoiceCore, ...drafts];
-    //console.log(this.returnDrafts());
-    //console.log(Arrow);
-    //console.log(tempInvoicec);
     const filteredInvoices = memorizedFilters(
       tempInvoicec,
       referenceQuery,
       timespan,
       status
     );
+    console.error(`OPEN: ${this.props.isFormOpen}`);
+    if (this.props.isFormOpen) {
+      return <></>;
+    }
     return (
       <>
         <Header>
