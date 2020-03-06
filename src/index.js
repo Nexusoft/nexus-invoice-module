@@ -5,13 +5,14 @@ import {
   updateCoreInfo,
   updateTheme,
 } from './actions/actionCreators';
+import ReactDOM from 'react-dom';
 
 const store = configureStore();
 
 const {
   libraries: {
     React,
-    ReactDOM,
+
     ReactRedux: { Provider },
   },
   utilities: { onceInitialize, onCoreInfoUpdated, onThemeUpdated },
