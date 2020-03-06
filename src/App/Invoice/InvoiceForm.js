@@ -248,7 +248,6 @@ class RecipientField extends Component {
 })
 class InvoiceForm extends Component {
   gatherTotal() {
-    return 5;
     return this.props.items.reduce((total, element) => {
       return total + element.units * element.unitPrice;
     }, 0);
