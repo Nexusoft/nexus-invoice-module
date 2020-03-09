@@ -19,9 +19,7 @@ export default {
     extensions: ['.js', '.jsx', '.json'],
     modules: [path.join(process.cwd(), 'src/shared'), 'node_modules'],
     alias: {
-      // because victory library requires react
       react$: path.resolve(__dirname, 'src/react.js'),
-      'react-dom$': path.resolve(__dirname, 'src/reactDOM.js'),
     },
   },
 };

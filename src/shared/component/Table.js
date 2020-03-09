@@ -4,7 +4,6 @@ const {
 } = NEXUS;
 const Table = ({ data, columns, defaultSortingColumnIndex, ...rest }) => (
   <ReactTable
-    react={React}
     noDataText={'No Rows Found'}
     data={data}
     pageText={'Page'}
