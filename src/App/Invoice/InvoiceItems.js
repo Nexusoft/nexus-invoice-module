@@ -46,12 +46,14 @@ const PlusIcon = styled(Icon)({
   fontSize: '.8em',
 });
 
-const TableHeader = styled.div({
+const TableHeader = styled.div(({ theme, error }) => ({
   display: 'grid',
   gridTemplateColumns: 'auto 8em 5em 10em',
   gridTemplateRows: 'auto',
   gridGap: '1em 1em',
-});
+  backgroundColor: theme.error,
+  transition: `background-color ${timing.normal}, opacity ${timing.normal}`,
+}));
 
 /**
  * Recipients Field from the Send Page
@@ -62,7 +64,7 @@ const TableHeader = styled.div({
 class InvoiceItems extends React.Component {
   returnHeader() {
     return (
-      <TableHeader>
+      <TableHeader error={this.props.meta.error}>
         <div style={{ width: '5em', textAlign: 'center' }}>
           {__('Description')}
         </div>
@@ -80,7 +82,8 @@ class InvoiceItems extends React.Component {
    * @memberof Recipients
    */
   render() {
-    const { fields, change, addInvoiceItem, accBalance } = this.props;
+    const { fields, change, addInvoiceItem } = this.props;
+    console.log(this.props);
 
     if (!fields) return null;
 

@@ -65,7 +65,7 @@ const formInitialValues = {
   sendDetail: '',
   recipientAddress: '',
   recipientDetail: '',
-  items: [{ description: '', units: 1, unitPrice: 0 }],
+  items: [],
 };
 
 const mapStateToProps = state => {
@@ -112,6 +112,10 @@ const Footer = styled.div({
   marginTop: '1em',
 });
 
+const TotalField = styled.strong(({ theme }) => ({
+  color: theme.primary,
+}));
+
 @connect(
   state => ({
     suggestions: getRecipientSuggestions(
@@ -128,7 +132,7 @@ class RecipientField extends Component {
 
   render() {
     const { input, meta, suggestions } = this.props;
-    console.error(suggestions);
+    console.error(this.props);
     return (
       <AutoSuggest.RF
         input={input}
@@ -166,13 +170,8 @@ class RecipientField extends Component {
       recipientDetail,
       items,
     } = values;
-    if (!invoiceDescription)
-      errors.invoiceDescription = __('Description Needed');
-    if (!invoiceNumber || isNaN(invoiceNumber))
-      errors.invoiceNumber = __('Invalid Number');
-    if (!invoiceReference) errors.invoiceReference = __('Reference Needed');
     if (!sendFrom) errors.sendFrom = __('Account Payable Needed');
-    if (!recipientAddress) errors.recipientAddress = __('Address Needed');
+    if (!recipientAddress) errors.recipientAddress = __('Recipient Needed');
     if (items && items.length == 0) errors.items = __('Items Needed');
     console.log(errors);
     return errors;
@@ -192,7 +191,6 @@ class RecipientField extends Component {
     dispatch,
     props
   ) => {
-    const creationDate = Date.now();
     const dueDate = new Date(invoiceDueDate).getTime() / 1000;
     const convertedItems = items.map(e => {
       return {
@@ -202,38 +200,28 @@ class RecipientField extends Component {
       };
     });
 
-    const pin = '1234'; //await confirmPin('Pin', props.OpenPopUp);
     const isSendAddress = await apiCall('system/validate/address', {
       address: sendFrom,
     });
-    if (pin) {
-      const params = {
-        extra_field: 'Extra',
-        reference: invoiceReference,
-        description: invoiceDescription,
-        contact: 'foo@bar.com',
-        items: convertedItems,
-      };
-      isSendAddress.is_valid
-        ? (params.account = sendFrom)
-        : (params.account_name = `${props.username}:${sendFrom}`);
-      if (recipientAddress.startsWith('a') && recipientAddress.length === 64) {
-        params.recipient = recipientAddress;
-      } else {
-        params.recipient_username = recipientAddress;
-      }
-      if (invoiceNumber) params.number = invoiceNumber;
-      if (invoiceDueDate) params.due_date = dueDate;
-      if (sendDetail) params.sender_detail = sendDetail;
-      if (recipientDetail) params.recipient_detail = recipientDetail;
-      console.log(params);
-      //const asd = await apiCall('invoices/create/invoice', params);
-      //console.log(asd);
-      const ddd = await secureApiCall('invoices/create/invoice', params);
-      console.log(ddd);
-      console.error(props);
-      return ddd;
+    const params = {
+      items: convertedItems,
+    };
+    isSendAddress.is_valid
+      ? (params.account = sendFrom)
+      : (params.account_name = `${props.username}:${sendFrom}`);
+    if (recipientAddress.startsWith('a') && recipientAddress.length === 64) {
+      params.recipient = recipientAddress;
+    } else {
+      params.recipient_username = recipientAddress;
     }
+    if (invoiceReference) params.reference = invoiceReference;
+    if (invoiceDescription) params.description = invoiceDescription;
+    if (invoiceNumber) params.number = invoiceNumber;
+    if (invoiceDueDate) params.due_date = dueDate;
+    if (sendDetail) params.sender_detail = sendDetail;
+    if (recipientDetail) params.recipient_detail = recipientDetail;
+    console.log(params);
+    return await secureApiCall('invoices/create/invoice', params);
   },
   onSubmitSuccess: (result, dispatch, props) => {
     console.error(result);
@@ -379,6 +367,13 @@ class InvoiceForm extends Component {
         <ItemListSection legend={__('Items')}>
           <FieldArray
             component={InvoiceItems}
+            validate={(value, allValues, props) => {
+              console.log(value);
+              console.log(allValues);
+              console.log(props);
+              if (value && value.length == 0) return 'Error!';
+              return null;
+            }}
             name="items"
             change={change}
             addInvoiceItem={this.addInvoiceItem}
@@ -396,7 +391,9 @@ class InvoiceForm extends Component {
           >
             {__('Save As Draft')}
           </Button>
-          {__(`Total: ${formatNumber(this.gatherTotal(), 6)} NXS`)}
+          <TotalField>
+            {__(`Total: ${formatNumber(this.gatherTotal(), 6)} NXS`)}
+          </TotalField>
         </Footer>
       </FormComponent>
     );

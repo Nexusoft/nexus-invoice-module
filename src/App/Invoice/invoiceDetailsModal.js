@@ -322,6 +322,7 @@ class InvoiceDetailModal extends Component {
       invoiceNumber,
       due_date,
       account,
+      amount,
       address,
       sender_detail,
       recipient,
@@ -389,9 +390,7 @@ class InvoiceDetailModal extends Component {
               {formatDateTime(paidOn, timeFormatOptions)}
             </Field>
           )}
-          <Field label={__('Total')}>{`${this.calculateTotal(
-            items
-          )} NXS`}</Field>
+          <Field label={__('Total')}>{`${amount} NXS`}</Field>
           {MoreOpenButton(
             this.state.moreOpen || false,
             this.toggleMoreOpen,
