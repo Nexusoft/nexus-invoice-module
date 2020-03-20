@@ -36,7 +36,15 @@ class Main extends React.Component {
 
   render() {
     return (
-      <Panel title="Invoices" icon={nexusIcon}>
+      <Panel
+        title={
+          <>
+            {'Invoices'}
+            <a style={{ marginLeft: '.25em', fontSize: '10pt' }}>{'  BETA'}</a>
+          </>
+        }
+        icon={nexusIcon}
+      >
         <GlobalStyles />
         <Invoice />
       </Panel>

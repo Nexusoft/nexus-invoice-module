@@ -68,6 +68,20 @@ const ItalicText = styled.a({
   fontStyle: 'italic',
 });
 
+const getThresholdDate = timeSpan => {
+  const now = new Date();
+  switch (timeSpan) {
+    case 'week':
+      return new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7);
+    case 'month':
+      return new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
+    case 'year':
+      return new Date(now.getFullYear() - 1, now.getMonth(), now.getDate());
+    default:
+      return null;
+  }
+};
+
 const tableColumns = [
   {
     id: 'created',
@@ -111,47 +125,30 @@ const tableColumns = [
 
 const InvoiceTable = styled(Table)({});
 
-const invoices = [
-  {
-    created: '199232403',
-    description: 'This is a  test invoice',
-    due_date: '199255403',
-    reference: 'Test1',
-    invoiceNumber: 2,
-    address: '8MAF92nNAkk3288Skfn1n44kksn356n2k1',
-    recipient:
-      'a1537d5c089ebe309887bcf6a9c2e219ca64257922ce91455c2ca86617536a2d',
-    recipient_detail: '1111 North Street \n LA California N USA',
-    status: 'TEST',
-    sender_detail: '1234 Main Street \n Phx Arizona \n USA',
-    items: [
-      { description: 'Item1', unit_amount: '2.0421', units: '4' },
-      { description: 'Item2', unit_amount: '20', units: '1' },
-      { description: 'Item3', unit_amount: '1.62342', units: '6' },
-      { description: 'Item4', unit_amount: '0.1355', units: '19' },
-      { description: 'Item5', unit_amount: '12', units: '3' },
-      { description: 'Item6', unit_amount: '5.3', units: '2' },
-      { description: 'Item2', unit_amount: '20', units: '1' },
-      { description: 'Item3', unit_amount: '1.62342', units: '6' },
-      { description: 'Item4', unit_amount: '0.1355', units: '19' },
-      { description: 'Item5', unit_amount: '12', units: '3' },
-      { description: 'Item6', unit_amount: '5.3', units: '2' },
-    ],
-  },
-];
+const invoices = [];
 
 const memorizedFilters = memoize(
-  (invoiceList, referenceQuery, timespan, status) =>
+  (invoiceList, referenceQuery, timeSpan, status) =>
     invoiceList &&
     invoiceList.filter(element => {
-      if (
-        referenceQuery &&
-        element.reference &&
-        !element.reference.toLowerCase().includes(referenceQuery.toLowerCase())
-      )
-        return false;
-
-      if (status && element.status && !element.status === status) return false;
+      if (referenceQuery) {
+        if (
+          element.reference &&
+          !element.reference
+            .toLowerCase()
+            .includes(referenceQuery.toLowerCase())
+        )
+          return false;
+        if (!element.reference) return false;
+      }
+      if (status && element.status && element.status !== status) return false;
+      if (timeSpan) {
+        console.log(element);
+        const pastDate = getThresholdDate(timeSpan);
+        console.log(pastDate);
+        if (!pastDate) return true;
+        else return element.created * 1000 > pastDate.getTime();
+      }
       return true;
     })
 );
@@ -226,30 +223,27 @@ class Invoice extends Component {
   };
 
   render() {
-    const { referenceQuery, status, timespan } = this.props.invoicesUI;
+    const { referenceQuery, status, timeSpan } = this.props.invoicesUI;
     const { accounts, genesis } = this.props;
     const drafts = this.returnDrafts();
     const tempInvoicec = [...invoices, ...this.props.invoiceCore, ...drafts];
     const filteredInvoices = memorizedFilters(
       tempInvoicec,
       referenceQuery,
-      timespan,
+      timeSpan,
       status
     );
-    console.error(`OPEN: ${this.props.isFormOpen}`);
     if (this.props.isFormOpen) {
       return <></>;
     }
     return (
       <>
         <Header>
-          <Filters optionsOpen={this.state.optionsOpen}>
-            <Button
-              onClick={
-                () => this.props.OpenPopUp(InvoiceModal)
-                //this.props.OpenPopUp(<div>{'ASDASD'}</div>)
-              }
-            >
+          <Filters
+            query={this.props.invoicesUI}
+            optionsOpen={this.state.optionsOpen}
+          >
+            <Button onClick={() => this.props.OpenPopUp(InvoiceModal)}>
               <Icon
                 icon={plusIcon}
                 style={{

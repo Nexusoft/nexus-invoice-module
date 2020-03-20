@@ -22,7 +22,7 @@ const {
   },
   utilities: {
     confirm,
-      
+
     showErrorDialog,
     showSuccessDialog,
   },
@@ -30,7 +30,7 @@ const {
 
 const __ = input => input;
 
-const operations = ['PENDING', 'PAID', 'REJECTED'];
+const operations = ['PENDING', 'PAID', 'REJECTED', 'DRAFT'];
 
 const opOptions = [
   {
@@ -93,6 +93,7 @@ const Filters = ({
   morePadding,
   children,
   optionsOpen,
+  ...rest
 }) => (
   <FiltersWrapper>
     <FormField connectLabel label={__('Reference')}>
@@ -100,14 +101,14 @@ const Filters = ({
         type="search"
         placeholder="Reference Search"
         value={referenceQuery}
-        onChange={evt => setInvoiceReferenceQuery(evt.target.value)}
+        onChange={evt => rest.setInvoiceReferenceQuery(evt.target.value)}
       />
     </FormField>
 
     <FormField label={__('Time span')}>
       <Select
         value={timeSpan}
-        onChange={setInvoiceTimeFilter}
+        onChange={rest.setInvoiceTimeFilter}
         options={timeFrames}
       />
     </FormField>
@@ -115,7 +116,7 @@ const Filters = ({
     <FormField label={__('Status')}>
       <Select
         value={status}
-        onChange={setInvoiceStatusFilter}
+        onChange={rest.setInvoiceStatusFilter}
         options={opOptions}
       />
     </FormField>
@@ -124,18 +125,30 @@ const Filters = ({
     {optionsOpen && (
       <MoreOptions>
         <FormField label={__('Description')}>
-          <TextField type="search" placeholder="Description Search" />
+          <TextField
+            disabled={true}
+            type="search"
+            placeholder="Description Search (Coming soon <--> )"
+          />
         </FormField>
 
-        <FormField label={__('Show Only PastDue')}>
-          <Switch />
+        <FormField label={__('Show Only PastDue ')}>
+          <Switch disabled={true} />
         </FormField>
 
         <FormField label={__('Payable')}>
-          <TextField type="search" placeholder="Search Payable" />
+          <TextField
+            disabled={true}
+            type="search"
+            placeholder="Search Payable"
+          />
         </FormField>
         <FormField label={__('Receipiant')}>
-          <TextField type="search" placeholder="Search Receipiant" />
+          <TextField
+            disabled={true}
+            type="search"
+            placeholder="Search Receipiant"
+          />
         </FormField>
       </MoreOptions>
     )}
@@ -152,4 +165,8 @@ const mapStateToProps = ({
   timeSpan,
 });
 
-export default connect(mapStateToProps)(Filters);
+export default connect(mapStateToProps, {
+  setInvoiceReferenceQuery,
+  setInvoiceStatusFilter,
+  setInvoiceTimeFilter,
+})(Filters);

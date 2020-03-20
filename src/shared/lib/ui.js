@@ -36,25 +36,26 @@ export const loadInvoices = () => async dispatch => {
   }
 };
 
-export const setInvoiceReferenceQuery = search => {
-  return {
+export const setInvoiceReferenceQuery = search => async dispatch => {
+  console.log(search);
+  dispatch({
     type: TYPE.SET_INVOICE_REFERENCE_QUERY,
     payload: search,
-  };
+  });
 };
 
-export const setInvoiceTimeFilter = timeSpan => {
-  return {
+export const setInvoiceTimeFilter = timeSpan => async dispatch => {
+  dispatch({
     type: TYPE.SET_INVOICE_TIME_FILTER,
     payload: timeSpan,
-  };
+  });
 };
 
-export const setInvoiceStatusFilter = status => {
-  return {
+export const setInvoiceStatusFilter = status => async dispatch => {
+  dispatch({
     type: TYPE.SET_INVOICE_STATUS_FILTER,
     payload: status,
-  };
+  });
 };
 
 export const resetForm = formName => {
