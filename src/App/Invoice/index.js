@@ -167,7 +167,7 @@ const mapStateToProps = state => {
     genesis: state.user.genesis,
     accounts: state.accounts || [],
     drafts: state.invoiceDrafts,
-    isFormOpen: !!state.form.InvoiceForm,
+    PopUp: state.popUps,
   };
 };
 
@@ -197,6 +197,15 @@ class Invoice extends Component {
     this.props.LoadAccounts();
     this.props.loadInvoices();
     loadInvoiceDrafts();
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    //If a popup is open don't update
+    if (nextProps.PopUp) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -233,9 +242,6 @@ class Invoice extends Component {
       timeSpan,
       status
     );
-    if (this.props.isFormOpen) {
-      return <></>;
-    }
     return (
       <>
         <Header>
