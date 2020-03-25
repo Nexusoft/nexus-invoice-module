@@ -163,6 +163,7 @@ const OptionsArrow = styled.span({
 const mapStateToProps = state => {
   return {
     invoiceCore: state.invoices,
+    blocks: state.coreInfo.blocks,
     invoicesUI: state.ui.invoices,
     genesis: state.user.genesis,
     accounts: state.accounts || [],
@@ -197,6 +198,11 @@ class Invoice extends Component {
     this.props.LoadAccounts();
     this.props.loadInvoices();
     loadInvoiceDrafts();
+    setInterval(this.updateInvoice.bind(this), 5000);
+  }
+
+  updateInvoice() {
+    this.props.loadInvoices();
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -209,7 +215,16 @@ class Invoice extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    loadInvoiceDrafts();
+    if (prevProps.drafts.length != this.props.drafts.length) {
+      loadInvoiceDrafts();
+    }
+
+    if (prevProps.blocks != this.props.blocks) {
+      console.log('Updated with blocks');
+
+      this.props.LoadAccounts();
+      this.props.loadInvoices();
+    }
   }
 
   toggleMoreOptions = e => {
