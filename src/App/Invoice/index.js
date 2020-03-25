@@ -163,11 +163,12 @@ const OptionsArrow = styled.span({
 const mapStateToProps = state => {
   return {
     invoiceCore: state.invoices,
+    blocks: state.coreInfo.blocks,
     invoicesUI: state.ui.invoices,
     genesis: state.user.genesis,
     accounts: state.accounts || [],
     drafts: state.invoiceDrafts,
-    isFormOpen: !!state.form.InvoiceForm,
+    PopUp: state.popUps,
   };
 };
 
@@ -197,10 +198,33 @@ class Invoice extends Component {
     this.props.LoadAccounts();
     this.props.loadInvoices();
     loadInvoiceDrafts();
+    setInterval(this.updateInvoice.bind(this), 5000);
+  }
+
+  updateInvoice() {
+    this.props.loadInvoices();
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    //If a popup is open don't update
+    if (nextProps.PopUp) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   componentDidUpdate(prevProps) {
-    loadInvoiceDrafts();
+    if (prevProps.drafts.length != this.props.drafts.length) {
+      loadInvoiceDrafts();
+    }
+
+    if (prevProps.blocks != this.props.blocks) {
+      console.log('Updated with blocks');
+
+      this.props.LoadAccounts();
+      this.props.loadInvoices();
+    }
   }
 
   toggleMoreOptions = e => {
@@ -233,9 +257,6 @@ class Invoice extends Component {
       timeSpan,
       status
     );
-    if (this.props.isFormOpen) {
-      return <></>;
-    }
     return (
       <>
         <Header>
