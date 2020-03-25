@@ -1,13 +1,13 @@
 {
   "name": "nexus_interface_invoice_module",
   "displayName": "Nexus Invoice System",
-  "version": "0.9.9",
+  "version": "1.0.0",
   "targetWalletVersion": "3.0.0",
   "description": "Use Case for the Invoice System",
   "type": "app",
   "entry": "dist/index.html",
-  "icon": "dist/react.svg",
-  "files": ["dist/index.html", "dist/react.svg", "dist/js/app.js"],
+  "icon": "dist/logo.svg",
+  "files": ["dist/index.html", "dist/logo.svg", "dist/js/app.js"],
   "author": {
     "name": "Nexus Team",
     "email": "developer@nexus.io"
