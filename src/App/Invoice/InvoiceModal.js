@@ -57,6 +57,11 @@ const {
 
 const __ = input => input;
 
+const DangerButtonStyle = {
+  border: 'none',
+  boxShadow: 'none',
+};
+
 /**
  * The Internal Send Form in the Send Page
  *
@@ -114,6 +119,24 @@ class InvoiceModal extends Component {
         }}
       >
         <Modal.Header>
+          <div
+            style={{
+              display: 'inline',
+              left: '0%',
+              position: 'absolute',
+              top: '0%',
+              marginTop: '.25em',
+              marginLeft: '.25em',
+            }}
+          >
+            <Button
+              skin={'danger'}
+              style={DangerButtonStyle}
+              onClick={this.props.removeModal}
+            >
+              x
+            </Button>
+          </div>
           {isDraft ? 'Edit Draft Invoice' : 'New Invoice'}{' '}
           {isDraft && (
             <div
@@ -127,7 +150,8 @@ class InvoiceModal extends Component {
             >
               <Button
                 square
-                skin={'plain'}
+                skin={'danger'}
+                style={DangerButtonStyle}
                 onClick={() => {
                   this.removeDraft();
                 }}

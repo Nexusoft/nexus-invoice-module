@@ -29,7 +29,6 @@ async function listAll(endpoint, params, limit = 100) {
 export const loadInvoices = () => async dispatch => {
   try {
     const invoices = await listAll('users/list/invoices');
-    console.log(invoices);
     dispatch({ type: TYPE.SET_INVOICES, payload: invoices });
   } catch (err) {
     console.error('Failed listing Invoices', err);
@@ -72,7 +71,6 @@ export const OpenPopUp = (component, props) => async dispatch => {
 
 export const LoadAccounts = () => async dispatch => {
   const results = await apiCall('users/list/accounts');
-  console.log(results);
   dispatch({
     type: TYPE.SET_USER_ACCOUNTS,
     payload: results,
