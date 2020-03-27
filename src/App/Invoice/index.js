@@ -166,6 +166,7 @@ const mapStateToProps = state => {
     blocks: state.coreInfo.blocks,
     invoicesUI: state.ui.invoices,
     genesis: state.user.genesis,
+    username: state.user.username,
     accounts: state.accounts || [],
     drafts: state.invoiceDrafts,
     PopUp: state.popUps,
@@ -235,13 +236,16 @@ class Invoice extends Component {
 
   returnDrafts() {
     const { drafts } = this.props;
-    return Object.keys(drafts).map(e => {
-      return drafts[e];
-    });
+    return Object.keys(drafts)
+      .map(e => {
+        return drafts[e];
+      })
+      .filter(
+        e => e.draftOwner === undefined || e.draftOwner === this.props.username
+      );
   }
 
   openDraftToEdit = draft => {
-    console.log(draft);
     this.props.setDraftToEdit(draft);
     this.props.OpenPopUp(InvoiceModal);
   };

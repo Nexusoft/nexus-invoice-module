@@ -91,7 +91,10 @@ export const loadInvoiceDrafts = invoices => {
 export const addNewDraft = draft => async (dispatch, getState) => {
   const results = dispatch({
     type: TYPE.ADD_NEW_INVOICE_DRAFT,
-    payload: getState().form['InvoiceForm'].values,
+    payload: {
+      ...getState().form['InvoiceForm'].values,
+      draftOwner: getState().user.username,
+    },
   });
 };
 
