@@ -28,6 +28,11 @@
     "build": "cross-env NODE_ENV=production webpack --config webpack.config.babel.js",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --config webpack-dev.config.babel.js"
   },
+  "files": [
+      "dist/**/*",
+      "nxs_package.json",
+      "repo_info.json"
+    ],
   "dependencies": {
     "ajv": "^6.11.0",
     "core-js": "^2.0.0",

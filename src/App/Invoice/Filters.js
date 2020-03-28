@@ -30,7 +30,7 @@ const {
 
 const __ = input => input;
 
-const operations = ['PENDING', 'PAID', 'REJECTED', 'DRAFT'];
+const operations = ['OUTSTANDING', 'PAID', 'REJECTED', 'DRAFT'];
 
 const opOptions = [
   {
@@ -143,11 +143,11 @@ const Filters = ({
             placeholder="Search Payable"
           />
         </FormField>
-        <FormField label={__('Receipiant')}>
+        <FormField label={__('Recipient')}>
           <TextField
             disabled={true}
             type="search"
-            placeholder="Search Receipiant"
+            placeholder="Search Recipient"
           />
         </FormField>
       </MoreOptions>
