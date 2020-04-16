@@ -67,7 +67,6 @@ export const setInvoiceDescriptionFilter = (description) => async (
 };
 
 export const setInvoicePastDueFilter = (pastDue) => async (dispatch) => {
-  console.error(pastDue);
   dispatch({
     type: TYPE.SET_INVOICE_PAST_DUE_FILTER,
     payload: pastDue,

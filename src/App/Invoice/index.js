@@ -306,7 +306,6 @@ class Invoice extends Component {
     const { accounts, genesis } = this.props;
     const drafts = this.returnDrafts();
     const tempInvoices = [...invoices, ...this.props.invoiceCore, ...drafts];
-    console.error(pastDue);
     const filteredInvoices = memorizedFilters(
       tempInvoices,
       referenceQuery,
