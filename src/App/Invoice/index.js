@@ -50,7 +50,7 @@ const {
 
 const __ = input => input;
 
-const contractStatus = ['Pending', 'Paid', 'Rejected'];
+const contractStatus = ['Outstanding', 'Paid', 'Rejected'];
 
 const Header = styled.div({});
 

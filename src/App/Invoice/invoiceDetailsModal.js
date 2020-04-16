@@ -380,7 +380,7 @@ class InvoiceDetailModal extends Component {
           {sender_detail && (
             <Field label={__('Details')}>{sender_detail}</Field>
           )}
-          <Field label={__('Receipiant')}>{recipient}</Field>
+          <Field label={__('Recipient')}>{recipient}</Field>
           {recipient_detail && (
             <Field label={__('Details')}>{recipient_detail}</Field>
           )}
