@@ -3,5 +3,5 @@
   "displayName": "Nexus Invoice System",
   "type": "app",
   "entry": "http://localhost:24011/dev.html",
-  "icon": "dist/react.svg"
+  "icon": "dist/logo.svg"
 }

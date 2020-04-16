@@ -1,6 +1,6 @@
 {
   "name": "nexus_interface_invoice_module",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Use Case for the Invoice System",
   "devDependencies": {
     "@babel/core": "^7.8.4",
@@ -29,10 +29,10 @@
     "dev": "cross-env NODE_ENV=development webpack-dev-server --config webpack-dev.config.babel.js"
   },
   "files": [
-      "dist/**/*",
-      "nxs_package.json",
-      "repo_info.json"
-    ],
+    "dist/**/*",
+    "nxs_package.json",
+    "repo_info.json"
+  ],
   "dependencies": {
     "ajv": "^6.11.0",
     "core-js": "^2.0.0",
