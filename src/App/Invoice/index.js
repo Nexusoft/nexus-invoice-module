@@ -48,7 +48,7 @@ const {
   },
 } = NEXUS;
 
-const __ = input => input;
+const __ = (input) => input;
 
 const contractStatus = ['Outstanding', 'Paid', 'Rejected'];
 
@@ -68,7 +68,7 @@ const ItalicText = styled.a({
   fontStyle: 'italic',
 });
 
-const getThresholdDate = timeSpan => {
+const getThresholdDate = (timeSpan) => {
   const now = new Date();
   switch (timeSpan) {
     case 'week':
@@ -87,7 +87,7 @@ const tableColumns = [
     id: 'created',
     Header: __('Time'),
     accessor: 'created',
-    Cell: cell => {
+    Cell: (cell) => {
       const timeValue = cell.value
         ? formatDateTime(cell.value * 1000, timeFormatOptions)
         : '';
@@ -130,7 +130,7 @@ const invoices = [];
 const memorizedFilters = memoize(
   (invoiceList, referenceQuery, timeSpan, status) =>
     invoiceList &&
-    invoiceList.filter(element => {
+    invoiceList.filter((element) => {
       if (referenceQuery) {
         if (
           element.reference &&
@@ -160,7 +160,7 @@ const OptionsArrow = styled.span({
 });
 
 // React-Redux mandatory methods
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     invoiceCore: state.invoices,
     blocks: state.coreInfo.blocks,
@@ -228,7 +228,7 @@ class Invoice extends Component {
     }
   }
 
-  toggleMoreOptions = e => {
+  toggleMoreOptions = (e) => {
     this.setState({
       optionsOpen: !this.state.optionsOpen,
     });
@@ -237,15 +237,17 @@ class Invoice extends Component {
   returnDrafts() {
     const { drafts } = this.props;
     return Object.keys(drafts)
-      .map(e => {
+      .map((e) => {
         return drafts[e];
       })
       .filter(
-        e => e.draftOwner === undefined || e.draftOwner === this.props.username
+        (e) =>
+          e &&
+          (e.draftOwner === undefined || e.draftOwner === this.props.username)
       );
   }
 
-  openDraftToEdit = draft => {
+  openDraftToEdit = (draft) => {
     this.props.setDraftToEdit(draft);
     this.props.OpenPopUp(InvoiceModal);
   };

@@ -6,20 +6,15 @@ const {
   utilities: { apiCall },
 } = NEXUS;
 
-export const SetUserName = () => async dispatch => {
+export const UpdateUserInfo = (userStatus) => async (dispatch) => {
   try {
-    const result = await apiCall('users/get/status');
-    dispatch({ type: TYPE.SET_USERNAME, payload: result.username });
-    dispatch({ type: TYPE.SET_GENESIS, payload: result.genesis });
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-export const SetGenesis = () => async dispatch => {
-  try {
-    const result = await apiCall('users/get/status');
-    dispatch({ type: TYPE.SET_GENESIS, payload: result.genesis });
+    if (!userStatus) {
+      dispatch({
+        type: TYPE.UPDATE_USER_INFO,
+        payload: { username: null, genesis: null },
+      });
+    }
+    dispatch({ type: TYPE.UPDATE_USER_INFO, payload: userStatus });
   } catch (error) {
     console.error(error);
   }

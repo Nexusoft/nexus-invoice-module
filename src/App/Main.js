@@ -1,6 +1,5 @@
 import Invoice from './Invoice';
 import { ClosePopUp } from 'lib/ui';
-import { SetUserName } from 'lib/user';
 
 import nexusIcon from 'icon/NXS_coin.svg';
 
@@ -20,25 +19,25 @@ const {
 } = NEXUS;
 
 @connect(
-  state => ({
+  (state) => ({
     coreInfo: state.coreInfo,
+    loggedIn: !!state.user.username,
   }),
-  { SetUserName }
+  {}
 )
 class Main extends React.Component {
   constructor(props) {
     super(props);
   }
 
-  componentDidMount() {
-    this.props.SetUserName();
-  }
+  componentDidMount() {}
 
   render() {
+    const { loggedIn } = this.props;
     return (
       <Panel title={'Invoices'} icon={nexusIcon}>
         <GlobalStyles />
-        <Invoice />
+        {loggedIn ? <Invoice /> : <div>Please Log In!</div>}
       </Panel>
     );
   }

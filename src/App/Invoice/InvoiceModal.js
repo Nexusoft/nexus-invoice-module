@@ -130,7 +130,7 @@ class InvoiceModal extends Component {
             }}
           >
             <Button
-              skin={'danger'}
+              skin={'plain'}
               style={DangerButtonStyle}
               onClick={this.props.removeModal}
             >
@@ -150,7 +150,7 @@ class InvoiceModal extends Component {
             >
               <Button
                 square
-                skin={'danger'}
+                skin={'plain'}
                 style={DangerButtonStyle}
                 onClick={() => {
                   this.removeDraft();
