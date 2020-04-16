@@ -128,7 +128,16 @@ const InvoiceTable = styled(Table)({});
 const invoices = [];
 
 const memorizedFilters = memoize(
-  (invoiceList, referenceQuery, timeSpan, status) =>
+  (
+    invoiceList,
+    referenceQuery,
+    timeSpan,
+    status,
+    descriptionQuery,
+    pastDue,
+    payableQuery,
+    recipientQuery
+  ) =>
     invoiceList &&
     invoiceList.filter((element) => {
       if (referenceQuery) {
@@ -148,6 +157,38 @@ const memorizedFilters = memoize(
         console.log(pastDate);
         if (!pastDate) return true;
         else return element.created * 1000 > pastDate.getTime();
+      }
+      if (descriptionQuery) {
+        if (
+          element.description &&
+          !element.description
+            .toLowerCase()
+            .includes(descriptionQuery.toLowerCase())
+        )
+          return false;
+        if (!element.description) return false;
+      }
+      if (pastDue) {
+        if (element.past_due) {
+          return element.past_due * 1000 < pastDate.getTime();
+        } else {
+          return false;
+        }
+      }
+      if (payableQuery) {
+        if (element.account) {
+          if (!element.account.includes(payableQuery)) {
+            return false;
+          }
+        }
+      }
+      if (recipientQuery) {
+        if (element.recipient) {
+          !element.recipient.includes(recipientQuery);
+          {
+            return false;
+          }
+        }
       }
       return true;
     })
@@ -253,15 +294,28 @@ class Invoice extends Component {
   };
 
   render() {
-    const { referenceQuery, status, timeSpan } = this.props.invoicesUI;
+    const {
+      referenceQuery,
+      status,
+      timeSpan,
+      descriptionQuery,
+      pastDue,
+      payableQuery,
+      recipientQuery,
+    } = this.props.invoicesUI;
     const { accounts, genesis } = this.props;
     const drafts = this.returnDrafts();
-    const tempInvoicec = [...invoices, ...this.props.invoiceCore, ...drafts];
+    const tempInvoices = [...invoices, ...this.props.invoiceCore, ...drafts];
+    console.error(pastDue);
     const filteredInvoices = memorizedFilters(
-      tempInvoicec,
+      tempInvoices,
       referenceQuery,
       timeSpan,
-      status
+      status,
+      descriptionQuery,
+      pastDue,
+      payableQuery,
+      recipientQuery
     );
     return (
       <>

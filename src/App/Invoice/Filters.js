@@ -2,6 +2,10 @@ import {
   setInvoiceReferenceQuery,
   setInvoiceStatusFilter,
   setInvoiceTimeFilter,
+  setInvoiceDescriptionFilter,
+  setInvoicePastDueFilter,
+  setInvoicePayableFilter,
+  setInvoiceRecipientFilter,
 } from 'lib/ui';
 
 const {
@@ -28,7 +32,7 @@ const {
   },
 } = NEXUS;
 
-const __ = input => input;
+const __ = (input) => input;
 
 const operations = ['OUTSTANDING', 'PAID', 'REJECTED', 'DRAFT'];
 
@@ -37,7 +41,7 @@ const opOptions = [
     value: null,
     display: __('All'),
   },
-  ...operations.map(op => ({
+  ...operations.map((op) => ({
     value: op,
     display: op,
   })),
@@ -90,6 +94,10 @@ const Filters = ({
   referenceQuery,
   status,
   timeSpan,
+  descriptionQuery,
+  pastDue,
+  payableQuery,
+  recipientQuery,
   morePadding,
   children,
   optionsOpen,
@@ -101,7 +109,7 @@ const Filters = ({
         type="search"
         placeholder="Reference Search"
         value={referenceQuery}
-        onChange={evt => rest.setInvoiceReferenceQuery(evt.target.value)}
+        onChange={(evt) => rest.setInvoiceReferenceQuery(evt.target.value)}
       />
     </FormField>
 
@@ -126,26 +134,36 @@ const Filters = ({
       <MoreOptions>
         <FormField label={__('Description')}>
           <TextField
-            disabled={true}
             type="search"
-            placeholder="Description Search (Coming soon <--> )"
+            value={descriptionQuery}
+            onChange={(evt) =>
+              rest.setInvoiceDescriptionFilter(evt.target.value)
+            }
+            placeholder="Description Search"
           />
         </FormField>
 
-        <FormField label={__('Show Only PastDue ')}>
-          <Switch disabled={true} />
+        <FormField label={__('Show Only Past Due ')}>
+          <Switch
+            checked={pastDue}
+            onChange={(event) =>
+              rest.setInvoicePastDueFilter(!!event.target.checked)
+            }
+          />
         </FormField>
 
         <FormField label={__('Payable')}>
           <TextField
-            disabled={true}
+            value={payableQuery}
             type="search"
+            onChange={(evt) => rest.setInvoicePayableFilter(evt.target.value)}
             placeholder="Search Payable"
           />
         </FormField>
         <FormField label={__('Recipient')}>
           <TextField
-            disabled={true}
+            value={recipientQuery}
+            onChange={(evt) => rest.setInvoiceRecipientFilter(evt.target.value)}
             type="search"
             placeholder="Search Recipient"
           />
@@ -169,4 +187,8 @@ export default connect(mapStateToProps, {
   setInvoiceReferenceQuery,
   setInvoiceStatusFilter,
   setInvoiceTimeFilter,
+  setInvoiceDescriptionFilter,
+  setInvoicePastDueFilter,
+  setInvoicePayableFilter,
+  setInvoiceRecipientFilter,
 })(Filters);

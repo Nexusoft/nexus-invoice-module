@@ -26,7 +26,7 @@ async function listAll(endpoint, params, limit = 100) {
   return list;
 }
 
-export const loadInvoices = () => async dispatch => {
+export const loadInvoices = () => async (dispatch) => {
   try {
     const invoices = await listAll('users/list/invoices');
     dispatch({ type: TYPE.SET_INVOICES, payload: invoices });
@@ -35,33 +35,64 @@ export const loadInvoices = () => async dispatch => {
   }
 };
 
-export const setInvoiceReferenceQuery = search => async dispatch => {
+export const setInvoiceReferenceQuery = (search) => async (dispatch) => {
   console.log(search);
   dispatch({
-    type: TYPE.SET_INVOICE_REFERENCE_QUERY,
+    type: TYPE.SET_INVOICE_REFERENCE_FILTER,
     payload: search,
   });
 };
 
-export const setInvoiceTimeFilter = timeSpan => async dispatch => {
+export const setInvoiceTimeFilter = (timeSpan) => async (dispatch) => {
   dispatch({
     type: TYPE.SET_INVOICE_TIME_FILTER,
     payload: timeSpan,
   });
 };
 
-export const setInvoiceStatusFilter = status => async dispatch => {
+export const setInvoiceStatusFilter = (status) => async (dispatch) => {
   dispatch({
     type: TYPE.SET_INVOICE_STATUS_FILTER,
     payload: status,
   });
 };
 
-export const resetForm = formName => {
+export const setInvoiceDescriptionFilter = (description) => async (
+  dispatch
+) => {
+  dispatch({
+    type: TYPE.SET_INVOICE_DESCRIPTION_FILTER,
+    payload: description,
+  });
+};
+
+export const setInvoicePastDueFilter = (pastDue) => async (dispatch) => {
+  console.error(pastDue);
+  dispatch({
+    type: TYPE.SET_INVOICE_PAST_DUE_FILTER,
+    payload: pastDue,
+  });
+};
+
+export const setInvoicePayableFilter = (payable) => async (dispatch) => {
+  dispatch({
+    type: TYPE.SET_INVOICE_PAYABLE_FILTER,
+    payload: payable,
+  });
+};
+
+export const setInvoiceRecipientFilter = (recipient) => async (dispatch) => {
+  dispatch({
+    type: TYPE.SET_INVOICE_RECEIPANT_FILTER,
+    payload: recipient,
+  });
+};
+
+export const resetForm = (formName) => {
   return reset(formName);
 };
 
-export const OpenPopUp = (component, props) => async dispatch => {
+export const OpenPopUp = (component, props) => async (dispatch) => {
   console.log(component);
   dispatch({
     type: TYPE.SET_POP_UP,
@@ -69,7 +100,7 @@ export const OpenPopUp = (component, props) => async dispatch => {
   });
 };
 
-export const LoadAccounts = () => async dispatch => {
+export const LoadAccounts = () => async (dispatch) => {
   const results = await apiCall('users/list/accounts');
   dispatch({
     type: TYPE.SET_USER_ACCOUNTS,
@@ -77,7 +108,7 @@ export const LoadAccounts = () => async dispatch => {
   });
 };
 
-export const ClosePopUp = () => async dispatch => {
+export const ClosePopUp = () => async (dispatch) => {
   console.log('CLOSING');
   dispatch({
     type: TYPE.CLOSE_POP_UP,
