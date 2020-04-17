@@ -54,7 +54,7 @@ const {
   },
 } = NEXUS;
 
-const __ = input => input;
+const __ = (input) => input;
 
 const formInitialValues = {
   invoiceDescription: '',
@@ -68,7 +68,7 @@ const formInitialValues = {
   items: [],
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const valueSelector = formValueSelector('InvoiceForm');
   return {
     username: state.user.username,
@@ -117,7 +117,7 @@ const TotalField = styled.strong(({ theme }) => ({
 }));
 
 @connect(
-  state => ({
+  (state) => ({
     suggestions: getRecipientSuggestions(
       state.addressBook,
       state.user.accounts
@@ -126,7 +126,7 @@ const TotalField = styled.strong(({ theme }) => ({
   {}
 )
 class RecipientField extends Component {
-  handleSelect = element => {
+  handleSelect = (element) => {
     this.props.change(this.props.input.name, element);
   };
 
@@ -157,7 +157,7 @@ class RecipientField extends Component {
   form: 'InvoiceForm',
   destroyOnUnmount: true,
 
-  validate: values => {
+  validate: (values) => {
     const errors = {};
     const {
       invoiceDescription,
@@ -192,7 +192,7 @@ class RecipientField extends Component {
     props
   ) => {
     const dueDate = new Date(invoiceDueDate).getTime() / 1000;
-    const convertedItems = items.map(e => {
+    const convertedItems = items.map((e) => {
       return {
         description: e.description,
         units: e.units,
@@ -227,7 +227,7 @@ class RecipientField extends Component {
     console.error(result);
     if (!result) return;
     props.deleteDraft(props.values.draftTimeStamp);
-    showSuccessDialog({ message: 'Invoice Sent', note: 'Pass' });
+    showSuccessDialog({ message: 'Invoice Sent' });
     loadInvoices();
     dispatch(reset('InvoiceForm'));
     props.ClosePopUp();
@@ -381,9 +381,23 @@ class InvoiceForm extends Component {
         </ItemListSection>
 
         <Footer className="mt3 flex space-between">
-          <Button type="submit" skin="primary" disabled={submitting}>
-            {__('Submit')}
-          </Button>
+          <>
+            <Button type="submit" skin="primary" disabled={submitting}>
+              {__('Submit')}
+            </Button>
+            <div
+              style={{
+                fontWeight: 'bolder',
+                fontVariant: 'all-small-caps',
+                position: 'absolute',
+                paddingTop: '.5em',
+                paddingLeft: '6em',
+                opacity: '.75',
+              }}
+            >
+              (1 NXS Fee)
+            </div>
+          </>
           <Button
             skin="primary"
             onClick={() => this.saveAsDraft()}

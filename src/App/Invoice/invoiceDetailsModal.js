@@ -1,7 +1,9 @@
 //Internal Dependencies
 import { formatDateTime } from 'gui/intl';
 
-import { loadInvoices, ClosePopUp } from 'lib/ui';
+import { loadInvoices, OpenPopUp, ClosePopUp } from 'lib/ui';
+
+import AccountAsk from 'component/AccountAsk';
 
 const {
   libraries: {
@@ -34,7 +36,7 @@ const {
   },
 } = NEXUS;
 
-const __ = input => input;
+const __ = (input) => input;
 
 const timeFormatOptions = {
   year: 'numeric',
@@ -133,7 +135,7 @@ const InvoiceItems = ({ items }) => {
         <TableHeaderText padding={2}>{'Price'}</TableHeaderText>
         <TableHeaderText padding={2}>{'Quantity'}</TableHeaderText>
         <TableHeaderText padding={0}>{'Total'}</TableHeaderText>
-        {items.map(e => (
+        {items.map((e) => (
           <InvoiceItem
             description={e.description}
             unit_amount={e.unit_amount}
@@ -226,8 +228,9 @@ const MoreOpenButton = (moreOpen, moreOpenToggle, children) => (
 );
 
 //Allow support any addtional key/values that may be attached to the invoice
-const AdditionalKeyValues = addValues =>
-  addValues.map(e => <Field label={e.key}>{e.value}</Field>);
+const AdditionalKeyValues = (addValues) =>
+  addValues.map((e) => <Field label={e.key}>{e.value}</Field>);
+const testhh = () => <div>test</div>;
 
 class InvoiceDetailModal extends Component {
   constructor(props) {
@@ -239,36 +242,16 @@ class InvoiceDetailModal extends Component {
 
   componentDidMount() {}
 
-  calculateTotal = items =>
+  calculateTotal = (items) =>
     items.reduce((total, element) => {
       return total + element.units * element.unit_amount;
     }, 0);
 
-  clickPayNow = async e => {
-    const result = await confirm({
-      question: __('Do you want to fulfill this invoice?'),
-      note: __('This will come from your default account'),
-    });
-    if (result) {
-      try {
-        console.log('Send NXS');
-        const params = {
-          address: this.props.invoice.address,
-          amount: this.calculateTotal(this.props.invoice.items),
-          name_from: `${this.props.username}:default`,
-        };
-        const apiResult = await secureApiCall('invoices/pay/invoice', params);
-        if (apiResult) {
-          this.props.loadInvoices();
-          this.props.ClosePopUp();
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    }
+  clickPayNow = async (e) => {
+    this.props.OpenPopUp(AccountAsk, { invoice: this.props.invoice });
   };
 
-  clickCancel = async e => {
+  clickCancel = async (e) => {
     const result = await confirm({
       question: __('Are you sure you want to cancel this invoice?'),
       note: __(''),
@@ -302,14 +285,14 @@ class InvoiceDetailModal extends Component {
     }
   }
 
-  toggleMoreOpen = e => {
+  toggleMoreOpen = (e) => {
     this.setState({
       moreOpen: !this.state.moreOpen,
     });
   };
 
   returnRest(rest) {
-    return Object.keys(rest).map(e => {
+    return Object.keys(rest).map((e) => {
       return { key: e, value: rest[e] };
     });
   }
@@ -341,7 +324,7 @@ class InvoiceDetailModal extends Component {
     return (
       <ModalInternal
         removeModal={this.props.removeModal}
-        assignClose={closeModal => (this.closeModal = closeModal)}
+        assignClose={(closeModal) => (this.closeModal = closeModal)}
       >
         <StatusTag status={status}>
           <h2>{status}</h2>
@@ -446,10 +429,12 @@ class InvoiceDetailModal extends Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return { username: state.user.username };
 };
 
-export default connect(mapStateToProps, { loadInvoices, ClosePopUp })(
-  InvoiceDetailModal
-);
+export default connect(mapStateToProps, {
+  loadInvoices,
+  ClosePopUp,
+  OpenPopUp,
+})(InvoiceDetailModal);
