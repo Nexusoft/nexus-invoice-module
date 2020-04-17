@@ -6,6 +6,7 @@ import {
   updateTheme,
 } from './actions/actionCreators';
 import { UpdateUserInfo } from 'shared/lib/user';
+import { UpdateExchangeRate } from 'shared/lib/ui';
 
 const store = configureStore();
 

@@ -1,4 +1,5 @@
 import fiatCurrency from './fiatCurrency';
+import exchangeRate from './exchangeRate';
 
 const {
   libraries: {
@@ -8,4 +9,5 @@ const {
 
 export default combineReducers({
   fiatCurrency,
+  exchangeRate,
 });

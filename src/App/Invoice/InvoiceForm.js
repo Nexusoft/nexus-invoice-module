@@ -13,6 +13,7 @@ import {
 } from './selectors';
 
 import { addNewDraft, removeDraftToEdit, deleteDraft } from 'lib/invoiceDrafts';
+import { UpdateExchangeRate } from 'shared/lib/ui';
 
 const {
   libraries: {
@@ -75,6 +76,7 @@ const mapStateToProps = (state) => {
     accountOptions: getAccountOptions(state.user.accounts),
     fiatCurrency: state.settings.fiatCurrency,
     items: valueSelector(state, 'items') || [],
+    exchangeRate: state.settings.exchangeRate,
     initialValues: state.ui.draftEdit || formInitialValues,
   };
 };
@@ -153,6 +155,7 @@ class RecipientField extends Component {
   removeDraftToEdit,
   deleteDraft,
   ClosePopUp,
+  UpdateExchangeRate,
 })
 @reduxForm({
   form: 'InvoiceForm',
@@ -236,6 +239,10 @@ class RecipientField extends Component {
   onSubmitFail: errorHandler(__('Error sending NXS')),
 })
 class InvoiceForm extends Component {
+  componentDidMount() {
+    this.props.UpdateExchangeRate();
+  }
+
   gatherTotal() {
     return this.props.items.reduce((total, element) => {
       return total + element.units * element.unitPrice;
@@ -290,6 +297,7 @@ class InvoiceForm extends Component {
       handleSubmit,
       submitting,
       fiatCurrency,
+      exchangeRate,
     } = this.props;
     return (
       <FormComponent onSubmit={handleSubmit}>
@@ -414,7 +422,10 @@ class InvoiceForm extends Component {
           </Button>
           <TotalField>
             {__(`Total: ${formatNumber(this.gatherTotal(), 6)} NXS`)}
-            <a style={{ opacity: '.5' }}>{` (0 ${fiatCurrency})`}</a>
+            <a style={{ opacity: '.5' }}>{` (${formatNumber(
+              this.gatherTotal() * exchangeRate,
+              2
+            )} ${fiatCurrency})`}</a>
           </TotalField>
         </Footer>
       </FormComponent>

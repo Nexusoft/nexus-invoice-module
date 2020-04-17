@@ -3,7 +3,7 @@ const {
   libraries: {
     ReduxForm: { reset },
   },
-  utilities: { apiCall },
+  utilities: { proxyRequest, apiCall },
 } = NEXUS;
 
 async function listAll(endpoint, params, limit = 100) {
@@ -113,4 +113,21 @@ export const ClosePopUp = () => async (dispatch) => {
     type: TYPE.CLOSE_POP_UP,
     payload: null,
   });
+};
+
+export const UpdateExchangeRate = () => async (dispatch, getState) => {
+  try {
+    const fiat = getState().settings.fiatCurrency;
+    const result = await proxyRequest(
+      `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=NXS&tsyms=${fiat}`,
+      {}
+    );
+    console.log(result.data['RAW']['NXS'][fiat]);
+    dispatch({
+      type: TYPE.UPDATE_EXCHANGE_RATE,
+      payload: result.data['RAW']['NXS'][fiat].PRICE,
+    });
+  } catch (error) {
+    console.error(error);
+  }
 };
