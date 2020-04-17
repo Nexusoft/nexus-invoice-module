@@ -1,4 +1,4 @@
-import showingConnections from './showingConnections';
+import fiatCurrency from './fiatCurrency';
 
 const {
   libraries: {
@@ -7,5 +7,5 @@ const {
 } = NEXUS;
 
 export default combineReducers({
-  showingConnections,
+  fiatCurrency,
 });

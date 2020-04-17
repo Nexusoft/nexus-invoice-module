@@ -73,6 +73,7 @@ const mapStateToProps = (state) => {
   return {
     username: state.user.username,
     accountOptions: getAccountOptions(state.user.accounts),
+    fiatCurrency: state.settings.fiatCurrency,
     items: valueSelector(state, 'items') || [],
     initialValues: state.ui.draftEdit || formInitialValues,
   };
@@ -283,7 +284,13 @@ class InvoiceForm extends Component {
   };
 
   render() {
-    const { accountOptions, change, handleSubmit, submitting } = this.props;
+    const {
+      accountOptions,
+      change,
+      handleSubmit,
+      submitting,
+      fiatCurrency,
+    } = this.props;
     return (
       <FormComponent onSubmit={handleSubmit}>
         <InvoiceDataSection legend={__('Details')}>
@@ -407,6 +414,7 @@ class InvoiceForm extends Component {
           </Button>
           <TotalField>
             {__(`Total: ${formatNumber(this.gatherTotal(), 6)} NXS`)}
+            <a style={{ opacity: '.5' }}>{` (0 ${fiatCurrency})`}</a>
           </TotalField>
         </Footer>
       </FormComponent>
