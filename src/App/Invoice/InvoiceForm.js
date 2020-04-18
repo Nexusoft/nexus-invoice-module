@@ -395,23 +395,24 @@ class InvoiceForm extends Component {
           ></FieldArray>
         </ItemListSection>
 
-        <Footer className="mt3 flex space-between">
+        <Footer
+          style={{ display: 'grid', gridTemplateColumns: '6em .9fr auto 1fr' }}
+        >
           <>
             <Button type="submit" skin="primary" disabled={submitting}>
               {__('Submit')}
             </Button>
-            <div
+            <a
               style={{
                 fontWeight: 'bolder',
                 fontVariant: 'all-small-caps',
-                position: 'absolute',
                 paddingTop: '.5em',
-                paddingLeft: '6em',
+                paddingLeft: '.5em',
                 opacity: '.75',
               }}
             >
               (1 NXS Fee)
-            </div>
+            </a>
           </>
           <Button
             skin="primary"
@@ -420,7 +421,7 @@ class InvoiceForm extends Component {
           >
             {__('Save As Draft')}
           </Button>
-          <TotalField>
+          <TotalField style={{ marginLeft: 'auto' }}>
             {__(`Total: ${formatNumber(this.gatherTotal(), 6)} NXS`)}
             <a style={{ opacity: '.5' }}>{` (${formatNumber(
               this.gatherTotal() * exchangeRate,
