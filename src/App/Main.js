@@ -35,6 +35,7 @@ const DemoTextField = styled(TextField)({
   { showConnections, hideConnections, updateInput }
 )
 class Main extends React.Component {
+  //This setting will be saved to disk
   confirmToggle = async () => {
     const { showingConnections, showConnections, hideConnections } = this.props;
     const question = showingConnections
@@ -51,6 +52,7 @@ class Main extends React.Component {
     }
   };
 
+  //This Setting will be saved to the session
   handleChange = (e) => {
     this.props.updateInput(e.target.value);
   };

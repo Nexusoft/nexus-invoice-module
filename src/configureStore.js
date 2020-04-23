@@ -9,9 +9,11 @@ const {
 } = NEXUS;
 
 export default function configureStore() {
+  //Middlewares will automaticly save when the state as changes,
+  //ie state.settings will be stored on disk and will save evertime state.settings is changed
   const middlewares = [
-    storageMiddleware(state => state.settings),
-    stateMiddleware(state => state.ui),
+    storageMiddleware((state) => state.settings), //Data saved to disk
+    stateMiddleware((state) => state.ui), //Data saved to session
   ];
   const enhancers = [applyMiddleware(...middlewares)];
 
