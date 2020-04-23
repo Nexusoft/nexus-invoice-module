@@ -14,6 +14,7 @@ const {
   utilities: {
     confirm,
     rpcCall,
+    apiCall,
     onceRpcReturn,
     showErrorDialog,
     showSuccessDialog,
@@ -25,10 +26,11 @@ const DemoTextField = styled(TextField)({
 });
 
 @connect(
-  state => ({
+  (state) => ({
     coreInfo: state.coreInfo,
     showingConnections: state.settings.showingConnections,
     inputValue: state.ui.inputValue,
+    userStatus: state.user,
   }),
   { showConnections, hideConnections, updateInput }
 )
@@ -49,10 +51,11 @@ class Main extends React.Component {
     }
   };
 
-  handleChange = e => {
+  handleChange = (e) => {
     this.props.updateInput(e.target.value);
   };
 
+  /// rpcCall for legacy API
   getDifficulty = async () => {
     try {
       const response = await rpcCall('getdifficulty', [[]]);
@@ -67,8 +70,24 @@ class Main extends React.Component {
     }
   };
 
+  /// apiCall for tritium API
+  getTritiumMetrics = async () => {
+    try {
+      const params = {};
+      const result = await apiCall('system/get/metrics', params);
+      showSuccessDialog({
+        message: 'Tritium Metrics',
+        note: JSON.stringify(result, null, 2),
+      });
+    } catch (error) {
+      showErrorDialog({
+        message: 'Cannot get metrics',
+      });
+    }
+  };
+
   render() {
-    const { coreInfo, showingConnections, inputValue } = this.props;
+    const { coreInfo, showingConnections, inputValue, userStatus } = this.props;
     return (
       <Panel
         title="React Module Example"
@@ -108,6 +127,13 @@ class Main extends React.Component {
 
         <div className="mt2">
           <Button onClick={this.getDifficulty}>View mining difficulty</Button>
+        </div>
+        <div className="mt2">
+          <Button onClick={this.getTritiumMetrics}>View Tritium metrics</Button>
+        </div>
+        <div className="mt2">
+          <span>Current Tritium User Status: </span>
+          <span>{userStatus ? userStatus.username : 'Not Logged In'}</span>
         </div>
       </Panel>
     );

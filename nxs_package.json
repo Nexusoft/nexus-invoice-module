@@ -1,8 +1,8 @@
 {
   "name": "react_redux_module_example",
   "displayName": "React Redux Module",
-  "version": "0.2.0",
-  "targetWalletVersion": "2.2.0",
+  "version": "0.3.0",
+  "targetWalletVersion": "3.0.3",
   "description": "This is an example of how a Nexus Module can be built with React & Redux, showcasing some interesting features of Nexus modules",
   "type": "app",
   "entry": "dist/index.html",
