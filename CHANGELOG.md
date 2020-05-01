@@ -12,9 +12,9 @@
 
 #### Fixes
 
--
+- Fixed issue if you were not logged in prior to opening up the module the module would crash
 
-# 1.0.1 (2020.4.XX)
+# 1.0.1 (2020.4.23)
 
 [Release Link](https://github.com/Nexusoft/Nexus-Interface-Invoice-Module/releases/tag/v1.0.1)
 

@@ -10,6 +10,13 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case TYPE.INITIALIZE:
       const userInfo = action.payload.userStatus;
+      if (!userInfo) {
+        return {
+          ...state,
+          username: null,
+          genesis: null,
+        };
+      }
       return {
         ...state,
         username: userInfo.username,
