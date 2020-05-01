@@ -60,7 +60,7 @@ class AccountAsk extends Component {
         .name || this.state.account;
     const result = await confirm({
       question: 'Do you want to fulfill this invoice?',
-      note: `You are paying ${total}NXS with your ${account} Account`,
+      note: `You are paying ${total} NXS with your ${account} Account`,
     });
     if (result) {
       try {
