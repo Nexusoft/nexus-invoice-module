@@ -161,7 +161,7 @@ const StatusTag = styled.div(
       top: '85px',
       left: '0px',
       color: 'dimgray',
-      mixBlendMode: 'darken',
+      mixBlendMode: 'screen',
       transform: 'skew(0deg, 45deg) rotate(-45deg)',
     },
   },

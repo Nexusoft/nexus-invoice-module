@@ -8,7 +8,7 @@
 
 #### Adjustments
 
--
+- Changed Status tag text from a `darken` to a `screen`
 
 #### Fixes
 
