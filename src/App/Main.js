@@ -25,7 +25,7 @@ const DemoTextField = styled(TextField)({
 });
 
 @connect(
-  state => ({
+  (state) => ({
     coreInfo: state.coreInfo,
     showingConnections: state.settings.showingConnections,
     inputValue: state.ui.inputValue,
@@ -49,7 +49,7 @@ class Main extends React.Component {
     }
   };
 
-  handleChange = e => {
+  handleChange = (e) => {
     this.props.updateInput(e.target.value);
   };
 

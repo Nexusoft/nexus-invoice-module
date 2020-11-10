@@ -9,7 +9,7 @@ const devPlugins = [];
 
 const prodPlugins = ['babel-plugin-dev-expression', ...reactOptimizePreset];
 
-module.exports = function(api) {
+module.exports = function (api) {
   const development = process.env.NODE_ENV !== 'production';
   api.cache(true);
 
@@ -31,11 +31,7 @@ module.exports = function(api) {
           root: ['./src/'],
         },
       ],
-      '@babel/plugin-proposal-export-default-from',
-      '@babel/plugin-proposal-do-expressions',
-      ['@babel/plugin-proposal-decorators', { legacy: true }],
-      '@babel/plugin-proposal-export-namespace-from',
-      ['@babel/plugin-proposal-class-properties', { loose: true }],
+      ['@babel/plugin-proposal-optional-chaining', { loose: false }],
       ...(development ? devPlugins : prodPlugins),
     ],
   };
