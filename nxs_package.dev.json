@@ -1,6 +1,7 @@
 {
-  "name": "_dev_react_redux_module_example",
+  "name": "_dev_react_redux_module_template",
   "displayName": "React Redux Module Development",
+  "description": "A Nexus Wallet Module template built with React and Redux, also includes boilerplate code and example usages of some Nexus Wallet Module's advanced features",
   "type": "app",
   "entry": "http://localhost:24011/dev.html",
   "icon": "dist/react.svg"

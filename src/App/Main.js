@@ -58,7 +58,7 @@ export default function Main() {
   };
 
   return (
-    <Panel title="React Module Example" icon={{ url: 'react.svg', id: 'icon' }}>
+    <Panel title="React Redux Module" icon={{ url: 'react.svg', id: 'icon' }}>
       <GlobalStyles />
       <div>
         This showcases how a Nexus Wallet Modules can interact with the base
