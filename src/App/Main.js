@@ -10,7 +10,15 @@ const {
     ReactRedux: { useSelector, useDispatch },
     emotion: { styled },
   },
-  components: { GlobalStyles, Panel, Switch, Tooltip, TextField, Button },
+  components: {
+    GlobalStyles,
+    Panel,
+    Switch,
+    Tooltip,
+    TextField,
+    Button,
+    FieldSet,
+  },
   utilities: { confirm, rpcCall, showErrorDialog, showSuccessDialog },
 } = NEXUS;
 
@@ -60,33 +68,56 @@ export default function Main() {
   return (
     <Panel title="React Redux Module" icon={{ url: 'react.svg', id: 'icon' }}>
       <GlobalStyles />
-      <div>
+      <div className="text-center">
         This showcases how a Nexus Wallet Modules can interact with the base
         wallet.
       </div>
 
       <div className="mt2 flex center">
-        Show number of connections&nbsp;&nbsp;
-        <Tooltip.Trigger
-          position="right"
-          tooltip="This setting will be remembered even when the wallet is restarted"
-        >
-          <Switch checked={showingConnections} onChange={confirmToggle} />
-        </Tooltip.Trigger>
+        <FieldSet legend="Module storage">
+          <p>
+            <strong>Module storage</strong> is a feature that allows modules to
+            save data (module's settings for example) into a file so that it
+            won't be lost when user closes their wallet.
+          </p>
+          <p>
+            The on/off state of the Switch below will be saved using module
+            storage feature. Try switching it and restart your wallet to see if
+            its state is retained.
+          </p>
+          <Tooltip.Trigger
+            position="right"
+            tooltip="Click me then restart wallet"
+          >
+            <Switch checked={showingConnections} onChange={confirmToggle} />
+          </Tooltip.Trigger>
+        </FieldSet>
       </div>
-      {!!showingConnections && <div>Connections: {coreInfo.connections}</div>}
 
       <div className="mt2">
-        <div>
-          This textbox's content will be remembered even when you navigate away
-          from this module
-        </div>
-        <DemoTextField
-          value={inputValue}
-          onChange={handleChange}
-          placeholder="Type anything here"
-        />
+        <FieldSet legend="Module state">
+          <p>
+            Since your module is embedded inside a &lt;webview&gt; tag, normally
+            when user navigates away from your module page, the &lt;Webview&gt;
+            will be unmounted and all your module state will be lost.{' '}
+            <strong>Module state</strong> is a feature that allows modules to
+            save temporary state data on the base wallet so that it won't be
+            lost when user navigates away from the module.
+          </p>
+          <p>
+            This textbox's content will be remembered even when you navigate
+            away from this module
+          </p>
+          <DemoTextField
+            value={inputValue}
+            onChange={handleChange}
+            placeholder="Type anything here"
+          />
+        </FieldSet>
       </div>
+
+      <div className="mt2 flex center"></div>
+      {!!showingConnections && <div>Connections: {coreInfo.connections}</div>}
 
       <div className="mt2">
         <Button onClick={viewDifficulty}>View mining difficulty</Button>
