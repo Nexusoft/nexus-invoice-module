@@ -3,6 +3,7 @@ import theme from './theme';
 import coreInfo from './coreInfo';
 import settings from './settings';
 import ui from './ui';
+import user from './user';
 
 const {
   libraries: {
@@ -17,5 +18,6 @@ export default function createReducer() {
     coreInfo,
     settings,
     ui,
+    user,
   });
 }

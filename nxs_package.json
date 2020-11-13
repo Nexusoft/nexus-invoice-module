@@ -1,8 +1,8 @@
 {
   "name": "react_redux_module_template",
   "displayName": "React Redux Module",
-  "version": "0.2.1",
-  "targetWalletVersion": "2.2.0",
+  "version": "0.3.1",
+  "targetWalletVersion": "3.0.3",
   "description": "A Nexus Wallet Module template built with React and Redux, also includes boilerplate code and example usages of some Nexus Wallet Module's advanced features",
   "type": "app",
   "entry": "dist/index.html",
