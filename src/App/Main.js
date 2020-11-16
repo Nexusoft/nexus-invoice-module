@@ -27,21 +27,6 @@ const DemoTextField = styled(TextField)({
   maxWidth: 400,
 });
 
-async function viewMetrics() {
-  try {
-    const result = await apiCall('system/get/metrics');
-    showSuccessDialog({
-      message: 'Tritium Metrics',
-      note: JSON.stringify(result, null, 2),
-    });
-  } catch (error) {
-    showErrorDialog({
-      message: 'Cannot get metrics',
-      note: error?.message || 'Unknown error',
-    });
-  }
-}
-
 export default function Main() {
   const coreInfo = useSelector((state) => state.coreInfo);
   const userStatus = useSelector((state) => state.user);
@@ -67,6 +52,24 @@ export default function Main() {
   const handleChange = (e) => {
     dispatch(updateInput(e.target.value));
   };
+  const [checkingMetrics, setCheckingMetrics] = React.useState(false);
+  const viewMetrics = async () => {
+    try {
+      setCheckingMetrics(true);
+      const result = await apiCall('system/get/metrics');
+      showSuccessDialog({
+        message: 'Tritium Metrics',
+        note: JSON.stringify(result, null, 2),
+      });
+    } catch (error) {
+      showErrorDialog({
+        message: 'Cannot get metrics',
+        note: error?.message || 'Unknown error',
+      });
+    } finally {
+      setCheckingMetrics(false);
+    }
+  };
 
   return (
     <Panel title="React Redux Module" icon={{ url: 'react.svg', id: 'icon' }}>
@@ -78,8 +81,8 @@ export default function Main() {
           href="https://github.com/Nexusoft/NexusInterface/tree/master/docs/Modules"
         >
           Developer's guide to Nexus Wallet Module
-        </Link>
-        .
+        </Link>{' '}
+        for documentation and API reference.
       </div>
 
       <div className="mt2 flex center">
@@ -163,7 +166,9 @@ export default function Main() {
             </Link>{' '}
             utility function. Click the button below to view blockchain metrics.
           </p>
-          <Button onClick={viewMetrics}>View blockchain metrics</Button>
+          <Button onClick={viewMetrics} disabled={checkingMetrics}>
+            View blockchain metrics
+          </Button>
         </FieldSet>
       </div>
     </Panel>
