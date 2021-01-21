@@ -13,7 +13,7 @@ const {
   utilities: { color },
 } = NEXUS;
 
-const emotionCache = createCache({ container: document.head });
+const emotionCache = createCache({ container: document.head, key: 'emotion' });
 
 export default function App() {
   const initialized = useSelector((state) => state.initialized);
