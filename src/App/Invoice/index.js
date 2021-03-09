@@ -117,7 +117,7 @@ const tableColumns = [
   },
   {
     id: 'recipient',
-    Header: __('Receipiant'),
+    Header: __('Recipient'),
     accessor: 'recipient',
     width: 240,
   },
