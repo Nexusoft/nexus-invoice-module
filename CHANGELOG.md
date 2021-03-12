@@ -1,18 +1,20 @@
-# 1.0.2 (2020.5.XX)
+# 1.0.2 (2021.3.11)
 
 [Release Link](https://github.com/Nexusoft/Nexus-Interface-Invoice-Module/releases/tag/v1.0.2)
 
 #### Additions
 
--
+- Added balances to the accounts you can use to pay an invoice
 
 #### Adjustments
 
 - Changed Status tag text from a `darken` to a `screen`
+- Updated package-lock
 
 #### Fixes
 
 - Fixed issue if you were not logged in prior to opening up the module the module would crash
+- Fixed issue of not being able to use a `trust` account (requires Nexus Core 5.1.x)
 
 # 1.0.1 (2020.4.23)
 
