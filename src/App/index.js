@@ -14,7 +14,7 @@ const {
   utilities: { color },
 } = NEXUS;
 
-const emotionCache = createCache({ container: document.head });
+const emotionCache = createCache({ key:'nexus-invoice-module-emotion-cache',container: document.head });
 
 @connect(
   state => ({

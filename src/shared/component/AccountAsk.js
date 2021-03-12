@@ -12,8 +12,7 @@ const {
 
 const ModalInternal = styled(Modal)({
   maxHeight: '90%',
-  maxWidth: '50%',
-  width: '40%',
+  maxWidth: '90%',
 });
 
 class AccountAsk extends Component {
@@ -44,7 +43,7 @@ class AccountAsk extends Component {
       .map((element) => {
         return {
           value: element.address,
-          display: element.name || element.address,
+          display: `${(element.address)} (${element.balance} NXS)`,
         };
       });
   }
