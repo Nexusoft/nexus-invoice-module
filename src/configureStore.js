@@ -9,10 +9,27 @@ const {
   },
 } = NEXUS;
 
+const memoizeObject = (() => {
+  let cache = null;
+  return (object) => {
+    const cacheKeys = cache && Object.keys(cache);
+    const objKeys = objech && Object.keys(object);
+    if (
+      cacheKeys?.length !== objKeys?.length ||
+      objKeys.some((key) => cache[key] !== object[key])
+    ) {
+      cache = object;
+    }
+    return cache;
+  };
+})();
+
 export default function configureStore() {
   const middlewares = [
-    storageMiddleware(state => state.invoiceDrafts),
-    stateMiddleware(state => state),
+    storageMiddleware((state) => state.invoiceDrafts),
+    stateMiddleware(({ ui, invoices }) => {
+      ui, invoices;
+    }),
     thunk,
   ];
   const enhancers = [applyMiddleware(...middlewares)];
