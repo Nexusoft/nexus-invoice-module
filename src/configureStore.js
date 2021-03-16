@@ -27,11 +27,12 @@ const memoizeObject = (() => {
 export default function configureStore() {
   const middlewares = [
     storageMiddleware((state) => state.invoiceDrafts),
-    stateMiddleware(({ ui, invoices, popUps }) =>
+    stateMiddleware(({ ui, invoices, popUps, form }) =>
       memoizeObject({
         ui,
         invoices,
         popUps,
+        form,
       })
     ),
     thunk,

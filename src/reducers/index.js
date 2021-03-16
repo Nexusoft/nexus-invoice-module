@@ -8,11 +8,11 @@ import invoices from './invoices';
 import popUps from './popUps';
 import user from './user';
 import addressBook from './addressBook';
+import form from './form';
 
 const {
   libraries: {
     Redux: { combineReducers },
-    ReduxForm: { reducer },
   },
 } = NEXUS;
 
@@ -28,6 +28,6 @@ export default function createReducer() {
     popUps,
     user,
     addressBook,
-    form: reducer,
+    form,
   });
 }
