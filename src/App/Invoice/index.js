@@ -210,7 +210,6 @@ const mapStateToProps = (state) => {
     username: state.user.username,
     accounts: state.accounts || [],
     drafts: state.invoiceDrafts,
-    PopUp: state.popUps,
   };
 };
 
@@ -245,15 +244,6 @@ class Invoice extends Component {
 
   updateInvoice() {
     this.props.loadInvoices();
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    //If a popup is open don't update
-    if (nextProps.PopUp) {
-      return false;
-    } else {
-      return true;
-    }
   }
 
   componentDidUpdate(prevProps) {
