@@ -1,6 +1,6 @@
 // Internal
 import plusIcon from 'icon/plus.svg';
-import InvoiceItem from './invoiceItem';
+import InvoiceItem from './InvoiceItem';
 
 const timing = {
   normal: '300ms',
@@ -15,7 +15,7 @@ const {
   components: { GlobalStyles, Icon, Tooltip, Button },
 } = NEXUS;
 
-const __ = input => input;
+const __ = (input) => input;
 
 const RemoveButton = styled.div(({ theme }) => ({
   left: `0.75em`,

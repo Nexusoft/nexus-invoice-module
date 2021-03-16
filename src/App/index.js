@@ -1,7 +1,7 @@
 import Main from './Main';
 import { ClosePopUp } from 'lib/ui';
 import InvoiceModal from './Invoice/InvoiceModal';
-import InvoiceDetailsModal from './Invoice/invoiceDetailsModal';
+import InvoiceDetailsModal from './Invoice/InvoiceDetailsModal';
 import AccountAsk from 'component/AccountAsk';
 
 const {

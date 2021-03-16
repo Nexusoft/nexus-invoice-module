@@ -7,7 +7,7 @@ import { loadInvoices, openModal, OpenPopUp, LoadAccounts } from 'lib/ui';
 //Invoice
 import InvoiceModal from './InvoiceModal';
 import Filters from './Filters';
-import InvoiceDetailModal from './invoiceDetailsModal';
+import InvoiceDetailModal from './InvoiceDetailsModal';
 
 import plusIcon from 'icon/plus.svg';
 import {
