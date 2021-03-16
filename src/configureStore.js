@@ -9,16 +9,20 @@ const {
   },
 } = NEXUS;
 
-const memoizeObject = (() => {
+const getPersistedState = (() => {
   let cache = null;
-  return (object) => {
-    const cacheKeys = cache && Object.keys(cache);
-    const objKeys = object && Object.keys(object);
-    if (
-      cacheKeys?.length !== objKeys?.length ||
-      objKeys.some((key) => cache[key] !== object[key])
-    ) {
-      cache = object;
+  return (state) => {
+    if (state) {
+      const { ui, invoices, popUps, form } = state;
+      if (
+        !cache ||
+        cache.ui !== ui ||
+        cache.invoices !== invoices ||
+        cache.popUps !== popUps ||
+        cache.form !== form
+      ) {
+        cache = { ui, invoices, popUps, form };
+      }
     }
     return cache;
   };
@@ -27,14 +31,7 @@ const memoizeObject = (() => {
 export default function configureStore() {
   const middlewares = [
     storageMiddleware((state) => state.invoiceDrafts),
-    stateMiddleware(({ ui, invoices, popUps, form }) =>
-      memoizeObject({
-        ui,
-        invoices,
-        popUps,
-        form,
-      })
-    ),
+    stateMiddleware(getPersistedState),
     thunk,
   ];
   const enhancers = [applyMiddleware(...middlewares)];
