@@ -290,7 +290,7 @@ class Invoice extends Component {
 
   openDraftToEdit = (draft) => {
     this.props.setDraftToEdit(draft);
-    this.props.OpenPopUp(InvoiceModal);
+    this.props.OpenPopUp('Invoice');
   };
 
   render() {
@@ -323,7 +323,7 @@ class Invoice extends Component {
             query={this.props.invoicesUI}
             optionsOpen={this.state.optionsOpen}
           >
-            <Button onClick={() => this.props.OpenPopUp(InvoiceModal)}>
+            <Button onClick={() => this.props.OpenPopUp('Invoice')}>
               <Icon
                 icon={plusIcon}
                 style={{
@@ -374,7 +374,7 @@ class Invoice extends Component {
                     console.log(invoice);
                     invoice.status === 'DRAFT'
                       ? this.openDraftToEdit(invoice)
-                      : this.props.OpenPopUp(InvoiceDetailModal, {
+                      : this.props.OpenPopUp('InvoiceDetail', {
                           invoice,
                           isMine: isMyAddress(
                             accounts,
