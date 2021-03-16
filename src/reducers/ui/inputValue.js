@@ -5,8 +5,8 @@ const initialState = '';
 export default (state = initialState, action) => {
   switch (action.type) {
     case TYPE.INITIALIZE: {
-      const { inputValue } = action.payload.moduleState || {};
-      return inputValue !== undefined ? inputValue : state;
+      const { moduleState } = action.payload;
+      return (moduleState && moduleState.ui.inputValue) || initialState;
     }
 
     case TYPE.UPDATE_INPUT:
