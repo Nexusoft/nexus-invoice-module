@@ -18,12 +18,11 @@ const {
 const __ = (input) => input;
 
 const RemoveButton = styled.div(({ theme }) => ({
-  left: `0.75em`,
-  marginTop: '1.5em',
+  marginTop: '1.2em',
   cursor: 'pointer',
-  width: '1.5em',
-  height: '1.5em',
-  fontSize: '1em',
+  width: 'min-content',
+  height: '1.3em',
+  fontSize: '1.3em',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
@@ -83,7 +82,6 @@ class InvoiceItems extends React.Component {
    */
   render() {
     const { fields, change, addInvoiceItem } = this.props;
-    console.log(this.props);
 
     if (!fields) return null;
 
@@ -103,7 +101,7 @@ class InvoiceItems extends React.Component {
                       fields.remove(i);
                     }}
                   >
-                    ✕
+                    ×
                   </RemoveButton>
                 </Tooltip.Trigger>
               }
