@@ -1,7 +1,7 @@
 {
   "name": "nexus_interface_invoice_module",
   "displayName": "Nexus Invoice System",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "targetWalletVersion": "3.0.3",
   "description": "Use Case for the Invoice System",
   "type": "app",
