@@ -55,7 +55,7 @@ const {
   },
 } = NEXUS;
 
-const __ = input => input;
+const __ = (input) => input;
 
 const DangerButtonStyle = {
   border: 'none',
@@ -69,7 +69,7 @@ const DangerButtonStyle = {
  * @extends {Component}
  */
 @connect(
-  state => ({
+  (state) => ({
     draftToEditBool: !!state.ui.draftEdit,
   }),
   {
@@ -134,7 +134,7 @@ class InvoiceModal extends Component {
               style={DangerButtonStyle}
               onClick={this.props.removeModal}
             >
-              x
+              ×
             </Button>
           </div>
           {isDraft ? 'Edit Draft Invoice' : 'New Invoice'}{' '}

@@ -1,18 +1,20 @@
 import * as TYPE from 'actions/types';
 
-const initialState = '';
+const {
+  libraries: {
+    ReduxForm: { reducer },
+  },
+} = NEXUS;
+const initialState = null;
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case TYPE.INITIALIZE: {
       const { moduleState } = action.payload;
-      return (moduleState && moduleState.ui.inputValue) || initialState;
+      return (moduleState && moduleState.form) || initialState;
     }
 
-    case TYPE.UPDATE_INPUT:
-      return action.payload;
-
     default:
-      return state;
+      return reducer(state, action);
   }
 };

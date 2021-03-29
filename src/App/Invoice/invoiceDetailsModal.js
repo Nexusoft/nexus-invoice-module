@@ -248,7 +248,7 @@ class InvoiceDetailModal extends Component {
     }, 0);
 
   clickPayNow = async (e) => {
-    this.props.OpenPopUp(AccountAsk, { invoice: this.props.invoice });
+    this.props.OpenPopUp('AccountAsk', { invoice: this.props.invoice });
   };
 
   clickCancel = async (e) => {

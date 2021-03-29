@@ -7,7 +7,7 @@ import { loadInvoices, openModal, OpenPopUp, LoadAccounts } from 'lib/ui';
 //Invoice
 import InvoiceModal from './InvoiceModal';
 import Filters from './Filters';
-import InvoiceDetailModal from './invoiceDetailsModal';
+import InvoiceDetailModal from './InvoiceDetailsModal';
 
 import plusIcon from 'icon/plus.svg';
 import {
@@ -210,7 +210,6 @@ const mapStateToProps = (state) => {
     username: state.user.username,
     accounts: state.accounts || [],
     drafts: state.invoiceDrafts,
-    PopUp: state.popUps,
   };
 };
 
@@ -247,15 +246,6 @@ class Invoice extends Component {
     this.props.loadInvoices();
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    //If a popup is open don't update
-    if (nextProps.PopUp) {
-      return false;
-    } else {
-      return true;
-    }
-  }
-
   componentDidUpdate(prevProps) {
     if (prevProps.drafts.length != this.props.drafts.length) {
       loadInvoiceDrafts();
@@ -290,7 +280,7 @@ class Invoice extends Component {
 
   openDraftToEdit = (draft) => {
     this.props.setDraftToEdit(draft);
-    this.props.OpenPopUp(InvoiceModal);
+    this.props.OpenPopUp('Invoice');
   };
 
   render() {
@@ -323,7 +313,7 @@ class Invoice extends Component {
             query={this.props.invoicesUI}
             optionsOpen={this.state.optionsOpen}
           >
-            <Button onClick={() => this.props.OpenPopUp(InvoiceModal)}>
+            <Button onClick={() => this.props.OpenPopUp('Invoice')}>
               <Icon
                 icon={plusIcon}
                 style={{
@@ -374,7 +364,7 @@ class Invoice extends Component {
                     console.log(invoice);
                     invoice.status === 'DRAFT'
                       ? this.openDraftToEdit(invoice)
-                      : this.props.OpenPopUp(InvoiceDetailModal, {
+                      : this.props.OpenPopUp('InvoiceDetail', {
                           invoice,
                           isMine: isMyAddress(
                             accounts,

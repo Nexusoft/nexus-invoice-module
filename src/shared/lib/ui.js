@@ -91,11 +91,10 @@ export const resetForm = (formName) => {
   return reset(formName);
 };
 
-export const OpenPopUp = (component, props) => async (dispatch) => {
-  console.log(component);
+export const OpenPopUp = (name, props) => async (dispatch) => {
   dispatch({
     type: TYPE.SET_POP_UP,
-    payload: { div: component, props: props },
+    payload: { name, props },
   });
 };
 

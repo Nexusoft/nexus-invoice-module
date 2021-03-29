@@ -9,10 +9,29 @@ const {
   },
 } = NEXUS;
 
+const getPersistedState = (() => {
+  let cache = null;
+  return (state) => {
+    if (state) {
+      const { ui, invoices, popUps, form } = state;
+      if (
+        !cache ||
+        cache.ui !== ui ||
+        cache.invoices !== invoices ||
+        cache.popUps !== popUps ||
+        cache.form !== form
+      ) {
+        cache = { ui, invoices, popUps, form };
+      }
+    }
+    return cache;
+  };
+})();
+
 export default function configureStore() {
   const middlewares = [
-    storageMiddleware(state => state.invoiceDrafts),
-    stateMiddleware(state => state),
+    storageMiddleware((state) => state.invoiceDrafts),
+    stateMiddleware(getPersistedState),
     thunk,
   ];
   const enhancers = [applyMiddleware(...middlewares)];
