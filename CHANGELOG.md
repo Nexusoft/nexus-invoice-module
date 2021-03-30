@@ -1,3 +1,12 @@
+# 1.0.3 (2021.3.29)
+
+[Release Link](https://github.com/Nexusoft/Nexus-Interface-Invoice-Module/releases/tag/v1.0.3)
+
+#### Adjustments
+
+- Optimized UI
+- Optimized Code
+
 # 1.0.2 (2021.3.11)
 
 [Release Link](https://github.com/Nexusoft/Nexus-Interface-Invoice-Module/releases/tag/v1.0.2)
