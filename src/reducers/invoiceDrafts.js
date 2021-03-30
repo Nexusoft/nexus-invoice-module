@@ -28,7 +28,6 @@ export default (state = initialState, action) => {
           ...action.payload,
           created: new Date().getTime() / 1000,
         };
-        updateStorage(state);
         return state;
       } else {
         const payload = {
@@ -38,7 +37,6 @@ export default (state = initialState, action) => {
           status: 'DRAFT',
         };
         const draftInvoices = [...Object.values(state), payload];
-        updateStorage(draftInvoices);
         return fromArray(draftInvoices);
       }
     }
@@ -51,11 +49,10 @@ export default (state = initialState, action) => {
         invoicedrafts = { ...state, [name]: contact };
       } else {
         const contacts = [...Object.values(state), contact]
-          .filter(c => c.name !== action.payload.name)
+          .filter((c) => c.name !== action.payload.name)
           .sort(compareNames);
         invoicedrafts = fromArray(contacts);
       }
-      updateStorage(invoicedrafts);
       return invoicedrafts;
     }
 
@@ -64,7 +61,6 @@ export default (state = initialState, action) => {
       if (invoicedrafts[action.payload]) {
         delete invoicedrafts[action.payload];
       }
-      updateStorage(invoicedrafts);
       return invoicedrafts;
     }
     default:
