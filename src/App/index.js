@@ -47,7 +47,8 @@ class App extends React.Component {
     };
     const { popUp } = this.props;
     const PopUp = popUp && modals[popUp.name];
-
+    console.log(popUp);
+    console.log(PopUp);
     return (
       <CacheProvider value={emotionCache}>
         <ThemeProvider theme={themeWithMixer}>

@@ -110,6 +110,7 @@ class InvoiceModal extends Component {
     const { isDraft } = this.state;
     return (
       <Modal
+        visible={true}
         removeModal={this.props.removeModal}
         style={{
           width: '90%',
