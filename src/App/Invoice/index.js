@@ -364,7 +364,7 @@ class Invoice extends Component {
                     console.log(invoice);
                     invoice.status === 'DRAFT'
                       ? this.openDraftToEdit(invoice)
-                      : this.props.OpenPopUp('InvoiceDetail', {
+                      : this.props.OpenPopUp('InvoiceDetails', {
                           invoice,
                           isMine: isMyAddress(
                             accounts,
