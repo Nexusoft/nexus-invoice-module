@@ -1,3 +1,11 @@
+# 1.0.3 (2021.4.16)
+
+[Release Link](https://github.com/Nexusoft/Nexus-Interface-Invoice-Module/releases/tag/v1.0.4)
+
+#### Fixes
+
+- Fixed detail modal not working
+
 # 1.0.3 (2021.3.29)
 
 [Release Link](https://github.com/Nexusoft/Nexus-Interface-Invoice-Module/releases/tag/v1.0.3)
