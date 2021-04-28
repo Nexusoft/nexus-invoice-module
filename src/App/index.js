@@ -11,10 +11,9 @@ const {
     emotion: {
       createCache,
       core: { CacheProvider },
-      theming: { ThemeProvider },
     },
   },
-  utilities: { color },
+  components: { ThemeController },
 } = NEXUS;
 
 const emotionCache = createCache({
@@ -41,16 +40,12 @@ class App extends React.Component {
     const { initialized, theme } = this.props;
     if (!initialized) return null;
 
-    const themeWithMixer = {
-      ...theme,
-      mixer: color.getMixer(theme.background, theme.foreground),
-    };
     const { popUp } = this.props;
     const PopUp = popUp && modals[popUp.name];
 
     return (
       <CacheProvider value={emotionCache}>
-        <ThemeProvider theme={themeWithMixer}>
+        <ThemeController theme={theme}>
           <Main />
           {PopUp && (
             <PopUp
@@ -58,7 +53,7 @@ class App extends React.Component {
               removeModal={() => this.props.ClosePopUp()}
             />
           )}
-        </ThemeProvider>
+        </ThemeController>
       </CacheProvider>
     );
   }
