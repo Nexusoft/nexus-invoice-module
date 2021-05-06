@@ -2,26 +2,8 @@ const {
   libraries: {
     React,
     React: { Component },
-    ReactRedux: { connect },
-    emotion: { styled },
   },
-  components: {
-    GlobalStyles,
-    Icon,
-    Panel,
-    Switch,
-    Tooltip,
-    Select,
-    TextField,
-    FormField,
-    Button,
-  },
-  utilities: {
-    confirm,
-      
-    showErrorDialog,
-    showSuccessDialog,
-  },
+  components: { TextField, FormField },
 } = NEXUS;
 
 /**
@@ -36,7 +18,7 @@ class Invoice extends Component {
    *
    * @memberof RecipientField
    */
-  handleSelect = address => {
+  handleSelect = (address) => {
     this.props.change(this.props.input.name, address);
   };
 

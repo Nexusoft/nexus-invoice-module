@@ -5,9 +5,7 @@ import { formatDateTime } from 'gui/intl';
 import { loadInvoices, openModal, OpenPopUp, LoadAccounts } from 'lib/ui';
 
 //Invoice
-import InvoiceModal from './InvoiceModal';
 import Filters from './Filters';
-import InvoiceDetailModal from './InvoiceDetailsModal';
 
 import plusIcon from 'icon/plus.svg';
 import {
@@ -27,30 +25,10 @@ const {
     ReactRedux: { connect },
     emotion: { styled },
   },
-  components: {
-    GlobalStyles,
-    Icon,
-    Panel,
-    Switch,
-    Tooltip,
-    Select,
-    TextField,
-    FormField,
-    Button,
-    Arrow,
-  },
-  utilities: {
-    updateStorage,
-    confirm,
-    apiCall,
-    showErrorDialog,
-    showSuccessDialog,
-  },
+  components: { Icon, Button, Arrow },
 } = NEXUS;
 
 const __ = (input) => input;
-
-const contractStatus = ['Outstanding', 'Paid', 'Rejected'];
 
 const Header = styled.div({});
 

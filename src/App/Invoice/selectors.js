@@ -3,32 +3,11 @@ import memoize from 'gui/memoize';
 const {
   libraries: {
     React,
-    React: { Component },
-    ReactRedux: { connect },
     emotion: { styled },
-  },
-  components: {
-    GlobalStyles,
-    Icon,
-    Panel,
-    AutoSuggest,
-    FieldSet,
-    Switch,
-    Tooltip,
-    Select,
-    TextField,
-    FormField,
-    Button,
-  },
-  utilities: {
-    confirm,
-      
-    showErrorDialog,
-    showSuccessDialog,
   },
 } = NEXUS;
 
-const __ = input => input;
+const __ = (input) => input;
 
 const TokenRecipientName = styled.span({
   color: 'gray',
@@ -51,12 +30,12 @@ export const getAccountOptions = memoize((myAccounts, myTokens) => {
     });
     options.push(
       ...myAccounts
-        .filter(acc => acc.token_name === 'NXS')
-        .map(acc => ({
+        .filter((acc) => acc.token_name === 'NXS')
+        .map((acc) => ({
           value: acc.name || acc.address,
-          display: `${acc.name || acc.address} (${
-            acc.balance
-          } ${acc.token_name || 'Tokens'})`,
+          display: `${acc.name || acc.address} (${acc.balance} ${
+            acc.token_name || 'Tokens'
+          })`,
           indent: true,
         }))
     );
@@ -68,8 +47,8 @@ export const getAccountOptions = memoize((myAccounts, myTokens) => {
 export const getAccountBalance = memoize(
   (accountName, myAccounts, myTokens) => {
     const account =
-      myAccounts && myAccounts.find(acc => acc.name === accountName);
-    const token = myTokens && myTokens(tkn => tkn.name === accountName);
+      myAccounts && myAccounts.find((acc) => acc.name === accountName);
+    const token = myTokens && myTokens((tkn) => tkn.name === accountName);
     return account && account.balance;
   }
 );
@@ -78,19 +57,19 @@ export const getAccountInfo = memoize((accountName, myAccounts, myTokens) => {
   const account =
     myAccounts &&
     myAccounts.find(
-      acc => acc.name === accountName || acc.address === accountName
+      (acc) => acc.name === accountName || acc.address === accountName
     );
   const token =
     myTokens &&
     myTokens.find(
-      tkn => tkn.name === accountName || tkn.address === accountName
+      (tkn) => tkn.name === accountName || tkn.address === accountName
     );
   return account || token || { balance: 0 };
 });
 
 export const getNxsFiatPrice = memoize((rawNXSvalues, fiatCurrency) => {
   if (rawNXSvalues) {
-    const marketInfo = rawNXSvalues.find(e => e.name === fiatCurrency);
+    const marketInfo = rawNXSvalues.find((e) => e.name === fiatCurrency);
     if (marketInfo) {
       return marketInfo.price;
     }
@@ -101,7 +80,7 @@ export const getNxsFiatPrice = memoize((rawNXSvalues, fiatCurrency) => {
 export const getAddressNameMap = memoize((addressBook, myTritiumAccounts) => {
   const map = {};
   if (addressBook) {
-    Object.values(addressBook).forEach(contact => {
+    Object.values(addressBook).forEach((contact) => {
       if (contact.addresses) {
         contact.addresses.forEach(({ address, label }) => {
           map[address] = contact.name + (label ? ' - ' + label : '');
@@ -110,7 +89,7 @@ export const getAddressNameMap = memoize((addressBook, myTritiumAccounts) => {
     });
   }
   if (myTritiumAccounts) {
-    myTritiumAccounts.forEach(element => {
+    myTritiumAccounts.forEach((element) => {
       map[element.address] = element.name;
     });
   }
@@ -127,10 +106,10 @@ export const getRecipientSuggestions = memoize(
     console.log(addressBook);
     const suggestions = [];
     if (addressBook) {
-      Object.values(addressBook).forEach(contact => {
+      Object.values(addressBook).forEach((contact) => {
         if (contact.addresses) {
           contact.addresses
-            .filter(e => e.address.startsWith('a'))
+            .filter((e) => e.address.startsWith('a'))
             .forEach(({ address, label, isMine }) => {
               if (!isMine) {
                 suggestions.push({
@@ -179,12 +158,12 @@ export const isMyAddress = (myAccounts, myGenesis, testAddress) => {
   if (!myGenesis || !myAccounts) return false;
   if (myGenesis === testAddress) return true;
 
-  const foundAddress = myAccounts.find(e => e.address === testAddress);
+  const foundAddress = myAccounts.find((e) => e.address === testAddress);
   if (foundAddress) return true;
 
   return false;
 };
 
-export const getRegisteredFieldNames = memoize(registeredFields =>
+export const getRegisteredFieldNames = memoize((registeredFields) =>
   Object.keys(registeredFields || {})
 );

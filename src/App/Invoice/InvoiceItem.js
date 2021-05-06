@@ -1,7 +1,3 @@
-// External
-
-import memoize from 'gui/memoize';
-
 // Internal
 import { formatNumber } from 'gui/intl';
 
@@ -15,7 +11,7 @@ const {
   components: { TextField, FormField },
 } = NEXUS;
 
-const __ = input => input;
+const __ = (input) => input;
 
 const ItemLine = styled.div({
   display: 'grid',

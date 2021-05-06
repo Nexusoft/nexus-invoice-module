@@ -14,22 +14,7 @@ const {
     ReactRedux: { connect },
     emotion: { styled },
   },
-  components: {
-    GlobalStyles,
-    Panel,
-    Switch,
-    Tooltip,
-    Select,
-    TextField,
-    FormField,
-    Button,
-  },
-  utilities: {
-    confirm,
-
-    showErrorDialog,
-    showSuccessDialog,
-  },
+  components: { Switch, Select, TextField, FormField },
 } = NEXUS;
 
 const __ = (input) => input;

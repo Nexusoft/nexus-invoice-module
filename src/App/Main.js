@@ -1,5 +1,4 @@
 import Invoice from './Invoice';
-import { ClosePopUp } from 'lib/ui';
 
 import nexusIcon from 'icon/NXS_coin.svg';
 
@@ -7,15 +6,8 @@ const {
   libraries: {
     React,
     ReactRedux: { connect },
-    emotion: { styled },
   },
-  components: { GlobalStyles, Panel, Switch, Tooltip, TextField, Button },
-  utilities: {
-    confirm,
-
-    showErrorDialog,
-    showSuccessDialog,
-  },
+  components: { GlobalStyles, Panel },
 } = NEXUS;
 
 @connect(

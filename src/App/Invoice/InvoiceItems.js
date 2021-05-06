@@ -12,7 +12,7 @@ const {
     ReduxForm: { Field },
     emotion: { styled },
   },
-  components: { GlobalStyles, Icon, Tooltip, Button },
+  components: { Icon, Tooltip, Button },
 } = NEXUS;
 
 const __ = (input) => input;

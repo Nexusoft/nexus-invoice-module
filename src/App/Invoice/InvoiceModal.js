@@ -1,18 +1,11 @@
 // External
 
 // Internal Global
-import { loadInvoices, ClosePopUp } from 'lib/ui';
+import { ClosePopUp } from 'lib/ui';
 
 import InvoiceForm from './InvoiceForm';
 import trashIcon from 'icon/trash.svg';
 
-import {
-  getAccountOptions,
-  getAddressNameMap,
-  getRegisteredFieldNames,
-  getAccountInfo,
-  getRecipientSuggestions,
-} from './selectors';
 import { addNewDraft, removeDraftToEdit, deleteDraft } from 'lib/invoiceDrafts';
 
 const {
@@ -20,39 +13,9 @@ const {
     React,
     React: { Component },
     ReactRedux: { connect },
-    emotion: { styled },
-    ReduxForm: {
-      reduxForm,
-      Field,
-      FieldArray,
-      formValueSelector,
-      getFormValues,
-      reset,
-    },
   },
-  components: {
-    Icon,
-    Panel,
-    AutoSuggest,
-    FieldSet,
-    Switch,
-    Modal,
-    Tooltip,
-    Select,
-    DateTime,
-    TextField,
-    FormField,
-    Button,
-  },
-  utilities: {
-    confirm,
-    color,
-    apiCall,
-    secureApiCall,
-    showErrorDialog,
-    showSuccessDialog,
-    updateStorage,
-  },
+  components: { Icon, Modal, Button },
+  utilities: { confirm },
 } = NEXUS;
 
 const __ = (input) => input;

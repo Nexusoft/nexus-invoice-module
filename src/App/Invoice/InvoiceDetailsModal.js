@@ -3,8 +3,6 @@ import { formatDateTime } from 'gui/intl';
 
 import { loadInvoices, OpenPopUp, ClosePopUp } from 'lib/ui';
 
-import AccountAsk from 'component/AccountAsk';
-
 const {
   libraries: {
     React,
@@ -12,28 +10,8 @@ const {
     ReactRedux: { connect },
     emotion: { styled },
   },
-  components: {
-    GlobalStyles,
-    Icon,
-    Modal,
-    Panel,
-    Switch,
-    Tooltip,
-    Select,
-    TextField,
-    FormField,
-    Button,
-    Arrow,
-  },
-  utilities: {
-    confirm,
-    color,
-    apiCall,
-    sendNXS,
-    secureApiCall,
-    showErrorDialog,
-    showSuccessDialog,
-  },
+  components: { Modal, Tooltip, Button, Arrow },
+  utilities: { confirm, color, secureApiCall },
 } = NEXUS;
 
 const __ = (input) => input;
@@ -297,7 +275,6 @@ class InvoiceDetailModal extends Component {
     });
   }
   render() {
-    console.log(this.props);
     const {
       description,
       created,
@@ -317,10 +294,7 @@ class InvoiceDetailModal extends Component {
     } = this.props.invoice;
     const { isMine } = this.props;
     const pastDue = this.isPastDue();
-    console.log(rest);
-    console.log(this.isPastDue());
     this.calculateTotal(items);
-    console.log(items);
     return (
       <ModalInternal
         visible={true}
