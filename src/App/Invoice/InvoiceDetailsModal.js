@@ -323,6 +323,7 @@ class InvoiceDetailModal extends Component {
     console.log(items);
     return (
       <ModalInternal
+        visible={true}
         removeModal={this.props.removeModal}
         assignClose={(closeModal) => (this.closeModal = closeModal)}
       >
