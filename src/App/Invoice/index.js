@@ -3,6 +3,7 @@ import { formatDateTime } from 'gui/intl';
 
 // Internal Global Dependencies
 import { loadInvoices, openModal, OpenPopUp, LoadAccounts } from 'lib/ui';
+import { createPopUp } from 'actions/actionCreators';
 
 //Invoice
 import Filters from './Filters';
@@ -192,6 +193,7 @@ const mapStateToProps = (state) => {
 };
 
 @connect(mapStateToProps, {
+  createPopUp,
   OpenPopUp,
   LoadAccounts,
   addNewDraft,
@@ -258,7 +260,7 @@ class Invoice extends Component {
 
   openDraftToEdit = (draft) => {
     this.props.setDraftToEdit(draft);
-    this.props.OpenPopUp('Invoice');
+    this.props.createPopUp('Invoice');
   };
 
   render() {
@@ -291,7 +293,7 @@ class Invoice extends Component {
             query={this.props.invoicesUI}
             optionsOpen={this.state.optionsOpen}
           >
-            <Button onClick={() => this.props.OpenPopUp('Invoice')}>
+            <Button onClick={() => this.props.createPopUp('Invoice')}>
               <Icon
                 icon={plusIcon}
                 style={{
@@ -342,7 +344,7 @@ class Invoice extends Component {
                     console.log(invoice);
                     invoice.status === 'DRAFT'
                       ? this.openDraftToEdit(invoice)
-                      : this.props.OpenPopUp('InvoiceDetails', {
+                      : this.props.createPopUp('InvoiceDetails', {
                           invoice,
                           isMine: isMyAddress(
                             accounts,

@@ -23,6 +23,8 @@ export const SET_INVOICE_RECEIPANT_FILTER = 'SET_INVOICE_RECEIPANT_FILTER';
 
 export const SET_POP_UP = 'SET_POP_UP';
 export const CLOSE_POP_UP = 'CLOSE_POP_UP';
+export const CREATE_POP_UP = 'CREATE_POP_UP';
+export const REMOVE_POP_UP = 'REMOVE_POP_UP';
 
 export const SET_USER_ACCOUNTS = 'SET_USER_ACCOUNTS';
 export const SET_USERNAME = 'SET_USERNAME';

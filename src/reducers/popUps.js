@@ -1,6 +1,6 @@
 import * as TYPE from 'actions/types';
 
-const initialState = null;
+const initialState = [];
 
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -8,10 +8,24 @@ export default (state = initialState, action) => {
       const { moduleState } = action.payload;
       return (moduleState && moduleState.popUps) || initialState;
     }
-    case TYPE.SET_POP_UP:
-      return action.payload;
-    case TYPE.CLOSE_POP_UP:
-      return null;
+
+    case TYPE.CREATE_POP_UP: {
+      const {
+        payload: { id, name, props },
+      } = action;
+      return [
+        ...state,
+        {
+          id,
+          name,
+          props,
+        },
+      ];
+    }
+
+    case TYPE.REMOVE_POP_UP:
+      return state.filter((m) => m.id !== action.payload);
+
     default:
       return state;
   }
