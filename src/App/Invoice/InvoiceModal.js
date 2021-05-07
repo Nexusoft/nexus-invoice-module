@@ -79,7 +79,7 @@ class InvoiceModal extends Component {
           width: '90%',
           maxHeight: '90%',
           height: '90%',
-          animation: 'none',
+          // animation: 'none',
         }}
       >
         <Modal.Header>

@@ -210,7 +210,7 @@ const AdditionalKeyValues = (addValues) =>
   addValues.map((e) => <Field label={e.key}>{e.value}</Field>);
 const testhh = () => <div>test</div>;
 
-class InvoiceDetailModal extends Component {
+class InvoiceDetailsModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -412,4 +412,4 @@ export default connect(mapStateToProps, {
   loadInvoices,
   ClosePopUp,
   OpenPopUp,
-})(InvoiceDetailModal);
+})(InvoiceDetailsModal);
