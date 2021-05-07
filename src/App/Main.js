@@ -1,4 +1,5 @@
-import Invoice from './Invoice';
+import Filters from './Filters';
+import InvoicesTable from './InvoicesTable';
 
 import nexusIcon from 'icon/NXS_coin.svg';
 
@@ -15,7 +16,14 @@ export default function Main() {
   return (
     <Panel title={'Invoices'} icon={nexusIcon}>
       <GlobalStyles />
-      {loggedIn ? <Invoice /> : <div>Please Log In!</div>}
+      {loggedIn ? (
+        <>
+          <Filters />
+          <InvoicesTable />
+        </>
+      ) : (
+        <div>Please Log In!</div>
+      )}
     </Panel>
   );
 }

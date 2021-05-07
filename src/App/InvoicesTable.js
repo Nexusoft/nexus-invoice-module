@@ -2,20 +2,18 @@
 import { formatDateTime } from 'gui/intl';
 
 // Internal Global Dependencies
-import { loadInvoices, openModal, OpenPopUp, LoadAccounts } from 'lib/ui';
+import { loadInvoices, OpenPopUp, LoadAccounts } from 'lib/ui';
 import { createPopUp } from 'actions/actionCreators';
 
 //Invoice
-import Filters from './Filters';
 
-import plusIcon from 'icon/plus.svg';
 import {
   loadInvoiceDrafts,
   addNewDraft,
   setDraftToEdit,
 } from 'lib/invoiceDrafts';
 import memoize from 'gui/memoize';
-import { isMyAddress } from './selectors';
+import { isMyAddress } from 'selectors';
 
 import Table from 'component/Table';
 
@@ -26,12 +24,9 @@ const {
     ReactRedux: { connect },
     emotion: { styled },
   },
-  components: { Icon, Button, Arrow },
 } = NEXUS;
 
 const __ = (input) => input;
-
-const Header = styled.div({});
 
 const timeFormatOptions = {
   year: 'numeric',
@@ -102,8 +97,6 @@ const tableColumns = [
   },
 ];
 
-const InvoiceTable = styled(Table)({});
-
 const invoices = [];
 
 const memorizedFilters = memoize(
@@ -173,12 +166,6 @@ const memorizedFilters = memoize(
     })
 );
 
-const OptionsArrow = styled.span({
-  display: 'inline-block',
-  width: 15,
-  verticalAlign: 'middle',
-});
-
 // React-Redux mandatory methods
 const mapStateToProps = (state) => {
   return {
@@ -206,7 +193,7 @@ const mapStateToProps = (state) => {
  * @class Invoice
  * @extends {Component}
  */
-class Invoice extends Component {
+class InvoicesTable extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -238,12 +225,6 @@ class Invoice extends Component {
       this.props.loadInvoices();
     }
   }
-
-  toggleMoreOptions = (e) => {
-    this.setState({
-      optionsOpen: !this.state.optionsOpen,
-    });
-  };
 
   returnDrafts() {
     const { drafts } = this.props;
@@ -287,85 +268,40 @@ class Invoice extends Component {
       recipientQuery
     );
     return (
-      <>
-        <Header>
-          <Filters
-            query={this.props.invoicesUI}
-            optionsOpen={this.state.optionsOpen}
-          >
-            <Button onClick={() => this.props.createPopUp('Invoice')}>
-              <Icon
-                icon={plusIcon}
-                style={{
-                  fontSize: '.8em',
-                  opacity: 0.7,
-                  overflow: 'visible',
-                  marginRight: '0.25em',
-                }}
-              />
-              {'   New Invoice'}
-            </Button>
-            {
-              <Button
-                onClick={this.toggleMoreOptions}
-                skin="hyperlink"
-                style={{
-                  width: '12px',
-                  height: '10px',
-                  gridRowStart: 3,
-                  borderBottomStyle: 'none',
-                  paddingBottom: '1em',
-                }}
-              >
-                <OptionsArrow>
-                  <Arrow
-                    direction={this.state.optionsOpen ? 'down' : 'right'}
-                    height={8}
-                    width={10}
-                  />
-                </OptionsArrow>
-                <span>
-                  {__(this.state.optionsOpen ? 'Less options' : 'More options')}
-                </span>
-              </Button>
-            }
-          </Filters>
-        </Header>
-        <InvoiceTable
-          data={filteredInvoices}
-          columns={tableColumns}
-          defaultPageSize={10}
-          defaultSortingColumnIndex={0}
-          getTrProps={(state, row) => {
-            const invoice = row && row.original;
-            return {
-              onClick: invoice
-                ? () => {
-                    console.log(invoice);
-                    invoice.status === 'DRAFT'
-                      ? this.openDraftToEdit(invoice)
-                      : this.props.createPopUp('InvoiceDetails', {
-                          invoice,
-                          isMine: isMyAddress(
-                            accounts,
-                            genesis,
-                            invoice.recipient
-                          ),
-                        });
-                    //this.props.OpenPopUp(InvoiceDetailModal);
-                  }
-                : undefined,
-              style: {
-                cursor: 'pointer',
-                fontSize: 15,
-              },
-            };
-          }}
-        />
-      </>
+      <Table
+        data={filteredInvoices}
+        columns={tableColumns}
+        defaultPageSize={10}
+        defaultSortingColumnIndex={0}
+        getTrProps={(state, row) => {
+          const invoice = row && row.original;
+          return {
+            onClick: invoice
+              ? () => {
+                  console.log(invoice);
+                  invoice.status === 'DRAFT'
+                    ? this.openDraftToEdit(invoice)
+                    : this.props.createPopUp('InvoiceDetails', {
+                        invoice,
+                        isMine: isMyAddress(
+                          accounts,
+                          genesis,
+                          invoice.recipient
+                        ),
+                      });
+                  //this.props.OpenPopUp(InvoiceDetailModal);
+                }
+              : undefined,
+            style: {
+              cursor: 'pointer',
+              fontSize: 15,
+            },
+          };
+        }}
+      />
     );
   }
 }
 
 // Mandatory React-Redux method
-export default Invoice;
+export default InvoicesTable;

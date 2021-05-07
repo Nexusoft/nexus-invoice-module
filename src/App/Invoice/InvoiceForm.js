@@ -4,7 +4,7 @@ import { errorHandler } from 'gui/form';
 import InvoiceItems from './InvoiceItems';
 import { formatNumber } from 'gui/intl';
 
-import { getAccountOptions, getRecipientSuggestions } from './selectors';
+import { getAccountOptions, getRecipientSuggestions } from 'selectors';
 
 import { addNewDraft, removeDraftToEdit, deleteDraft } from 'lib/invoiceDrafts';
 import { UpdateExchangeRate } from 'shared/lib/ui';
