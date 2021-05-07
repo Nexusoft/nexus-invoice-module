@@ -1,13 +1,10 @@
 import Main from './Main';
-import { ClosePopUp } from 'lib/ui';
-import InvoiceModal from './Invoice/InvoiceModal';
-import InvoiceDetailsModal from './Invoice/InvoiceDetailsModal';
-import AccountAsk from 'component/AccountAsk';
+import PopUps from './PopUps';
 
 const {
   libraries: {
     React,
-    ReactRedux: { connect },
+    ReactRedux: { useSelector },
     emotion: {
       createCache,
       core: { CacheProvider },
@@ -21,42 +18,18 @@ const emotionCache = createCache({
   container: document.head,
 });
 
-const modals = {
-  Invoice: InvoiceModal,
-  InvoiceDetails: InvoiceDetailsModal,
-  AccountAsk: AccountAsk,
-};
+export default function App() {
+  const initialized = useSelector((state) => state.initialized);
+  const theme = useSelector((state) => state.theme);
 
-@connect(
-  (state) => ({
-    initialized: state.initialized,
-    theme: state.theme,
-    popUp: state.popUps,
-  }),
-  { ClosePopUp }
-)
-class App extends React.Component {
-  render() {
-    const { initialized, theme } = this.props;
-    if (!initialized) return null;
+  if (!initialized) return null;
 
-    const { popUp } = this.props;
-    const PopUp = popUp && modals[popUp.name];
-
-    return (
-      <CacheProvider value={emotionCache}>
-        <ThemeController theme={theme}>
-          <Main />
-          {PopUp && (
-            <PopUp
-              {...popUp.props}
-              removeModal={() => this.props.ClosePopUp()}
-            />
-          )}
-        </ThemeController>
-      </CacheProvider>
-    );
-  }
+  return (
+    <CacheProvider value={emotionCache}>
+      <ThemeController theme={theme}>
+        <Main />
+        <PopUps />
+      </ThemeController>
+    </CacheProvider>
+  );
 }
-
-export default App;
