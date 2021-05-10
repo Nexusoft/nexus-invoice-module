@@ -241,7 +241,7 @@ class InvoicesTable extends Component {
 
   openDraftToEdit = (draft) => {
     this.props.setDraftToEdit(draft);
-    this.props.createPopUp('Invoice');
+    this.props.createPopUp('AddEditInvoice');
   };
 
   render() {

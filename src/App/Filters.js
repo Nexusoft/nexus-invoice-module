@@ -125,7 +125,7 @@ export default function Filters({}) {
         />
       </FormField>
 
-      <Button onClick={() => dispatch(createPopUp('Invoice'))}>
+      <Button onClick={() => dispatch(createPopUp('AddEditInvoice'))}>
         <Icon
           icon={plusIcon}
           style={{

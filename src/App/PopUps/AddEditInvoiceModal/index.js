@@ -3,7 +3,7 @@
 // Internal Global
 import { ClosePopUp } from 'lib/ui';
 
-import InvoiceForm from './InvoiceForm';
+import InvoiceForm from './AddEditInvoiceForm';
 import trashIcon from 'icon/trash.svg';
 
 import { addNewDraft, removeDraftToEdit, deleteDraft } from 'lib/invoiceDrafts';

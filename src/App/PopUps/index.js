@@ -1,7 +1,7 @@
 import { removePopUp } from 'actions/actionCreators';
-import InvoiceModal from './Invoice/InvoiceModal';
-import InvoiceDetailsModal from './Invoice/InvoiceDetailsModal';
-import AccountAsk from 'component/AccountAsk';
+import AddEditInvoiceModal from './AddEditInvoiceModal';
+import InvoiceDetailsModal from './InvoiceDetailsModal';
+import SelectAccountModal from './SelectAccountModal';
 
 const {
   libraries: {
@@ -11,9 +11,9 @@ const {
 } = NEXUS;
 
 const popUpComponents = {
-  Invoice: InvoiceModal,
+  AddEditInvoice: AddEditInvoiceModal,
   InvoiceDetails: InvoiceDetailsModal,
-  AccountAsk: AccountAsk,
+  SelectAccount: SelectAccountModal,
 };
 
 export default function PopUps() {

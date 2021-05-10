@@ -226,7 +226,7 @@ class InvoiceDetailsModal extends Component {
     }, 0);
 
   clickPayNow = async (e) => {
-    this.props.OpenPopUp('AccountAsk', { invoice: this.props.invoice });
+    this.props.OpenPopUp('SelectAccount', { invoice: this.props.invoice });
   };
 
   clickCancel = async (e) => {
@@ -305,7 +305,7 @@ class InvoiceDetailsModal extends Component {
           <h2>{status}</h2>
         </StatusTag>
         <Modal.Header>
-          {'Invoice'}
+          Invoice Details
           <HeaderSubtext>{description}</HeaderSubtext>
         </Modal.Header>
         <Modal.Body style={{ overflowX: 'hidden' }}>
