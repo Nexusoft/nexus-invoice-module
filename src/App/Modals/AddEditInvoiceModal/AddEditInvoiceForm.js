@@ -1,4 +1,4 @@
-import { loadInvoices, ClosePopUp } from 'lib/ui';
+import { loadInvoices, CloseModal } from 'lib/ui';
 import { errorHandler } from 'gui/form';
 
 import InvoiceItems from './InvoiceItems';
@@ -128,7 +128,7 @@ class RecipientField extends Component {
   addNewDraft,
   removeDraftToEdit,
   deleteDraft,
-  ClosePopUp,
+  CloseModal,
   UpdateExchangeRate,
 })
 @reduxForm({
@@ -197,7 +197,7 @@ class RecipientField extends Component {
     showSuccessDialog({ message: 'Invoice Sent' });
     loadInvoices();
     dispatch(reset('InvoiceForm'));
-    props.ClosePopUp();
+    props.CloseModal();
   },
   onSubmitFail: errorHandler(__('Error sending NXS')),
 })

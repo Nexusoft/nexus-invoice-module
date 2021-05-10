@@ -29,7 +29,7 @@ export const updateInput = (inputValue) => ({
   payload: inputValue,
 });
 
-export const createPopUp = (name, props) => ({
+export const createModal = (name, props) => ({
   type: TYPE.CREATE_POP_UP,
   payload: {
     id: newUID(),
@@ -38,7 +38,7 @@ export const createPopUp = (name, props) => ({
   },
 });
 
-export const removePopUp = (id) => ({
+export const removeModal = (id) => ({
   type: TYPE.REMOVE_POP_UP,
   payload: id,
 });

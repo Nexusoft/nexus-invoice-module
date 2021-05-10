@@ -1,5 +1,5 @@
 import Main from './Main';
-import PopUps from './PopUps';
+import Modals from './Modals';
 
 const {
   libraries: {
@@ -28,7 +28,7 @@ export default function App() {
     <CacheProvider value={emotionCache}>
       <ThemeController theme={theme}>
         <Main />
-        <PopUps />
+        <Modals />
       </ThemeController>
     </CacheProvider>
   );

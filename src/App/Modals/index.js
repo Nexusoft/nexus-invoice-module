@@ -1,4 +1,4 @@
-import { removePopUp } from 'actions/actionCreators';
+import { removeModal } from 'actions/actionCreators';
 import AddEditInvoiceModal from './AddEditInvoiceModal';
 import InvoiceDetailsModal from './InvoiceDetailsModal';
 import SelectAccountModal from './SelectAccountModal';
@@ -10,24 +10,24 @@ const {
   },
 } = NEXUS;
 
-const popUpComponents = {
+const modalComponents = {
   AddEditInvoice: AddEditInvoiceModal,
   InvoiceDetails: InvoiceDetailsModal,
   SelectAccount: SelectAccountModal,
 };
 
-export default function PopUps() {
-  const popUps = useSelector((state) => state.popUps);
+export default function Modals() {
+  const modals = useSelector((state) => state.modals);
   const dispatch = useDispatch();
 
-  return popUps?.map(({ id, name, props }) => {
-    const PopUp = popUpComponents[name];
+  return modals?.map(({ id, name, props }) => {
+    const Modal = modalComponents[name];
     return (
-      !!PopUp && (
-        <PopUp
+      !!Modal && (
+        <Modal
           key={id}
           visible={true}
-          removeModal={() => dispatch(removePopUp(id))}
+          removeModal={() => dispatch(removeModal(id))}
           {...props}
         />
       )

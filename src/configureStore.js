@@ -13,15 +13,15 @@ const getPersistedState = (() => {
   let cache = null;
   return (state) => {
     if (state) {
-      const { ui, invoices, popUps, form } = state;
+      const { ui, invoices, modals, form } = state;
       if (
         !cache ||
         cache.ui !== ui ||
         cache.invoices !== invoices ||
-        cache.popUps !== popUps ||
+        cache.modals !== modals ||
         cache.form !== form
       ) {
-        cache = { ui, invoices, popUps, form };
+        cache = { ui, invoices, modals, form };
       }
     }
     return cache;

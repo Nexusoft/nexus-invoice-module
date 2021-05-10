@@ -91,7 +91,7 @@ export const resetForm = (formName) => {
   return reset(formName);
 };
 
-export const OpenPopUp = (name, props) => async (dispatch) => {
+export const OpenModal = (name, props) => async (dispatch) => {
   dispatch({
     type: TYPE.SET_POP_UP,
     payload: { name, props },
@@ -106,7 +106,7 @@ export const LoadAccounts = () => async (dispatch) => {
   });
 };
 
-export const ClosePopUp = () => async (dispatch) => {
+export const CloseModal = () => async (dispatch) => {
   console.log('CLOSING');
   dispatch({
     type: TYPE.CLOSE_POP_UP,

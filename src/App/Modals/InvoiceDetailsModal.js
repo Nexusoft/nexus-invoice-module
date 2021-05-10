@@ -1,7 +1,7 @@
 //Internal Dependencies
 import { formatDateTime } from 'gui/intl';
 
-import { loadInvoices, OpenPopUp, ClosePopUp } from 'lib/ui';
+import { loadInvoices, OpenModal, CloseModal } from 'lib/ui';
 
 const {
   libraries: {
@@ -226,7 +226,7 @@ class InvoiceDetailsModal extends Component {
     }, 0);
 
   clickPayNow = async (e) => {
-    this.props.OpenPopUp('SelectAccount', { invoice: this.props.invoice });
+    this.props.OpenModal('SelectAccount', { invoice: this.props.invoice });
   };
 
   clickCancel = async (e) => {
@@ -245,7 +245,7 @@ class InvoiceDetailsModal extends Component {
         console.log(result);
         if (result) {
           this.props.loadInvoices();
-          this.props.ClosePopUp();
+          this.props.CloseModal();
         }
       } catch (error) {
         //show error
@@ -410,6 +410,6 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
   loadInvoices,
-  ClosePopUp,
-  OpenPopUp,
+  CloseModal,
+  OpenModal,
 })(InvoiceDetailsModal);

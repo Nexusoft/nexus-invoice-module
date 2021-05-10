@@ -1,7 +1,7 @@
 // External
 
 // Internal Global
-import { ClosePopUp } from 'lib/ui';
+import { CloseModal } from 'lib/ui';
 
 import InvoiceForm from './AddEditInvoiceForm';
 import trashIcon from 'icon/trash.svg';
@@ -39,7 +39,7 @@ const DangerButtonStyle = {
     addNewDraft,
     removeDraftToEdit,
     deleteDraft,
-    ClosePopUp,
+    CloseModal,
   }
 )
 class InvoiceModal extends Component {

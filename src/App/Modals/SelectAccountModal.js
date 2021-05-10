@@ -1,4 +1,4 @@
-import { loadInvoices, ClosePopUp } from 'lib/ui';
+import { loadInvoices, CloseModal } from 'lib/ui';
 const {
   libraries: {
     React,
@@ -43,7 +43,7 @@ class AccountAsk extends Component {
       .map((element) => {
         return {
           value: element.address,
-          display: `${(element.address)} (${element.balance} NXS)`,
+          display: `${element.address} (${element.balance} NXS)`,
         };
       });
   }
@@ -72,7 +72,7 @@ class AccountAsk extends Component {
         const apiResult = await secureApiCall('invoices/pay/invoice', params);
         if (apiResult) {
           this.props.loadInvoices();
-          this.props.ClosePopUp();
+          this.props.CloseModal();
           showSuccessDialog({ message: 'Invoice Paid' });
         }
       } catch (error) {
@@ -104,7 +104,7 @@ class AccountAsk extends Component {
             className="mt2 flex space-between"
             style={{ marginBottom: '1em' }}
           >
-            <Button skin="danger" onClick={() => this.props.ClosePopUp()}>
+            <Button skin="danger" onClick={() => this.props.CloseModal()}>
               {'Cancel'}
             </Button>
             <Button onClick={() => this.openConfirm()}>
@@ -121,6 +121,6 @@ const mapStateToProps = (state) => {
   return { accounts: state.user.accounts, username: state.user.username };
 };
 
-export default connect(mapStateToProps, { loadInvoices, ClosePopUp })(
+export default connect(mapStateToProps, { loadInvoices, CloseModal })(
   AccountAsk
 );

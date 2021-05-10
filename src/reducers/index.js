@@ -5,7 +5,7 @@ import settings from './settings';
 import ui from './ui';
 import invoiceDrafts from './invoiceDrafts';
 import invoices from './invoices';
-import popUps from './popUps';
+import modals from './modals';
 import user from './user';
 import addressBook from './addressBook';
 import form from './form';
@@ -25,7 +25,7 @@ export default function createReducer() {
     ui,
     invoiceDrafts,
     invoices,
-    popUps,
+    modals,
     user,
     addressBook,
     form,

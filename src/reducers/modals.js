@@ -6,7 +6,7 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case TYPE.INITIALIZE: {
       const { moduleState } = action.payload;
-      return (moduleState && moduleState.popUps) || initialState;
+      return (moduleState && moduleState.modals) || initialState;
     }
 
     case TYPE.CREATE_POP_UP: {

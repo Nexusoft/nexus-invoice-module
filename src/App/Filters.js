@@ -7,7 +7,7 @@ import {
   setInvoicePayableFilter,
   setInvoiceRecipientFilter,
 } from 'lib/ui';
-import { createPopUp } from 'actions/actionCreators';
+import { createModal } from 'actions/actionCreators';
 import plusIcon from 'icon/plus.svg';
 
 const {
@@ -125,7 +125,7 @@ export default function Filters({}) {
         />
       </FormField>
 
-      <Button onClick={() => dispatch(createPopUp('AddEditInvoice'))}>
+      <Button onClick={() => dispatch(createModal('AddEditInvoice'))}>
         <Icon
           icon={plusIcon}
           style={{
