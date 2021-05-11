@@ -6,7 +6,6 @@ import {
   updateTheme,
 } from './actions/actionCreators';
 import { UpdateUserInfo } from 'shared/lib/user';
-import { UpdateExchangeRate } from 'shared/lib/ui';
 
 const store = configureStore();
 
@@ -40,8 +39,6 @@ onUserStatusUpdated((userStatus) => {
   //if null == not logged in
   store.dispatch(UpdateUserInfo(userStatus));
 });
-
-console.log(store);
 
 ReactDOM.render(
   <Provider store={store}>

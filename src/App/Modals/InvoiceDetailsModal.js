@@ -242,7 +242,6 @@ class InvoiceDetailsModal extends Component {
 
       try {
         const result = await secureApiCall('invoices/cancel/invoice', params);
-        console.log(result);
         if (result) {
           this.props.loadInvoices();
           this.props.CloseModal();

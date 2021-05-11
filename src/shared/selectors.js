@@ -102,8 +102,6 @@ const Address = styled.span(({ theme }) => ({
 
 export const getRecipientSuggestions = memoize(
   (addressBook, myTritiumAccounts) => {
-    console.log(myTritiumAccounts);
-    console.log(addressBook);
     const suggestions = [];
     if (addressBook) {
       Object.values(addressBook).forEach((contact) => {

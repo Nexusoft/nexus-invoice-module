@@ -63,7 +63,6 @@ class AccountAsk extends Component {
     });
     if (result) {
       try {
-        console.log('Send NXS');
         const params = {
           address: this.props.invoice.address,
           amount: this.calculateTotal(this.props.invoice.items),

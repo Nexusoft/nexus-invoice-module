@@ -10,14 +10,12 @@ async function listAll(endpoint, params, limit = 100) {
   let list = [];
   let results = null;
   let page = 0;
-  console.log(endpoint);
   do {
     results = await apiCall(endpoint, { ...params, limit, page: page++ });
     if (!results) break;
     if (Array.isArray(results)) {
       list = list.concat(results);
     } else {
-      console.log(results);
       throw new Error(
         `API result is expected to be an array, got ${typeof results}`
       );
@@ -36,7 +34,6 @@ export const loadInvoices = () => async (dispatch) => {
 };
 
 export const setInvoiceReferenceQuery = (search) => async (dispatch) => {
-  console.log(search);
   dispatch({
     type: TYPE.SET_INVOICE_REFERENCE_FILTER,
     payload: search,
@@ -107,7 +104,6 @@ export const LoadAccounts = () => async (dispatch) => {
 };
 
 export const CloseModal = () => async (dispatch) => {
-  console.log('CLOSING');
   dispatch({
     type: TYPE.CLOSE_POP_UP,
     payload: null,
@@ -121,7 +117,6 @@ export const UpdateExchangeRate = () => async (dispatch, getState) => {
       `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=NXS&tsyms=${fiat}`,
       {}
     );
-    console.log(result.data['RAW']['NXS'][fiat]);
     dispatch({
       type: TYPE.UPDATE_EXCHANGE_RATE,
       payload: result.data['RAW']['NXS'][fiat].PRICE,

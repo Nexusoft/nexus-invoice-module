@@ -141,7 +141,6 @@ class RecipientField extends Component {
     if (!sendFrom) errors.sendFrom = __('Account Payable Needed');
     if (!recipientAddress) errors.recipientAddress = __('Recipient Needed');
     if (items && items.length == 0) errors.items = __('Items Needed');
-    console.log(errors);
     return errors;
   },
   onSubmit: async (
@@ -187,7 +186,6 @@ class RecipientField extends Component {
     if (invoiceDueDate) params.due_date = dueDate;
     if (sendDetail) params.sender_detail = sendDetail;
     if (recipientDetail) params.recipient_detail = recipientDetail;
-    console.log(params);
     return await secureApiCall('invoices/create/invoice', params);
   },
   onSubmitSuccess: (result, dispatch, props) => {
@@ -217,7 +215,6 @@ class InvoiceForm extends Component {
    * @memberof SendForm
    */
   addInvoiceItem = () => {
-    console.log('Add Item');
     this.props.array.push('items', {
       description: '',
       units: 1,
@@ -346,9 +343,6 @@ class InvoiceForm extends Component {
           <FieldArray
             component={InvoiceItems}
             validate={(value, allValues, props) => {
-              console.log(value);
-              console.log(allValues);
-              console.log(props);
               if (value && value.length == 0) return 'Error!';
               return null;
             }}

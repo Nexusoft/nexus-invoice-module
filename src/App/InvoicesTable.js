@@ -124,9 +124,7 @@ const memorizedFilters = memoize(
       }
       if (status && element.status && element.status !== status) return false;
       if (timeSpan) {
-        console.log(element);
         const pastDate = getThresholdDate(timeSpan);
-        console.log(pastDate);
         if (!pastDate) return true;
         else return element.created * 1000 > pastDate.getTime();
       }
@@ -219,8 +217,6 @@ class InvoicesTable extends Component {
     }
 
     if (prevProps.blocks != this.props.blocks) {
-      console.log('Updated with blocks');
-
       this.props.LoadAccounts();
       this.props.loadInvoices();
     }
@@ -278,7 +274,6 @@ class InvoicesTable extends Component {
           return {
             onClick: invoice
               ? () => {
-                  console.log(invoice);
                   invoice.status === 'DRAFT'
                     ? this.openDraftToEdit(invoice)
                     : this.props.createModal('InvoiceDetails', {

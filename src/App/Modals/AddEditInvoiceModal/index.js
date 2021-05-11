@@ -51,7 +51,6 @@ class InvoiceModal extends Component {
   }
   componentDidMount() {
     // loadAccounts();
-    console.log(this.props.draftToEditBool);
     if (this.props.draftToEditBool) {
       this.setState({ isDraft: true });
       this.props.removeDraftToEdit();
