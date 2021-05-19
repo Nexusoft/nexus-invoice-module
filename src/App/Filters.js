@@ -57,7 +57,7 @@ const FiltersWrapper = styled.div({
   gridArea: 'filters',
   display: 'grid',
   gridTemplateAreas: '"reference timeFrame operation"',
-  gridTemplateColumns: '3fr 2fr 100px auto',
+  gridTemplateColumns: '3fr 2fr 150px auto',
   gridRowStart: 1,
   gridRowEnd: 1,
   columnGap: '.75em',
