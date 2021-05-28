@@ -8,7 +8,6 @@ export default {
     path: path.resolve(__dirname, 'dist/js'),
     filename: 'app.js',
   },
-  node: { fs: 'empty' },
   target: 'web',
   resolve: {
     extensions: ['.js', '.jsx', '.json'],
