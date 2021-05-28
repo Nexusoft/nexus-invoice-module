@@ -113,8 +113,9 @@ const InvoiceItems = ({ items }) => {
         <TableHeaderText padding={2}>{'Price'}</TableHeaderText>
         <TableHeaderText padding={2}>{'Quantity'}</TableHeaderText>
         <TableHeaderText padding={0}>{'Total'}</TableHeaderText>
-        {items.map((e) => (
+        {items.map((e, i) => (
           <InvoiceItem
+            key={i}
             description={e.description}
             unit_amount={e.unit_amount}
             units={e.units}

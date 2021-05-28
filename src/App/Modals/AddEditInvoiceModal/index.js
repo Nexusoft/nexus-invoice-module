@@ -3,8 +3,7 @@
 // Internal Global
 import { CloseModal } from 'lib/ui';
 
-import InvoiceForm from './AddEditInvoiceForm';
-import trashIcon from 'icon/trash.svg';
+import AddEditInvoiceForm from './AddEditInvoiceForm';
 
 import { addNewDraft, removeDraftToEdit, deleteDraft } from 'lib/invoiceDrafts';
 
@@ -121,7 +120,7 @@ class InvoiceModal extends Component {
               >
                 {' '}
                 <Icon
-                  icon={trashIcon}
+                  icon={{ url: 'icons/trash.svg', id: 'icon' }}
                   style={{
                     fontSize: '.8em',
                     opacity: 0.7,
@@ -134,7 +133,7 @@ class InvoiceModal extends Component {
           )}
         </Modal.Header>
         <Modal.Body>
-          <InvoiceForm removeModal={this.props.removeModal} />
+          <AddEditInvoiceForm removeModal={this.props.removeModal} />
         </Modal.Body>
       </Modal>
     );

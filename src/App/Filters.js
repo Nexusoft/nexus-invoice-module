@@ -8,7 +8,6 @@ import {
   setInvoiceRecipientFilter,
 } from 'lib/ui';
 import { createModal } from 'actions/actionCreators';
-import plusIcon from 'icon/plus.svg';
 
 const {
   libraries: {
@@ -127,7 +126,7 @@ export default function Filters({}) {
 
       <Button onClick={() => dispatch(createModal('AddEditInvoice'))}>
         <Icon
-          icon={plusIcon}
+          icon={{ url: 'icons/plus.svg', id: 'icon' }}
           style={{
             fontSize: '.8em',
             opacity: 0.7,

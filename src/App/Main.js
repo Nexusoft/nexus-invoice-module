@@ -1,8 +1,6 @@
 import Filters from './Filters';
 import InvoicesTable from './InvoicesTable';
 
-import nexusIcon from 'icon/NXS_coin.svg';
-
 const {
   libraries: {
     React,
@@ -14,7 +12,7 @@ const {
 export default function Main() {
   const loggedIn = useSelector((state) => !!state.user.username);
   return (
-    <Panel title={'Invoices'} icon={nexusIcon}>
+    <Panel title={'Invoices'} icon={{ url: 'icons/NXS_coin.svg', id: 'icon' }}>
       <GlobalStyles />
       {loggedIn ? (
         <>

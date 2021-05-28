@@ -6,8 +6,15 @@
   "description": "Use Case for the Invoice System",
   "type": "app",
   "entry": "dist/index.html",
-  "icon": "dist/logo.svg",
-  "files": ["dist/index.html", "dist/logo.svg", "dist/js/app.js"],
+  "icon": "dist/icons/logo.svg",
+  "files": [
+    "dist/index.html",
+    "dist/js/app.js",
+    "dist/icons/logo.svg",
+    "dist/icons/NXS_coin.svg",
+    "dist/icons/plus.svg",
+    "dist/icons/trash.svg"
+  ],
   "author": {
     "name": "Nexus Team",
     "email": "developer@nexus.io"

@@ -9,7 +9,7 @@ const devPlugins = [];
 
 const prodPlugins = ['babel-plugin-dev-expression', ...reactOptimizePreset];
 
-module.exports = function(api) {
+module.exports = function (api) {
   const development = process.env.NODE_ENV !== 'production';
   api.cache(true);
 
@@ -19,7 +19,7 @@ module.exports = function(api) {
         '@babel/preset-env',
         {
           targets: { electron: '4.0.5' },
-          corejs: '2',
+          corejs: require('core-js/package.json').version,
           useBuiltIns: 'usage',
         },
       ],

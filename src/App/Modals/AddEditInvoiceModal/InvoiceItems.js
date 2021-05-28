@@ -1,5 +1,4 @@
 // Internal
-import plusIcon from 'icon/plus.svg';
 import InvoiceItem from './InvoiceItem';
 
 const timing = {
@@ -111,7 +110,10 @@ class InvoiceItems extends React.Component {
 
         <MoreInfo>
           <Button skin="hyperlink" onClick={addInvoiceItem}>
-            <PlusIcon icon={plusIcon} className="space-right" />
+            <PlusIcon
+              icon={{ url: 'icons/plus.svg', id: 'icon' }}
+              className="space-right"
+            />
             <span className="v-align">{__('Add Item')}</span>
           </Button>
         </MoreInfo>
