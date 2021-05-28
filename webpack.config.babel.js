@@ -21,20 +21,6 @@ export default {
   module: {
     rules: [
       {
-        test: /\.svg$/,
-        use: [
-          {
-            loader: 'svg-sprite-loader',
-          },
-          {
-            loader: 'svgo-loader',
-            options: {
-              externalConfig: 'svgo-config.json',
-            },
-          },
-        ],
-      },
-      {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {

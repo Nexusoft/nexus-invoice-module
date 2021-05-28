@@ -20,9 +20,6 @@
     "babel-plugin-transform-react-pure-class-to-function": "^1.0.1",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "cross-env": "^7.0.3",
-    "svg-sprite-loader": "github:Qrysto/svg-sprite-loader",
-    "svgo": "^2.3.0",
-    "svgo-loader": "^3.0.0",
     "webpack": "^5.37.1",
     "webpack-cli": "^4.7.0",
     "webpack-dev-server": "^3.11.2"
