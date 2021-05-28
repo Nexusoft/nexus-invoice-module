@@ -4,7 +4,6 @@
 import { loadInvoices, ClosePopUp } from 'lib/ui';
 
 import InvoiceForm from './InvoiceForm';
-import trashIcon from 'icon/trash.svg';
 
 import {
   getAccountOptions,
@@ -159,7 +158,7 @@ class InvoiceModal extends Component {
               >
                 {' '}
                 <Icon
-                  icon={trashIcon}
+                  icon={{ url: 'trash.svg', id: 'icon' }}
                   style={{
                     fontSize: '.8em',
                     opacity: 0.7,

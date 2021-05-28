@@ -43,7 +43,7 @@ class AccountAsk extends Component {
       .map((element) => {
         return {
           value: element.address,
-          display: `${(element.address)} (${element.balance} NXS)`,
+          display: `${element.address} (${element.balance} NXS)`,
         };
       });
   }

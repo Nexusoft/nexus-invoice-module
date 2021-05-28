@@ -9,7 +9,6 @@ import InvoiceModal from './InvoiceModal';
 import Filters from './Filters';
 import InvoiceDetailModal from './InvoiceDetailsModal';
 
-import plusIcon from 'icon/plus.svg';
 import {
   loadInvoiceDrafts,
   addNewDraft,
@@ -315,7 +314,7 @@ class Invoice extends Component {
           >
             <Button onClick={() => this.props.OpenPopUp('Invoice')}>
               <Icon
-                icon={plusIcon}
+                icon={{ url: 'plus.svg', id: 'icon' }}
                 style={{
                   fontSize: '.8em',
                   opacity: 0.7,

@@ -1,8 +1,6 @@
 import Invoice from './Invoice';
 import { ClosePopUp } from 'lib/ui';
 
-import nexusIcon from 'icon/NXS_coin.svg';
-
 const {
   libraries: {
     React,
@@ -35,7 +33,7 @@ class Main extends React.Component {
   render() {
     const { loggedIn } = this.props;
     return (
-      <Panel title={'Invoices'} icon={nexusIcon}>
+      <Panel title={'Invoices'} icon={{ url: 'NXS_coin.svg', id: 'icon' }}>
         <GlobalStyles />
         {loggedIn ? <Invoice /> : <div>Please Log In!</div>}
       </Panel>

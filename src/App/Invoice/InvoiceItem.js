@@ -15,7 +15,7 @@ const {
   components: { TextField, FormField },
 } = NEXUS;
 
-const __ = input => input;
+const __ = (input) => input;
 
 const ItemLine = styled.div({
   display: 'grid',
