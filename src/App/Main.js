@@ -12,7 +12,7 @@ const {
 export default function Main() {
   const loggedIn = useSelector((state) => !!state.user.username);
   return (
-    <Panel title={'Invoices'} icon={{ url: 'icons/NXS_coin.svg', id: 'icon' }}>
+    <Panel title={'Invoices'} icon={{ url: 'icons/invoice.svg', id: 'icon' }}>
       <GlobalStyles />
       {loggedIn ? (
         <>

@@ -6,12 +6,11 @@
   "description": "Use Case for the Invoice System",
   "type": "app",
   "entry": "dist/index.html",
-  "icon": "dist/icons/logo.svg",
+  "icon": "dist/icons/invoice.svg",
   "files": [
     "dist/index.html",
     "dist/js/app.js",
-    "dist/icons/logo.svg",
-    "dist/icons/NXS_coin.svg",
+    "dist/icons/invoice.svg",
     "dist/icons/plus.svg",
     "dist/icons/trash.svg"
   ],
