@@ -111,7 +111,7 @@ class InvoiceItems extends React.Component {
         <MoreInfo>
           <Button skin="hyperlink" onClick={addInvoiceItem}>
             <PlusIcon
-              icon={{ url: 'plus.svg', id: 'icon' }}
+              icon={{ url: 'icons/plus.svg', id: 'icon' }}
               className="space-right"
             />
             <span className="v-align">{__('Add Item')}</span>

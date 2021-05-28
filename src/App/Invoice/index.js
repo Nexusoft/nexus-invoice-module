@@ -314,7 +314,7 @@ class Invoice extends Component {
           >
             <Button onClick={() => this.props.OpenPopUp('Invoice')}>
               <Icon
-                icon={{ url: 'plus.svg', id: 'icon' }}
+                icon={{ url: 'icons/plus.svg', id: 'icon' }}
                 style={{
                   fontSize: '.8em',
                   opacity: 0.7,

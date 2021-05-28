@@ -33,7 +33,10 @@ class Main extends React.Component {
   render() {
     const { loggedIn } = this.props;
     return (
-      <Panel title={'Invoices'} icon={{ url: 'NXS_coin.svg', id: 'icon' }}>
+      <Panel
+        title={'Invoices'}
+        icon={{ url: 'icons/NXS_coin.svg', id: 'icon' }}
+      >
         <GlobalStyles />
         {loggedIn ? <Invoice /> : <div>Please Log In!</div>}
       </Panel>

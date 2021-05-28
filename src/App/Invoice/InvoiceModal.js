@@ -158,7 +158,7 @@ class InvoiceModal extends Component {
               >
                 {' '}
                 <Icon
-                  icon={{ url: 'trash.svg', id: 'icon' }}
+                  icon={{ url: 'icons/trash.svg', id: 'icon' }}
                   style={{
                     fontSize: '.8em',
                     opacity: 0.7,
