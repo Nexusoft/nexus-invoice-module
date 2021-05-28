@@ -88,6 +88,7 @@ class AccountAsk extends Component {
   render() {
     return (
       <ModalInternal
+        visible={true}
         removeModal={this.props.removeModal}
         assignClose={(closeModal) => (this.closeModal = closeModal)}
       >
