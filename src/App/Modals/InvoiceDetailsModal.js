@@ -304,11 +304,10 @@ class InvoiceDetailsModal extends Component {
         <StatusTag status={status}>
           <h2>{status}</h2>
         </StatusTag>
-        <Modal.Header>
-          Invoice Details
-          <HeaderSubtext>{description}</HeaderSubtext>
-        </Modal.Header>
+        <Modal.Header>Invoice Details</Modal.Header>
         <Modal.Body style={{ overflowX: 'hidden' }}>
+          <Field label={__('Description')}>{description}</Field>
+          <Field label={__('Invoice address')}>{address}</Field>
           <Field label={__('Created')}>
             {' '}
             {formatDateTime(created * 1000, timeFormatOptions)}{' '}
@@ -334,13 +333,12 @@ class InvoiceDetailsModal extends Component {
             </Field>
           )}
           <Field label={__('Account Payable')}>{account}</Field>
-          <Field label={__('Address of Invoice')}>{address}</Field>
           {sender_detail && (
-            <Field label={__('Details')}>{sender_detail}</Field>
+            <Field label={__('Sender details')}>{sender_detail}</Field>
           )}
-          <Field label={__('Recipient')}>{recipient}</Field>
+          <Field label={__('Recipient ID')}>{recipient}</Field>
           {recipient_detail && (
-            <Field label={__('Details')}>{recipient_detail}</Field>
+            <Field label={__('Recipient details')}>{recipient_detail}</Field>
           )}
           <Field label={__('Status')}>{status}</Field>
           {paidOn && (
