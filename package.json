@@ -3,26 +3,25 @@
   "version": "0.2.0",
   "description": "A Nexus Wallet Module template built with React and Redux, also includes boilerplate code and example usages of some Nexus Wallet Module's advanced features",
   "devDependencies": {
-    "@babel/core": "^7.12.3",
-    "@babel/plugin-proposal-optional-chaining": "^7.12.1",
-    "@babel/plugin-transform-react-constant-elements": "^7.12.1",
-    "@babel/plugin-transform-react-inline-elements": "^7.12.1",
-    "@babel/preset-env": "^7.12.1",
-    "@babel/preset-react": "^7.12.5",
-    "@babel/register": "^7.12.1",
-    "babel-loader": "^8.2.0",
+    "@babel/core": "^7.14.3",
+    "@babel/plugin-proposal-optional-chaining": "^7.14.2",
+    "@babel/plugin-transform-react-constant-elements": "^7.13.13",
+    "@babel/plugin-transform-react-inline-elements": "^7.12.13",
+    "@babel/preset-env": "^7.14.4",
+    "@babel/preset-react": "^7.13.13",
+    "@babel/register": "^7.13.16",
+    "babel-loader": "^8.2.2",
     "babel-plugin-dev-expression": "^0.2.2",
-    "babel-plugin-module-resolver": "^4.0.0",
+    "babel-plugin-module-resolver": "^4.1.0",
     "babel-plugin-transform-react-pure-class-to-function": "^1.0.1",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
-    "cross-env": "^7.0.2",
-    "webpack": "^5.4.0",
-    "webpack-cli": "^4.2.0",
-    "webpack-dev-server": "^3.11.0"
+    "cross-env": "^7.0.3",
+    "webpack": "^5.38.1",
+    "webpack-cli": "^4.7.0",
+    "webpack-dev-server": "^3.7.2"
   },
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack --config webpack.config.babel.js",
     "dev": "cross-env NODE_ENV=development webpack serve --config webpack-dev.config.babel.js"
-  },
-  "dependencies": {}
+  }
 }
