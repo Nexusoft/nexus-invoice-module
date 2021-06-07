@@ -1,4 +1,4 @@
-import { loadInvoices, CloseModal } from 'lib/ui';
+import { loadInvoices } from 'lib/ui';
 import { errorHandler } from 'gui/form';
 
 import InvoiceItems from './InvoiceItems';
@@ -6,14 +6,14 @@ import { formatNumber } from 'gui/intl';
 
 import { getAccountOptions, getRecipientSuggestions } from 'selectors';
 
-import { addNewDraft, removeDraftToEdit, deleteDraft } from 'lib/invoiceDrafts';
-import { UpdateExchangeRate } from 'shared/lib/ui';
+import { addNewDraft, deleteDraft } from 'lib/invoiceDrafts';
+import { UpdateExchangeRate } from 'lib/ui';
 
 const {
   libraries: {
     React,
-    React: { Component },
-    ReactRedux: { connect },
+    React: { useEffect },
+    ReactRedux: { useSelector, useDispatch },
     emotion: { styled },
     ReduxForm: { reduxForm, Field, FieldArray, formValueSelector, reset },
   },
@@ -41,18 +41,6 @@ const formInitialValues = {
   recipientAddress: '',
   recipientDetail: '',
   items: [],
-};
-
-const mapStateToProps = (state) => {
-  const valueSelector = formValueSelector('InvoiceForm');
-  return {
-    username: state.user.username,
-    accountOptions: getAccountOptions(state.user.accounts),
-    fiatCurrency: state.settings.fiatCurrency,
-    items: valueSelector(state, 'items') || [],
-    exchangeRate: state.settings.exchangeRate,
-    initialValues: state.ui.draftEdit || formInitialValues,
-  };
 };
 
 const FormComponent = styled.form({});
@@ -93,45 +81,194 @@ const TotalField = styled.strong(({ theme }) => ({
   color: theme.primary,
 }));
 
-@connect(
-  (state) => ({
-    suggestions: getRecipientSuggestions(
-      state.addressBook,
-      state.user.accounts
-    ),
-  }),
-  {}
-)
-class RecipientField extends Component {
-  handleSelect = (element) => {
-    this.props.change(this.props.input.name, element);
+function RecipientField({ input, meta, change }) {
+  const suggestions = useSelector((state) =>
+    getRecipientSuggestions(state.addressBook, state.user.accounts)
+  );
+  const handleSelect = (element) => {
+    change(input.name, element);
   };
 
-  render() {
-    const { input, meta, suggestions } = this.props;
-    console.error(this.props);
-    return (
-      <AutoSuggest.RF
-        input={input}
-        meta={meta}
-        onSelect={this.handleSelect}
-        inputProps={{
-          placeholder: __('Recipient Genesis/UserName'),
-        }}
-        suggestions={suggestions}
-      />
-    );
-  }
+  return (
+    <AutoSuggest.RF
+      input={input}
+      meta={meta}
+      onSelect={handleSelect}
+      inputProps={{
+        placeholder: __('Recipient Genesis/UserName'),
+      }}
+      suggestions={suggestions}
+    />
+  );
 }
 
-@connect(mapStateToProps, {
-  addNewDraft,
-  removeDraftToEdit,
-  deleteDraft,
-  CloseModal,
-  UpdateExchangeRate,
-})
-@reduxForm({
+function AddEditInvoiceForm({
+  removeModal,
+  reset,
+  array,
+  change,
+  handleSubmit,
+}) {
+  const dispatch = useDispatch();
+  const valueSelector = formValueSelector('InvoiceForm');
+  const accountOptions = useSelector((state) =>
+    getAccountOptions(state.user.accounts)
+  );
+  const fiatCurrency = useSelector((state) => state.settings.fiatCurrency);
+  const items = useSelector((state) => valueSelector(state, 'items') || []);
+  const exchangeRate = useSelector((state) => state.settings.exchangeRate);
+
+  useEffect(() => {
+    dispatch(UpdateExchangeRate());
+  }, []);
+
+  const saveAsDraft = () => {
+    dispatch(addNewDraft(null));
+    reset('InvoiceForm');
+    removeModal();
+  };
+
+  const total = items.reduce(
+    (total, element) => total + element.units * element.unitPrice,
+    0
+  );
+
+  const addInvoiceItem = () => {
+    array.push('items', {
+      description: '',
+      units: 1,
+      unitPrice: 0,
+    });
+  };
+
+  return (
+    <FormComponent onSubmit={handleSubmit}>
+      <InvoiceDataSection legend={__('Details')}>
+        <FormField label={__('Description')}>
+          <Field
+            component={TextField.RF}
+            props={{ multiline: true, rows: 1 }}
+            name="invoiceDescription"
+            placeholder="Description"
+          />
+        </FormField>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'auto auto auto',
+            gridTemplateRows: 'auto',
+            gridGap: '1em 1em',
+          }}
+        >
+          <FormField label={__('Reference')}>
+            <Field
+              component={TextField.RF}
+              name="invoiceReference"
+              placeholder="Reference"
+            />
+          </FormField>
+          <FormField label={__('Number')}>
+            <Field
+              component={TextField.RF}
+              name="invoiceNumber"
+              placeholder="Number"
+            />
+          </FormField>
+          <FormField label={__('Due Date')}>
+            <Field component={DateTime.RF} time={false} name="invoiceDueDate" />
+          </FormField>
+        </div>
+      </InvoiceDataSection>
+      <div style={{ display: 'flex' }}>
+        <FromSection legend={__('From')}>
+          <FormField label={__('Account Payable')}>
+            <Field
+              component={Select.RF}
+              name="sendFrom"
+              placeholder={__('Select an account')}
+              options={accountOptions}
+            />
+          </FormField>
+          <FormField label={__('Sender Details')}>
+            <Field
+              component={TextField.RF}
+              name="sendDetail"
+              props={{ multiline: true, rows: 1 }}
+              placeholder="Name/Address/phoneNumber etc"
+            />
+          </FormField>
+        </FromSection>
+        <ToSection legend={__('To')}>
+          <FormField label={__('Recipient')}>
+            <Field
+              component={RecipientField}
+              name="recipientAddress"
+              change={change}
+              placeholder="Recipient Address"
+            />
+          </FormField>
+          <FormField label={__('Recipient Details')}>
+            <Field
+              component={TextField.RF}
+              name="recipientDetail"
+              props={{ multiline: true, rows: 1 }}
+              placeholder="Name/Address/phoneNumber etc"
+            />
+          </FormField>
+        </ToSection>
+      </div>
+      <ItemListSection legend={__('Items')}>
+        <FieldArray
+          component={InvoiceItems}
+          validate={(value, allValues, props) => {
+            if (value && value.length == 0) return 'Error!';
+            return null;
+          }}
+          name="items"
+          change={change}
+          addInvoiceItem={addInvoiceItem}
+        ></FieldArray>
+      </ItemListSection>
+
+      <Footer
+        style={{ display: 'grid', gridTemplateColumns: '6em .9fr auto 1fr' }}
+      >
+        <>
+          <Button type="submit" skin="primary" disabled={submitting}>
+            {__('Submit')}
+          </Button>
+          <a
+            style={{
+              fontWeight: 'bolder',
+              fontVariant: 'all-small-caps',
+              paddingTop: '.5em',
+              paddingLeft: '.5em',
+              opacity: '.75',
+            }}
+          >
+            (1 NXS Fee)
+          </a>
+        </>
+        <Button
+          skin="primary"
+          onClick={() => saveAsDraft()}
+          disabled={submitting}
+        >
+          {__('Save As Draft')}
+        </Button>
+        <TotalField style={{ marginLeft: 'auto' }}>
+          {__(`Total: ${formatNumber(total, 6)} NXS`)}
+          <a style={{ opacity: '.5' }}>{` (${formatNumber(
+            total * exchangeRate,
+            2
+          )} ${fiatCurrency})`}</a>
+        </TotalField>
+      </Footer>
+    </FormComponent>
+  );
+}
+
+const reduxFormOptions = {
   form: 'InvoiceForm',
   destroyOnUnmount: true,
 
@@ -191,204 +328,23 @@ class RecipientField extends Component {
   onSubmitSuccess: (result, dispatch, props) => {
     console.error(result);
     if (!result) return;
-    props.deleteDraft(props.values.draftTimeStamp);
+    dispatch(deleteDraft(props.values.draftTimeStamp));
     showSuccessDialog({ message: 'Invoice Sent' });
     loadInvoices();
     dispatch(reset('InvoiceForm'));
-    props.CloseModal();
+    props.removeModal();
   },
   onSubmitFail: errorHandler(__('Error sending NXS')),
-})
-class InvoiceForm extends Component {
-  componentDidMount() {
-    this.props.UpdateExchangeRate();
-  }
+};
 
-  gatherTotal() {
-    return this.props.items.reduce((total, element) => {
-      return total + element.units * element.unitPrice;
-    }, 0);
-  }
-  /**
-   * Add Recipient to the queue
-   *
-   * @memberof SendForm
-   */
-  addInvoiceItem = () => {
-    this.props.array.push('items', {
-      description: '',
-      units: 1,
-      unitPrice: 0,
-    });
-  };
+AddEditInvoiceForm = reduxForm(reduxFormOptions)(AddEditInvoiceForm);
 
-  /**
-   * Return JSX for the Add Recipient Button
-   *
-   * @memberof SendForm
-   */
-  renderAddItemButton = ({ fields }) => (
-    <Button onClick={this.addInvoiceItem}>{__('Add Item')}</Button>
+export default function AddEditInvoiceFormWrapper() {
+  const username = useSelector((state) => state.user.username);
+  const initialValues = useSelector(
+    (state) => state.ui.draftEdit || formInitialValues
   );
-
-  saveAsDraft() {
-    console.error(this.props);
-    this.props.addNewDraft(null);
-    this.props.reset('InvoiceForm');
-    this.props.removeModal();
-  }
-
-  removeDraft = async () => {
-    const result = await confirm({
-      question: __('Do you want to delete this draft invoice?'),
-      note: __('This can not be undone'),
-    });
-    if (result) {
-      this.props.deleteDraft();
-      this.props.reset('InvoiceForm');
-      this.props.removeModal();
-    }
-  };
-
-  render() {
-    const {
-      accountOptions,
-      change,
-      handleSubmit,
-      submitting,
-      fiatCurrency,
-      exchangeRate,
-    } = this.props;
-    return (
-      <FormComponent onSubmit={handleSubmit}>
-        <InvoiceDataSection legend={__('Details')}>
-          <FormField label={__('Description')}>
-            <Field
-              component={TextField.RF}
-              props={{ multiline: true, rows: 1 }}
-              name="invoiceDescription"
-              placeholder="Description"
-            />
-          </FormField>
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'auto auto auto',
-              gridTemplateRows: 'auto',
-              gridGap: '1em 1em',
-            }}
-          >
-            <FormField label={__('Reference')}>
-              <Field
-                component={TextField.RF}
-                name="invoiceReference"
-                placeholder="Reference"
-              />
-            </FormField>
-            <FormField label={__('Number')}>
-              <Field
-                component={TextField.RF}
-                name="invoiceNumber"
-                placeholder="Number"
-              />
-            </FormField>
-            <FormField label={__('Due Date')}>
-              <Field
-                component={DateTime.RF}
-                time={false}
-                name="invoiceDueDate"
-              />
-            </FormField>
-          </div>
-        </InvoiceDataSection>
-        <div style={{ display: 'flex' }}>
-          <FromSection legend={__('From')}>
-            <FormField label={__('Account Payable')}>
-              <Field
-                component={Select.RF}
-                name="sendFrom"
-                placeholder={__('Select an account')}
-                options={accountOptions}
-              />
-            </FormField>
-            <FormField label={__('Sender Details')}>
-              <Field
-                component={TextField.RF}
-                name="sendDetail"
-                props={{ multiline: true, rows: 1 }}
-                placeholder="Name/Address/phoneNumber etc"
-              />
-            </FormField>
-          </FromSection>
-          <ToSection legend={__('To')}>
-            <FormField label={__('Recipient')}>
-              <Field
-                component={RecipientField}
-                name="recipientAddress"
-                change={change}
-                placeholder="Recipient Address"
-              />
-            </FormField>
-            <FormField label={__('Recipient Details')}>
-              <Field
-                component={TextField.RF}
-                name="recipientDetail"
-                props={{ multiline: true, rows: 1 }}
-                placeholder="Name/Address/phoneNumber etc"
-              />
-            </FormField>
-          </ToSection>
-        </div>
-        <ItemListSection legend={__('Items')}>
-          <FieldArray
-            component={InvoiceItems}
-            validate={(value, allValues, props) => {
-              if (value && value.length == 0) return 'Error!';
-              return null;
-            }}
-            name="items"
-            change={change}
-            addInvoiceItem={this.addInvoiceItem}
-          ></FieldArray>
-        </ItemListSection>
-
-        <Footer
-          style={{ display: 'grid', gridTemplateColumns: '6em .9fr auto 1fr' }}
-        >
-          <>
-            <Button type="submit" skin="primary" disabled={submitting}>
-              {__('Submit')}
-            </Button>
-            <a
-              style={{
-                fontWeight: 'bolder',
-                fontVariant: 'all-small-caps',
-                paddingTop: '.5em',
-                paddingLeft: '.5em',
-                opacity: '.75',
-              }}
-            >
-              (1 NXS Fee)
-            </a>
-          </>
-          <Button
-            skin="primary"
-            onClick={() => this.saveAsDraft()}
-            disabled={submitting}
-          >
-            {__('Save As Draft')}
-          </Button>
-          <TotalField style={{ marginLeft: 'auto' }}>
-            {__(`Total: ${formatNumber(this.gatherTotal(), 6)} NXS`)}
-            <a style={{ opacity: '.5' }}>{` (${formatNumber(
-              this.gatherTotal() * exchangeRate,
-              2
-            )} ${fiatCurrency})`}</a>
-          </TotalField>
-        </Footer>
-      </FormComponent>
-    );
-  }
+  return (
+    <AddEditInvoiceForm username={username} initialValues={initialValues} />
+  );
 }
-
-export default InvoiceForm;

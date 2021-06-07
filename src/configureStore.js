@@ -1,6 +1,6 @@
 import createReducer from './reducers';
-import storageMiddleware from 'middlewares/storageMiddleware';
-import stateMiddleware from 'middlewares/stateMiddleware';
+import storageMiddleware from './middlewares/storageMiddleware';
+import stateMiddleware from './middlewares/stateMiddleware';
 import thunk from 'redux-thunk';
 
 const {

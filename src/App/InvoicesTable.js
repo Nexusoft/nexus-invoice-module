@@ -1,27 +1,15 @@
-// External Dependencies
 import { formatDateTime } from 'gui/intl';
-
-// Internal Global Dependencies
-import { loadInvoices, OpenModal, LoadAccounts } from 'lib/ui';
+import { loadInvoices, LoadAccounts } from 'lib/ui';
 import { createModal } from 'actions/actionCreators';
-
-//Invoice
-
-import {
-  loadInvoiceDrafts,
-  addNewDraft,
-  setDraftToEdit,
-} from 'lib/invoiceDrafts';
+import { loadInvoiceDrafts, setDraftToEdit } from 'lib/invoiceDrafts';
 import memoize from 'gui/memoize';
 import { isMyAddress } from 'selectors';
-
 import Table from 'component/Table';
 
 const {
   libraries: {
-    React,
-    React: { Component },
-    ReactRedux: { connect },
+    React: { useEffect },
+    ReactRedux: { useSelector, useDispatch },
     emotion: { styled },
   },
 } = NEXUS;
@@ -97,8 +85,6 @@ const tableColumns = [
   },
 ];
 
-const invoices = [];
-
 const memorizedFilters = memoize(
   (
     invoiceList,
@@ -164,139 +150,90 @@ const memorizedFilters = memoize(
     })
 );
 
-// React-Redux mandatory methods
-const mapStateToProps = (state) => {
-  return {
-    invoiceCore: state.invoices,
-    blocks: state.coreInfo.blocks,
-    invoicesUI: state.ui.invoices,
-    genesis: state.user.genesis,
-    username: state.user.username,
-    accounts: state.accounts || [],
-    drafts: state.invoiceDrafts,
+const selectDrafts = memoize((invoiceDrafts, username) =>
+  Object.keys(invoiceDrafts)
+    .map((e) => invoiceDrafts[e])
+    .filter(
+      (e) => e && (e.draftOwner === undefined || e.draftOwner === username)
+    )
+);
+
+export default function InvoicesTable() {
+  const dispatch = useDispatch();
+  const invoices = useSelector((state) => state.invoices);
+  const blocks = useSelector((state) => state.coreInfo.blocks);
+  const {
+    referenceQuery,
+    status,
+    timeSpan,
+    descriptionQuery,
+    pastDue,
+    payableQuery,
+    recipientQuery,
+  } = useSelector((state) => state.ui.invoices);
+  const genesis = useSelector((state) => state.user.genesis);
+  const username = useSelector((state) => state.user.username);
+  const accounts = useSelector((state) => state.accounts || []);
+  const drafts = useSelector((state) =>
+    selectDrafts(state.invoiceDrafts, username)
+  );
+  const tempInvoices = [...invoices, ...drafts];
+  const filteredInvoices = memorizedFilters(
+    tempInvoices,
+    referenceQuery,
+    timeSpan,
+    status,
+    descriptionQuery,
+    pastDue,
+    payableQuery,
+    recipientQuery
+  );
+
+  const openDraftToEdit = (draft) => {
+    dispatch(setDraftToEdit(draft));
+    dispatch(createModal('AddEditInvoice'));
   };
-};
 
-@connect(mapStateToProps, {
-  createModal,
-  OpenModal,
-  LoadAccounts,
-  addNewDraft,
-  loadInvoices,
-  setDraftToEdit,
-})
-/**
- * Invoice Page
- *
- * @class Invoice
- * @extends {Component}
- */
-class InvoicesTable extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      optionsOpen: false,
-    };
-  }
+  useEffect(() => {
+    dispatch(LoadAccounts());
+    dispatch(loadInvoices());
+  }, [blocks]);
 
-  // React Method (Life cycle hook)
-  componentDidMount() {
-    this.props.LoadAccounts();
-    this.props.loadInvoices();
+  useEffect(() => {
     loadInvoiceDrafts();
-    setInterval(this.updateInvoice.bind(this), 5000);
-  }
+  }, [drafts?.length]);
 
-  updateInvoice() {
-    this.props.loadInvoices();
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.drafts.length != this.props.drafts.length) {
-      loadInvoiceDrafts();
-    }
-
-    if (prevProps.blocks != this.props.blocks) {
-      this.props.LoadAccounts();
-      this.props.loadInvoices();
-    }
-  }
-
-  returnDrafts() {
-    const { drafts } = this.props;
-    return Object.keys(drafts)
-      .map((e) => {
-        return drafts[e];
-      })
-      .filter(
-        (e) =>
-          e &&
-          (e.draftOwner === undefined || e.draftOwner === this.props.username)
-      );
-  }
-
-  openDraftToEdit = (draft) => {
-    this.props.setDraftToEdit(draft);
-    this.props.createModal('AddEditInvoice');
-  };
-
-  render() {
-    const {
-      referenceQuery,
-      status,
-      timeSpan,
-      descriptionQuery,
-      pastDue,
-      payableQuery,
-      recipientQuery,
-    } = this.props.invoicesUI;
-    const { accounts, genesis } = this.props;
-    const drafts = this.returnDrafts();
-    const tempInvoices = [...invoices, ...this.props.invoiceCore, ...drafts];
-    const filteredInvoices = memorizedFilters(
-      tempInvoices,
-      referenceQuery,
-      timeSpan,
-      status,
-      descriptionQuery,
-      pastDue,
-      payableQuery,
-      recipientQuery
-    );
-    return (
-      <Table
-        data={filteredInvoices}
-        columns={tableColumns}
-        defaultPageSize={10}
-        defaultSortingColumnIndex={0}
-        getTrProps={(state, row) => {
-          const invoice = row && row.original;
-          return {
-            onClick: invoice
-              ? () => {
-                  invoice.status === 'DRAFT'
-                    ? this.openDraftToEdit(invoice)
-                    : this.props.createModal('InvoiceDetails', {
+  return (
+    <Table
+      data={filteredInvoices}
+      columns={tableColumns}
+      defaultPageSize={10}
+      defaultSortingColumnIndex={0}
+      getTrProps={(state, row) => {
+        const invoice = row && row.original;
+        return {
+          onClick: invoice
+            ? () => {
+                invoice.status === 'DRAFT'
+                  ? openDraftToEdit(invoice)
+                  : dispatch(
+                      createModal('InvoiceDetails', {
                         invoice,
                         isMine: isMyAddress(
                           accounts,
                           genesis,
                           invoice.recipient
                         ),
-                      });
-                  //this.props.OpenModal(InvoiceDetailModal);
-                }
-              : undefined,
-            style: {
-              cursor: 'pointer',
-              fontSize: 15,
-            },
-          };
-        }}
-      />
-    );
-  }
+                      })
+                    );
+              }
+            : undefined,
+          style: {
+            cursor: 'pointer',
+            fontSize: 15,
+          },
+        };
+      }}
+    />
+  );
 }
-
-// Mandatory React-Redux method
-export default InvoicesTable;

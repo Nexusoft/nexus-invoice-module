@@ -18,9 +18,8 @@ module.exports = function (api) {
       [
         '@babel/preset-env',
         {
-          targets: { electron: '4.0.5' },
-          corejs: require('core-js/package.json').version,
-          useBuiltIns: 'usage',
+          // Replace this with the Electron version that your target Nexus Wallet version uses
+          targets: { electron: '13.0.1' },
         },
       ],
       ['@babel/preset-react', { development }],
@@ -29,14 +28,10 @@ module.exports = function (api) {
       [
         'babel-plugin-module-resolver',
         {
-          root: ['./src/'],
+          root: ['./src/shared/'],
         },
       ],
-      '@babel/plugin-proposal-export-default-from',
-      '@babel/plugin-proposal-do-expressions',
-      ['@babel/plugin-proposal-decorators', { legacy: true }],
-      '@babel/plugin-proposal-export-namespace-from',
-      ['@babel/plugin-proposal-class-properties', { loose: true }],
+      ['@babel/plugin-proposal-optional-chaining', { loose: false }],
       ...(development ? devPlugins : prodPlugins),
     ],
   };

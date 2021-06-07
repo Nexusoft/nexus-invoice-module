@@ -9,15 +9,6 @@ export default {
     filename: 'app.js',
   },
   target: 'web',
-  resolve: {
-    extensions: ['.js', '.jsx', '.json'],
-    modules: [path.join(process.cwd(), 'src/shared'), 'node_modules'],
-    alias: {
-      // because victory library requires react
-      react$: path.resolve(__dirname, 'src/react.js'),
-      'react-dom$': path.resolve(__dirname, 'src/reactDOM.js'),
-    },
-  },
   module: {
     rules: [
       {
@@ -31,5 +22,12 @@ export default {
         },
       },
     ],
+  },
+  resolve: {
+    alias: {
+      // because victory library requires react
+      react$: path.resolve(__dirname, 'src/proxy/react.js'),
+      redux$: path.resolve(__dirname, 'src/proxy/redux.js'),
+    },
   },
 };

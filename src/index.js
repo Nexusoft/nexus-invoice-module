@@ -4,8 +4,8 @@ import {
   initialize,
   updateCoreInfo,
   updateTheme,
-} from './actions/actionCreators';
-import { UpdateUserInfo } from 'shared/lib/user';
+} from 'actions/actionCreators';
+import { UpdateUserInfo } from 'lib/user';
 
 const store = configureStore();
 
