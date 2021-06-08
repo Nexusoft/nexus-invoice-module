@@ -19,7 +19,7 @@ module.exports = function (api) {
         '@babel/preset-env',
         {
           // Replace this with the Electron version that your target Nexus Wallet version uses
-          targets: { electron: '8.2.3' },
+          targets: { electron: '13.0.1' },
         },
       ],
       ['@babel/preset-react', { development }],
