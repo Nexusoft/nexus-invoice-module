@@ -139,9 +139,9 @@ const StatusTag = styled.div(
       position: 'absolute',
       top: '85px',
       left: '0px',
-      color: 'dimgray',
       mixBlendMode: 'screen',
       transform: 'skew(0deg, 45deg) rotate(-45deg)',
+      opacity: 0.7,
     },
   },
 
@@ -154,17 +154,18 @@ const StatusTag = styled.div(
             top: '90px',
             fontSize: '1.25em',
             left: '-15px',
+            color: theme.foreground,
           },
         };
       case 'CANCELLED':
         return {
           borderBottom: `70px solid ${theme.danger}`,
-          '& > h2': { left: '-5px' },
+          '& > h2': { left: '-5px', color: theme.dangerAccent },
         };
       case 'PAID':
         return {
           borderBottom: `70px solid ${theme.primary}`,
-          '& > h2': { left: '35px' },
+          '& > h2': { left: '35px', color: theme.primaryAccent },
         };
       default:
         return { borderBottom: `70px solid ${theme.background}` };
