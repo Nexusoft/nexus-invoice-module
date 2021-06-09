@@ -22,7 +22,7 @@ module.exports = function (api) {
           targets: { electron: '13.0.1' },
         },
       ],
-      ['@babel/preset-react', { development }],
+      ['@babel/preset-react', { development, runtime: 'automatic' }],
     ],
     plugins: [
       [
