@@ -1,6 +1,6 @@
 {
   "name": "nexus_interface_invoice_module",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Use Case for the Invoice System",
   "devDependencies": {
     "@babel/core": "^7.9.0",

@@ -212,7 +212,10 @@ class RecipientField extends Component {
     };
     isSendAddress.is_valid
       ? (params.account = sendFrom)
-      : (params.account_name = `${props.username}:${sendFrom}`);
+      : (params.account = props.accountOptions.filter(
+          (e) => e.value === sendFrom
+        )[0].account.address);
+
     if (recipientAddress.startsWith('a') && recipientAddress.length === 64) {
       params.recipient = recipientAddress;
     } else {
