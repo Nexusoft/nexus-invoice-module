@@ -265,7 +265,6 @@ class InvoiceDetailModal extends Component {
 
       try {
         const result = await secureApiCall('invoices/cancel/invoice', params);
-        console.log(result);
         if (result) {
           this.props.loadInvoices();
           this.props.ClosePopUp();
@@ -297,31 +296,23 @@ class InvoiceDetailModal extends Component {
       return { key: e, value: rest[e] };
     });
   }
+
+
   render() {
-    console.log(this.props);
+    console.log(this.props.invoice);
     const {
-      description,
       created,
-      reference,
-      invoiceNumber,
-      due_date,
-      account,
-      amount,
+      json: {amount, account, sender_detail, description, token,items, recipient, recipient_detail,reference,status,due_date,invoiceNumber,...rest},
       address,
-      sender_detail,
-      recipient,
-      recipient_detail,
-      status,
       paidOn,
-      items,
-      ...rest
+      modified,
+      owner,
+      version,
+      type,
     } = this.props.invoice;
     const { isMine } = this.props;
     const pastDue = this.isPastDue();
-    console.log(rest);
-    console.log(this.isPastDue());
     this.calculateTotal(items);
-    console.log(items);
     return (
       <ModalInternal
         visible={true}
@@ -404,7 +395,7 @@ class InvoiceDetailModal extends Component {
               className="mt2 flex space-between"
               style={{ marginBottom: '1em' }}
             >
-              <Button skin="primary" onClick={() => this.closeModal()}>
+              <Button skin="primary" onClick={() => this.clickPayNow()}>
                 {'Close'}
               </Button>
               {status === 'OUTSTANDING' && (

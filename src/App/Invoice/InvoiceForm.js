@@ -3,6 +3,7 @@ import { errorHandler } from 'gui/form';
 
 import InvoiceItems from './InvoiceItems';
 import { formatNumber } from 'gui/intl';
+import DateTime from 'shared/component/DateTime';
 
 import {
   getAccountOptions,
@@ -39,7 +40,6 @@ const {
     Modal,
     Tooltip,
     Select,
-    DateTime,
     TextField,
     FormField,
     Button,
@@ -135,7 +135,6 @@ class RecipientField extends Component {
 
   render() {
     const { input, meta, suggestions } = this.props;
-    console.error(this.props);
     return (
       <AutoSuggest.RF
         input={input}
@@ -177,7 +176,6 @@ class RecipientField extends Component {
     if (!sendFrom) errors.sendFrom = __('Account Payable Needed');
     if (!recipientAddress) errors.recipientAddress = __('Recipient Needed');
     if (items && items.length == 0) errors.items = __('Items Needed');
-    console.log(errors);
     return errors;
   },
   onSubmit: async (
@@ -210,11 +208,9 @@ class RecipientField extends Component {
     const params = {
       items: convertedItems,
     };
-    isSendAddress.is_valid
-      ? (params.account = sendFrom)
-      : (params.account = props.accountOptions.filter(
-          (e) => e.value === sendFrom
-        )[0].account.address);
+
+    if (!isSendAddress.valid) throw 'Address not valid';
+    params.account = sendFrom;
 
     if (recipientAddress.startsWith('a') && recipientAddress.length === 64) {
       params.recipient = recipientAddress;
@@ -227,11 +223,9 @@ class RecipientField extends Component {
     if (invoiceDueDate) params.due_date = dueDate;
     if (sendDetail) params.sender_detail = sendDetail;
     if (recipientDetail) params.recipient_detail = recipientDetail;
-    console.log(params);
     return await secureApiCall('invoices/create/invoice', params);
   },
   onSubmitSuccess: (result, dispatch, props) => {
-    console.error(result);
     if (!result) return;
     props.deleteDraft(props.values.draftTimeStamp);
     showSuccessDialog({ message: 'Invoice Sent' });
@@ -257,7 +251,6 @@ class InvoiceForm extends Component {
    * @memberof SendForm
    */
   addInvoiceItem = () => {
-    console.log('Add Item');
     this.props.array.push('items', {
       description: '',
       units: 1,
@@ -275,7 +268,6 @@ class InvoiceForm extends Component {
   );
 
   saveAsDraft() {
-    console.error(this.props);
     this.props.addNewDraft(null);
     this.props.reset('InvoiceForm');
     this.props.removeModal();
@@ -386,9 +378,6 @@ class InvoiceForm extends Component {
           <FieldArray
             component={InvoiceItems}
             validate={(value, allValues, props) => {
-              console.log(value);
-              console.log(allValues);
-              console.log(props);
               if (value && value.length == 0) return 'Error!';
               return null;
             }}

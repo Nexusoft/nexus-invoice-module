@@ -25,10 +25,8 @@ class AccountAsk extends Component {
 
   componentDidMount() {
     this.setState({
-      account: this.props.accounts.filter((e) => e.name === 'default')[0]
-        .address,
+      account: this.props.accounts.filter((e) => e.name === '~default')[0]?.address,
     });
-    console.error(this);
   }
 
   setAccount = (e) => {
@@ -43,7 +41,7 @@ class AccountAsk extends Component {
       .map((element) => {
         return {
           value: element.address,
-          display: `${element.address} (${element.balance} NXS)`,
+          display: `${element.name || element.address} (${element.balance} NXS)`,
         };
       });
   }

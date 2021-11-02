@@ -100,24 +100,24 @@ const tableColumns = [
   {
     id: 'status',
     Header: __('Status'),
-    accessor: 'status',
+    accessor: 'json.status',
     width: 100,
   },
   {
     id: 'reference',
     Header: __('Reference'),
-    accessor: 'reference',
+    accessor: 'json.reference',
   },
   {
     id: 'address',
     Header: __('Account Payable'),
-    accessor: 'account',
+    accessor: 'json.account',
     width: 240,
   },
   {
     id: 'recipient',
     Header: __('Recipient'),
-    accessor: 'recipient',
+    accessor: 'json.recipient',
     width: 240,
   },
 ];

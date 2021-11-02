@@ -25,6 +25,14 @@ export function handleError(error, message = __('Error')) {
   });
 }
 
+export function passRef(el, ref) {
+  if (typeof ref === 'function') {
+    ref(el);
+  } else if (ref) {
+    ref.current = el;
+  }
+}
+
 export function errorHandler(message) {
   return (errors, dispatch, submitError) => {
     console.error(errors);
