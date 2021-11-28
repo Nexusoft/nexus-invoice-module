@@ -24,11 +24,16 @@ class AccountAsk extends Component {
   }
 
   componentDidMount() {
-    this.setState({
-      account: this.props.accounts.filter((e) => e.name === 'default')[0]
-        .address,
-    });
-    console.error(this);
+    if (this.props.accounts.length > 0) {
+      const defaultAcc = this.props.accounts.filter(
+        (e) => e.name === 'default'
+      );
+      if (defaultAcc) {
+        this.setState({
+          account: defaultAcc[0]?.address,
+        });
+      }
+    }
   }
 
   setAccount = (e) => {
@@ -86,6 +91,7 @@ class AccountAsk extends Component {
   }
 
   render() {
+    console.log(this.props);
     return (
       <ModalInternal
         removeModal={this.props.removeModal}

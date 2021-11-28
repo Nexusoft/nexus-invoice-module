@@ -1,3 +1,11 @@
+# 1.0.6 (2021.11.27)
+
+[Release Link](https://github.com/Nexusoft/Nexus-Interface-Invoice-Module/releases/tag/v1.0.6)
+
+#### Fixes
+
+- Fixed another edge case crash when using the pay modal
+
 # 1.0.5 (2021.10.29)
 
 [Release Link](https://github.com/Nexusoft/Nexus-Interface-Invoice-Module/releases/tag/v1.0.5)
