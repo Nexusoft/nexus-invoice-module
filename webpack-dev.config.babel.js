@@ -9,12 +9,15 @@ const config = {
   devtool: 'eval-source-map',
   devServer: {
     port,
-    publicPath,
-    inline: true,
+    devMiddleware: {
+      publicPath,
+    },
     compress: true,
     headers: { 'Access-Control-Allow-Origin': '*' },
-    contentBase: path.join(process.cwd(), 'dist'),
-    watchContentBase: true,
+    static: {
+      directory: path.join(process.cwd(), 'dist'),
+      watch: true,
+    },
   },
 };
 
