@@ -23,5 +23,8 @@
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack --config webpack.config.babel.js",
     "dev": "cross-env NODE_ENV=development webpack serve --config webpack-dev.config.babel.js"
+  },
+  "dependencies": {
+    "react-redux": "^7.2.6"
   }
 }
