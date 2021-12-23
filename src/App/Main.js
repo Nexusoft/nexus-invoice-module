@@ -1,3 +1,5 @@
+import { useSelector, useDispatch } from 'react-redux';
+
 import {
   showConnections,
   hideConnections,
@@ -7,7 +9,6 @@ import {
 const {
   libraries: {
     React,
-    ReactRedux: { useSelector, useDispatch },
     emotion: { styled },
   },
   components: {

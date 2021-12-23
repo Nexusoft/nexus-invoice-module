@@ -1,10 +1,6 @@
-import showingConnections from './showingConnections';
+import { combineReducers } from 'redux';
 
-const {
-  libraries: {
-    Redux: { combineReducers },
-  },
-} = NEXUS;
+import showingConnections from './showingConnections';
 
 export default combineReducers({
   showingConnections,

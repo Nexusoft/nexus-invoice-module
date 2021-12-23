@@ -1,12 +1,8 @@
+import { createStore, compose, applyMiddleware } from 'redux';
+
 import createReducer from './reducers';
 import storageMiddleware from 'middlewares/storageMiddleware';
 import stateMiddleware from 'middlewares/stateMiddleware';
-
-const {
-  libraries: {
-    Redux: { createStore, compose, applyMiddleware },
-  },
-} = NEXUS;
 
 export default function configureStore() {
   //Middlewares will automatically save when the state as changed,
