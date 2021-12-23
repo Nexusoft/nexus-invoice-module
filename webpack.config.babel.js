@@ -23,4 +23,11 @@ export default {
       },
     ],
   },
+  resolve: {
+    alias: {
+      // because victory library requires react
+      react$: path.resolve(__dirname, 'src/proxy/react.js'),
+      'react-dom$': path.resolve(__dirname, 'src/proxy/react-dom.js'),
+    },
+  },
 };
