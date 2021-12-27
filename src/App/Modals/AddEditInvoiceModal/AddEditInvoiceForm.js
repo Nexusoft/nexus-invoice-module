@@ -4,7 +4,13 @@ import { errorHandler } from 'gui/form';
 import InvoiceItems from './InvoiceItems';
 import { formatNumber } from 'gui/intl';
 
-import { getAccountOptions, getRecipientSuggestions } from 'selectors';
+import {
+  getAccountOptions,
+  getAddressNameMap,
+  getRegisteredFieldNames,
+  getAccountInfo,
+  getRecipientSuggestions,
+} from './selectors';
 
 import { addNewDraft, deleteDraft } from 'lib/invoiceDrafts';
 import { UpdateExchangeRate } from 'lib/ui';
@@ -15,18 +21,38 @@ const {
     React: { useEffect },
     ReactRedux: { useSelector, useDispatch },
     emotion: { styled },
-    ReduxForm: { reduxForm, Field, FieldArray, formValueSelector, reset },
+    ReduxForm: {
+      reduxForm,
+      Field,
+      FieldArray,
+      formValueSelector,
+      getFormValues,
+      reset,
+    },
   },
   components: {
+    Icon,
+    Panel,
     AutoSuggest,
     FieldSet,
+    Switch,
+    Modal,
+    Tooltip,
     Select,
     DateTime,
     TextField,
     FormField,
     Button,
   },
-  utilities: { confirm, color, apiCall, secureApiCall, showSuccessDialog },
+  utilities: {
+    confirm,
+    color,
+    apiCall,
+    secureApiCall,
+    showErrorDialog,
+    showSuccessDialog,
+    updateStorage,
+  },
 } = NEXUS;
 
 const __ = (input) => input;
@@ -274,7 +300,17 @@ const reduxFormOptions = {
 
   validate: (values) => {
     const errors = {};
-    const { sendFrom, recipientAddress, items } = values;
+    const {
+      invoiceDescription,
+      invoiceNumber,
+      invoiceReference,
+      invoiceDueDate,
+      sendFrom,
+      sendDetail,
+      recipientAddress,
+      recipientDetail,
+      items,
+    } = values;
     if (!sendFrom) errors.sendFrom = __('Account Payable Needed');
     if (!recipientAddress) errors.recipientAddress = __('Recipient Needed');
     if (items && items.length == 0) errors.items = __('Items Needed');
@@ -292,6 +328,7 @@ const reduxFormOptions = {
       recipientDetail,
       items,
     },
+    dispatch,
     props
   ) => {
     const dueDate = new Date(invoiceDueDate).getTime() / 1000;
@@ -311,7 +348,10 @@ const reduxFormOptions = {
     };
     isSendAddress.is_valid
       ? (params.account = sendFrom)
-      : (params.account_name = `${props.username}:${sendFrom}`);
+      : (params.account = props.accountOptions.filter(
+          (e) => e.value === sendFrom
+        )[0].account.address);
+
     if (recipientAddress.startsWith('a') && recipientAddress.length === 64) {
       params.recipient = recipientAddress;
     } else {

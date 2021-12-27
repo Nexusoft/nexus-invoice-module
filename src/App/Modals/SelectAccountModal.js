@@ -24,11 +24,16 @@ class AccountAsk extends Component {
   }
 
   componentDidMount() {
-    this.setState({
-      account: this.props.accounts.filter((e) => e.name === 'default')[0]
-        .address,
-    });
-    console.error(this);
+    if (this.props.accounts.length > 0) {
+      const defaultAcc = this.props.accounts.filter(
+        (e) => e.name === 'default'
+      );
+      if (defaultAcc) {
+        this.setState({
+          account: defaultAcc[0]?.address,
+        });
+      }
+    }
   }
 
   setAccount = (e) => {
@@ -55,18 +60,20 @@ class AccountAsk extends Component {
   async openConfirm() {
     const total = this.calculateTotal(this.props.invoice.items);
     const account =
-      this.props.accounts.filter((e) => e.address === this.state.account)[0]
-        .name || this.state.account;
+      this.props.accounts.filter((e) => e.address === this.state.account)[0] ||
+      this.state.account;
     const result = await confirm({
       question: 'Do you want to fulfill this invoice?',
-      note: `You are paying ${total} NXS with your ${account} Account`,
+      note: `You are paying ${total} NXS with your ${
+        account.name || 'Default'
+      } Account`,
     });
     if (result) {
       try {
         const params = {
           address: this.props.invoice.address,
           amount: this.calculateTotal(this.props.invoice.items),
-          name_from: `${this.props.username}:default`,
+          address_from: account.address,
         };
         const apiResult = await secureApiCall('invoices/pay/invoice', params);
         if (apiResult) {
@@ -77,14 +84,14 @@ class AccountAsk extends Component {
       } catch (error) {
         showErrorDialog({
           message: 'Did Not Send',
-          note: error,
+          note: `${error.code} , ${error.message}`,
         });
-        console.error(error);
       }
     }
   }
 
   render() {
+    console.log(this.props);
     return (
       <ModalInternal
         visible={true}
@@ -118,7 +125,7 @@ class AccountAsk extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return { accounts: state.user.accounts, username: state.user.username };
+  return { accounts: state.user.accounts || [], username: state.user.username };
 };
 
 export default connect(mapStateToProps, { loadInvoices, CloseModal })(

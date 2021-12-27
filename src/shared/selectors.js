@@ -33,6 +33,7 @@ export const getAccountOptions = memoize((myAccounts, myTokens) => {
         .filter((acc) => acc.token_name === 'NXS')
         .map((acc) => ({
           value: acc.name || acc.address,
+          account: acc,
           display: `${acc.name || acc.address} (${acc.balance} ${
             acc.token_name || 'Tokens'
           })`,
