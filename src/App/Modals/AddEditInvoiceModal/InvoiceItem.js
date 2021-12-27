@@ -1,6 +1,7 @@
 // Internal
 import { Field } from 'redux-form';
 import { formatNumber } from 'gui/intl';
+import RF from 'components/RF';
 
 const {
   libraries: {
