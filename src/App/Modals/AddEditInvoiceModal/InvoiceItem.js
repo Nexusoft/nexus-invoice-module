@@ -53,14 +53,16 @@ class InvoiceItem extends Component {
         {child}
         <FormField>
           <Field
-            component={TextField.RF}
+            component={RF}
+            as={TextField}
             name={`${input.name}.description`}
             placeholder="Description"
           />
         </FormField>
         <FormField>
           <Field
-            component={TextField.RF}
+            component={RF}
+            as={TextField}
             name={`${input.name}.unitPrice`}
             type="number"
             placeholder="Unit Costs"
@@ -68,7 +70,8 @@ class InvoiceItem extends Component {
         </FormField>
         <FormField>
           <Field
-            component={TextField.RF}
+            component={RF}
+            as={TextField}
             name={`${input.name}.units`}
             type="number"
             placeholder="Units"

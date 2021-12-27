@@ -9,6 +9,7 @@ import {
 } from 'redux-form';
 import { loadInvoices } from 'lib/ui';
 import { errorHandler } from 'gui/form';
+import RF from 'components/RF';
 
 import InvoiceItems from './InvoiceItems';
 import { formatNumber } from 'gui/intl';
@@ -116,7 +117,8 @@ function RecipientField({ input, meta, change }) {
   };
 
   return (
-    <AutoSuggest.RF
+    <RF
+      as={AutoSuggest}
       input={input}
       meta={meta}
       onSelect={handleSelect}
@@ -172,7 +174,8 @@ function AddEditInvoiceForm({
       <InvoiceDataSection legend={__('Details')}>
         <FormField label={__('Description')}>
           <Field
-            component={TextField.RF}
+            component={RF}
+            as={TextField}
             props={{ multiline: true, rows: 1 }}
             name="invoiceDescription"
             placeholder="Description"
@@ -188,20 +191,27 @@ function AddEditInvoiceForm({
         >
           <FormField label={__('Reference')}>
             <Field
-              component={TextField.RF}
+              component={RF}
+              as={TextField}
               name="invoiceReference"
               placeholder="Reference"
             />
           </FormField>
           <FormField label={__('Number')}>
             <Field
-              component={TextField.RF}
+              component={RF}
+              as={TextField}
               name="invoiceNumber"
               placeholder="Number"
             />
           </FormField>
           <FormField label={__('Due Date')}>
-            <Field component={DateTime.RF} time={false} name="invoiceDueDate" />
+            <Field
+              component={RF}
+              as={DateTime}
+              time={false}
+              name="invoiceDueDate"
+            />
           </FormField>
         </div>
       </InvoiceDataSection>
@@ -209,7 +219,8 @@ function AddEditInvoiceForm({
         <FromSection legend={__('From')}>
           <FormField label={__('Account Payable')}>
             <Field
-              component={Select.RF}
+              component={RF}
+              as={Select}
               name="sendFrom"
               placeholder={__('Select an account')}
               options={accountOptions}
@@ -217,7 +228,8 @@ function AddEditInvoiceForm({
           </FormField>
           <FormField label={__('Sender Details')}>
             <Field
-              component={TextField.RF}
+              component={RF}
+              as={TextField}
               name="sendDetail"
               props={{ multiline: true, rows: 1 }}
               placeholder="Name/Address/phoneNumber etc"
@@ -235,7 +247,8 @@ function AddEditInvoiceForm({
           </FormField>
           <FormField label={__('Recipient Details')}>
             <Field
-              component={TextField.RF}
+              component={RF}
+              as={TextField}
               name="recipientDetail"
               props={{ multiline: true, rows: 1 }}
               placeholder="Name/Address/phoneNumber etc"
