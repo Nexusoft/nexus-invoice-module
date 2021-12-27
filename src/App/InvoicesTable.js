@@ -5,7 +5,7 @@ import { createModal } from 'actions/actionCreators';
 import { loadInvoiceDrafts, setDraftToEdit } from 'lib/invoiceDrafts';
 import memoize from 'gui/memoize';
 import { isMyAddress } from 'selectors';
-import Table from 'component/Table';
+import Table from 'components/Table';
 
 const {
   libraries: {
