@@ -10,6 +10,7 @@ import {
 import { loadInvoices } from 'lib/ui';
 import { errorHandler } from 'gui/form';
 import RF from 'components/RF';
+import DateTimePicker from 'components/DateTimePicker';
 
 import InvoiceItems from './InvoiceItems';
 import { formatNumber } from 'gui/intl';
@@ -40,7 +41,6 @@ const {
     Modal,
     Tooltip,
     Select,
-    DateTime,
     TextField,
     FormField,
     Button,
@@ -208,7 +208,7 @@ function AddEditInvoiceForm({
           <FormField label={__('Due Date')}>
             <Field
               component={RF}
-              as={DateTime}
+              as={DateTimePicker}
               time={false}
               name="invoiceDueDate"
             />
