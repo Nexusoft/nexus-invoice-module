@@ -30,7 +30,9 @@
     "repo_info.json"
   ],
   "dependencies": {
+    "react-redux": "^7.2.6",
     "react-table": "^6.11.5",
+    "redux": "^4.1.2",
     "redux-form": "^8.3.8",
     "redux-thunk": "^2.4.1"
   }
