@@ -1,3 +1,5 @@
+import { combineReducers } from 'redux';
+
 import initialized from './initialized';
 import theme from './theme';
 import coreInfo from './coreInfo';
@@ -9,12 +11,6 @@ import modals from './modals';
 import user from './user';
 import addressBook from './addressBook';
 import form from './form';
-
-const {
-  libraries: {
-    Redux: { combineReducers },
-  },
-} = NEXUS;
 
 export default function createReducer() {
   return combineReducers({

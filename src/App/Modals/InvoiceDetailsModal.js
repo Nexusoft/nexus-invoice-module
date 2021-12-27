@@ -1,4 +1,5 @@
 //Internal Dependencies
+import { connect } from 'react-redux';
 import { formatDateTime } from 'gui/intl';
 
 import { loadInvoices, OpenModal, CloseModal } from 'lib/ui';
@@ -7,7 +8,6 @@ const {
   libraries: {
     React,
     React: { Component },
-    ReactRedux: { connect },
     emotion: { styled },
   },
   components: { Modal, Tooltip, Button, Arrow },

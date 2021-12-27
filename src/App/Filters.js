@@ -1,3 +1,4 @@
+import { useSelector, useDispatch } from 'react-redux';
 import {
   setInvoiceReferenceQuery,
   setInvoiceStatusFilter,
@@ -12,7 +13,6 @@ import { createModal } from 'actions/actionCreators';
 const {
   libraries: {
     React,
-    ReactRedux: { useSelector, useDispatch },
     emotion: { styled },
   },
   components: { Switch, Select, TextField, FormField, Icon, Button, Arrow },

@@ -1,11 +1,10 @@
+import { useSelector } from 'react-redux';
+
 import Filters from './Filters';
 import InvoicesTable from './InvoicesTable';
 
 const {
-  libraries: {
-    React,
-    ReactRedux: { useSelector },
-  },
+  libraries: { React },
   components: { GlobalStyles, Panel },
 } = NEXUS;
 

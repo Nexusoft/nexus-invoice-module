@@ -1,3 +1,5 @@
+import { Provider } from 'react-redux';
+
 import configureStore from './configureStore';
 import App from './App';
 import {
@@ -10,11 +12,7 @@ import { UpdateUserInfo } from 'lib/user';
 const store = configureStore();
 
 const {
-  libraries: {
-    React,
-    ReactDOM,
-    ReactRedux: { Provider },
-  },
+  libraries: { React, ReactDOM },
   utilities: {
     onceInitialize,
     onCoreInfoUpdated,

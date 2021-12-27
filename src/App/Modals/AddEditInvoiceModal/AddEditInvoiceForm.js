@@ -1,3 +1,12 @@
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  reduxForm,
+  Field,
+  FieldArray,
+  formValueSelector,
+  getFormValues,
+  reset,
+} from 'redux-form';
 import { loadInvoices } from 'lib/ui';
 import { errorHandler } from 'gui/form';
 
@@ -19,16 +28,7 @@ const {
   libraries: {
     React,
     React: { useEffect },
-    ReactRedux: { useSelector, useDispatch },
     emotion: { styled },
-    ReduxForm: {
-      reduxForm,
-      Field,
-      FieldArray,
-      formValueSelector,
-      getFormValues,
-      reset,
-    },
   },
   components: {
     Icon,

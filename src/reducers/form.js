@@ -1,10 +1,6 @@
+import { reducer } from 'redux-form';
 import * as TYPE from 'actions/types';
 
-const {
-  libraries: {
-    ReduxForm: { reducer },
-  },
-} = NEXUS;
 const initialState = null;
 
 export default (state = initialState, action) => {

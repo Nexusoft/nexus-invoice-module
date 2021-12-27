@@ -1,3 +1,4 @@
+import { useSelector, useDispatch } from 'react-redux';
 import { formatDateTime } from 'gui/intl';
 import { loadInvoices, LoadAccounts } from 'lib/ui';
 import { createModal } from 'actions/actionCreators';
@@ -9,7 +10,6 @@ import Table from 'component/Table';
 const {
   libraries: {
     React: { useEffect },
-    ReactRedux: { useSelector, useDispatch },
     emotion: { styled },
   },
 } = NEXUS;

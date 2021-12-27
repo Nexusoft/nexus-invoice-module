@@ -1,13 +1,9 @@
+import { createStore, compose, applyMiddleware } from 'redux';
+
 import createReducer from './reducers';
 import storageMiddleware from './middlewares/storageMiddleware';
 import stateMiddleware from './middlewares/stateMiddleware';
 import thunk from 'redux-thunk';
-
-const {
-  libraries: {
-    Redux: { createStore, compose, applyMiddleware },
-  },
-} = NEXUS;
 
 const getPersistedState = (() => {
   let cache = null;

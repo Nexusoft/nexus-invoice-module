@@ -1,13 +1,12 @@
+import { useSelector, useDispatch } from 'react-redux';
+
 import { removeModal } from 'actions/actionCreators';
 import AddEditInvoiceModal from './AddEditInvoiceModal';
 import InvoiceDetailsModal from './InvoiceDetailsModal';
 import SelectAccountModal from './SelectAccountModal';
 
 const {
-  libraries: {
-    React,
-    ReactRedux: { useSelector, useDispatch },
-  },
+  libraries: { React },
 } = NEXUS;
 
 const modalComponents = {

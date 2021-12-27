@@ -1,4 +1,5 @@
 // Internal
+import { Field } from 'redux-form';
 import InvoiceItem from './InvoiceItem';
 
 const timing = {
@@ -8,7 +9,6 @@ const timing = {
 const {
   libraries: {
     React,
-    ReduxForm: { Field },
     emotion: { styled },
   },
   components: { Icon, Tooltip, Button },

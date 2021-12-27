@@ -1,9 +1,9 @@
+import { connect } from 'react-redux';
 import { loadInvoices, CloseModal } from 'lib/ui';
 const {
   libraries: {
     React,
     React: { Component },
-    ReactRedux: { connect },
     emotion: { styled },
   },
   components: { Modal, Select, Button },

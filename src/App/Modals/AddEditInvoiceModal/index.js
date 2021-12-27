@@ -1,11 +1,11 @@
-import AddEditInvoiceForm from './AddEditInvoiceForm';
-
+import { useSelector, useDispatch } from 'react-redux';
 import { removeDraftToEdit, deleteDraft } from 'lib/invoiceDrafts';
+
+import AddEditInvoiceForm from './AddEditInvoiceForm';
 
 const {
   libraries: {
     React: { useState, useEffect },
-    ReactRedux: { useSelector, useDispatch },
   },
   components: { Icon, Modal, Button },
   utilities: { confirm },

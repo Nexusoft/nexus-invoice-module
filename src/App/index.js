@@ -1,10 +1,11 @@
+import { useSelector } from 'react-redux';
+
 import Main from './Main';
 import Modals from './Modals';
 
 const {
   libraries: {
     React,
-    ReactRedux: { useSelector },
     emotion: {
       createCache,
       core: { CacheProvider },

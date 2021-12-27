@@ -1,4 +1,5 @@
 // Internal
+import { Field } from 'redux-form';
 import { formatNumber } from 'gui/intl';
 
 const {
@@ -6,7 +7,6 @@ const {
     React,
     React: { Component },
     emotion: { styled },
-    ReduxForm: { Field },
   },
   components: { TextField, FormField },
 } = NEXUS;

@@ -1,8 +1,6 @@
+import { reset } from 'redux-form';
 import * as TYPE from 'actions/types';
 const {
-  libraries: {
-    ReduxForm: { reset },
-  },
   utilities: { proxyRequest, apiCall },
 } = NEXUS;
 
@@ -54,14 +52,13 @@ export const setInvoiceStatusFilter = (status) => async (dispatch) => {
   });
 };
 
-export const setInvoiceDescriptionFilter = (description) => async (
-  dispatch
-) => {
-  dispatch({
-    type: TYPE.SET_INVOICE_DESCRIPTION_FILTER,
-    payload: description,
-  });
-};
+export const setInvoiceDescriptionFilter =
+  (description) => async (dispatch) => {
+    dispatch({
+      type: TYPE.SET_INVOICE_DESCRIPTION_FILTER,
+      payload: description,
+    });
+  };
 
 export const setInvoicePastDueFilter = (pastDue) => async (dispatch) => {
   dispatch({
