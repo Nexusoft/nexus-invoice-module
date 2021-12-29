@@ -203,8 +203,6 @@ export default function InvoicesTable() {
     loadInvoiceDrafts();
   }, [drafts?.length]);
 
-  console.log(filteredInvoices);
-
   return (
     <Table
       data={filteredInvoices}

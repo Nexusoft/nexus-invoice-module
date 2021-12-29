@@ -87,7 +87,6 @@ class AccountAsk extends Component {
   }
 
   render() {
-    console.log(this.props);
     return (
       <ModalInternal
         visible={true}
