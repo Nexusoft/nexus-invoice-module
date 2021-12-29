@@ -21,7 +21,7 @@ import {
   getRegisteredFieldNames,
   getAccountInfo,
   getRecipientSuggestions,
-} from './selectors';
+} from 'selectors';
 
 import { addNewDraft, deleteDraft } from 'lib/invoiceDrafts';
 import { UpdateExchangeRate } from 'lib/ui';
