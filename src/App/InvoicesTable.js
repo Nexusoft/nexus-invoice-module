@@ -63,7 +63,7 @@ const tableColumns = [
   {
     id: 'status',
     Header: __('Status'),
-    accessor: 'status',
+    accessor: 'json.status',
     width: 100,
   },
   {
@@ -74,13 +74,13 @@ const tableColumns = [
   {
     id: 'address',
     Header: __('Account Payable'),
-    accessor: 'account',
+    accessor: 'json.account',
     width: 240,
   },
   {
     id: 'recipient',
     Header: __('Recipient'),
-    accessor: 'recipient',
+    accessor: 'json.recipient',
     width: 240,
   },
 ];
@@ -202,6 +202,8 @@ export default function InvoicesTable() {
   useEffect(() => {
     loadInvoiceDrafts();
   }, [drafts?.length]);
+
+  console.log(filteredInvoices);
 
   return (
     <Table
