@@ -14,7 +14,7 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case TYPE.INITIALIZE: {
       const { moduleState } = action.payload;
-      return (moduleState && moduleState.ui.invoices) || initialState;
+      return moduleState?.ui?.invoices || initialState;
     }
     case TYPE.SET_INVOICE_REFERENCE_FILTER:
       return {
