@@ -136,6 +136,7 @@ function AddEditInvoiceForm({
   array,
   change,
   handleSubmit,
+  submitting,
 }) {
   const dispatch = useDispatch();
   const valueSelector = formValueSelector('InvoiceForm');

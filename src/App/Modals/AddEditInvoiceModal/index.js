@@ -18,7 +18,7 @@ const DangerButtonStyle = {
   boxShadow: 'none',
 };
 
-export default function InvoiceModal({ removeModal }) {
+export default function AddEditInvoiceModal({ removeModal }) {
   const draftToEditBool = useSelector((state) => !!state.ui.draftEdit);
   const dispatch = useDispatch();
   const [isDraft, setIsDraft] = useState(false);
@@ -103,11 +103,7 @@ export default function InvoiceModal({ removeModal }) {
         )}
       </Modal.Header>
       <Modal.Body>
-        <AddEditInvoiceForm
-          removeModal={removeModal}
-          username={username}
-          formInitialValues
-        />
+        <AddEditInvoiceForm removeModal={removeModal} formInitialValues />
       </Modal.Body>
     </Modal>
   );
