@@ -1,0 +1,271 @@
+
+import { passRef } from 'shared/gui/form';
+
+const {
+    libraries: {
+      React,
+      React: { useState, useEffect, useRef },
+      emotion: { styled },
+    },
+
+    components: {
+        Tooltip,
+      },
+
+} = NEXUS;
+
+const ErrorMessage = styled(Tooltip)(
+  {
+    position: 'absolute',
+    top: 'calc(100% + 10px)',
+    left: 0,
+    maxWidth: '100%',
+    opacity: 0,
+    visibility: 'hidden',
+    transition: `opacity 300ms, visibility 300ms`,
+    zIndex: 1,
+    whiteSpace: 'normal',
+    textAlign: 'left',
+  },
+  ({ focus }) =>
+    focus && {
+      opacity: 1,
+      visibility: 'visible',
+    }
+);
+
+const TextFieldComponent = styled.div(
+  {
+    position: 'relative',
+    height: 2.25 + 'em',
+    alignItems: 'center',
+
+
+  },
+
+  ({ size }) => ({
+    display: size ? 'inline-flex' : 'flex',
+  }),
+
+  ({ skin, focus, error, theme }) => {
+    switch (skin) {
+      case 'underline':
+        return {
+          color: theme.mixer(0.875),
+          transitionProperty: 'color',
+          transitionDuration: '300ms',
+          '&::after': {
+            content: '""',
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: 2,
+            borderRadius: 1,
+            background: error ? theme.danger : theme.mixer(0.5),
+            transitionProperty: 'background-color, box-shadow',
+            transitionDuration: '300ms',
+          },
+          '&:hover': {
+            color: theme.foreground,
+            '&::after': {
+              background: error
+                ? theme.raise(theme.danger, 0.3)
+                : theme.mixer(0.75),
+            },
+          },
+          ...(focus
+            ? {
+                '&&::after': {
+                  background: theme.raise(
+                    error ? theme.danger : theme.primary,
+                    0.3
+                  ),
+                  boxShadow: `0 0 15px ${error ? theme.danger : theme.primary}`,
+                },
+              }
+            : null),
+        };
+      case 'filled':
+        return {
+          borderRadius: 2,
+          background: theme.mixer(0.875),
+          color: theme.background,
+          transitionProperty: 'background-color',
+          transitionDuration: '300ms',
+          '&:hover': {
+            background: theme.foreground,
+          },
+          ...(focus
+            ? {
+                background: theme.foreground,
+              }
+            : null),
+          ...(error
+            ? {
+                border: `1px solid ${theme.danger}`,
+              }
+            : null),
+        };
+      case 'filled-inverted':
+        return {
+          border: `1px solid ${theme.mixer(0.125)}`,
+          background: theme.background,
+          color: theme.foreground,
+          borderRadius: 2,
+          transitionProperty: 'border-color, box-shadow',
+          transitionDuration: '300ms',
+          '&:hover': {
+            borderColor: theme.mixer(0.25),
+          },
+          ...(focus
+            ? {
+                '&, &:hover': {
+                  borderColor: theme.primary,
+                  boxShadow: `0 0 5px ${theme.primary}`,
+                },
+              }
+            : null),
+          ...(error
+            ? {
+                '&, &:hover': {
+                  borderColor: theme.danger,
+                  boxShadow: `0 0 5px ${theme.danger}`,
+                },
+              }
+            : null),
+        };
+    }
+  },
+
+  ({ multiline }) =>
+    multiline && {
+      height: 'auto',
+      minHeight: 2.25 + 'em',
+    }
+);
+
+const Input = styled.input(
+  ({ theme, error }) => ({
+    display: 'block',
+    background: 'transparent',
+    color: 'inherit',
+    padding: 0,
+    height: '100%',
+    transitionProperty: 'color, box-shadow, color',
+    transitionDuration: '300ms',
+
+    '&::placeholder': {
+      color: theme.mixer(0.5),
+    },
+
+    '&::-webkit-datetime-edit-fields-wrapper': {
+      background: 'none',
+    },
+    '&::-webkit-inner-spin-button': {
+      display: 'none',
+    },
+    '&::-webkit-calendar-picker-indicator': {
+      background: 'none',
+      '&:hover': {
+        color: theme.foreground,
+        borderBottomColor: theme.mixer(0.75),
+        '&::after': {
+          background: error
+            ? theme.raise(theme.danger, 0.3)
+            : theme.mixer(0.75),
+        },
+      },
+    },
+  }),
+
+  ({ size }) =>
+    !size && {
+      width: '100%',
+    }
+);
+
+export default function DateTime ({
+  inputRef,
+  onFocus,
+  onBlur,
+  className,
+  style,
+  inputStyle,
+  skin = 'underline',
+  multiline,
+  left,
+  right,
+  size,
+  readOnly,
+  autoFocus,
+  error,
+  time,
+  ...rest
+}) {
+  const [focus, setFocus] = useState(false);
+  const inputElRef = useRef();
+
+  useEffect(() => {
+    // Somehow React's autoFocus doesn't work, so handle it manually
+    if (autoFocus && inputElRef.current) {
+      // This needs setTimeout to work
+      setTimeout(() => {
+        inputElRef.current.focus();
+      }, 0);
+    }
+  }, []);
+
+  const handleFocus = (e) => {
+    setFocus(true);
+    onFocus?.(e);
+  };
+
+  const handleBlur = (e) => {
+    setFocus(false);
+    onBlur?.(e);
+  };
+
+
+  return (
+    <TextFieldComponent
+      {...{ className, style, skin, size, error, multiline }}
+      focus={!readOnly && focus}
+    >
+      {left}
+
+      <Input
+        {...{ skin, size, readOnly }}
+        {...rest}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+        style={inputStyle}
+        ref={(el) => {
+          inputElRef.current = el;
+          if (inputRef) {
+            passRef(el, inputRef);
+          }
+        }}
+        type={time ? 'datetime-local' : 'date'}
+      />
+
+      {right}
+      {!!error && (
+        <ErrorMessage
+          skin="error"
+          position="bottom"
+          align="start"
+          focus={focus}
+        >
+          {error}
+        </ErrorMessage>
+      )}
+    </TextFieldComponent>
+  );
+}
+
+// DateTime wrapper for redux-form
+const DateTimeReduxForm = ({ input, meta, ...rest }) => (
+  <DateTime error={meta.touched && meta.error} {...input} {...rest} />
+);
+DateTime.RF = DateTimeReduxForm;

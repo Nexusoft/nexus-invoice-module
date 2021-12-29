@@ -24,16 +24,10 @@ class AccountAsk extends Component {
   }
 
   componentDidMount() {
-    if (this.props.accounts.length > 0) {
-      const defaultAcc = this.props.accounts.filter(
-        (e) => e.name === 'default'
-      );
-      if (defaultAcc) {
-        this.setState({
-          account: defaultAcc[0]?.address,
-        });
-      }
-    }
+    this.setState({
+      account: this.props.accounts.filter((e) => e.name === '~default')[0]
+        ?.address,
+    });
   }
 
   setAccount = (e) => {
@@ -48,7 +42,9 @@ class AccountAsk extends Component {
       .map((element) => {
         return {
           value: element.address,
-          display: `${element.address} (${element.balance} NXS)`,
+          display: `${element.name || element.address} (${
+            element.balance
+          } NXS)`,
         };
       });
   }

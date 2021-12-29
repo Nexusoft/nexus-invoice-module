@@ -275,23 +275,31 @@ class InvoiceDetailsModal extends Component {
       return { key: e, value: rest[e] };
     });
   }
+
   render() {
     const {
-      description,
       created,
-      reference,
-      invoiceNumber,
-      due_date,
-      account,
-      amount,
+      json: {
+        amount,
+        account,
+        sender_detail,
+        description,
+        token,
+        items,
+        recipient,
+        recipient_detail,
+        reference,
+        status,
+        due_date,
+        invoiceNumber,
+        ...rest
+      },
       address,
-      sender_detail,
-      recipient,
-      recipient_detail,
-      status,
       paidOn,
-      items,
-      ...rest
+      modified,
+      owner,
+      version,
+      type,
     } = this.props.invoice;
     const { isMine } = this.props;
     const pastDue = this.isPastDue();
@@ -376,7 +384,7 @@ class InvoiceDetailsModal extends Component {
               className="mt2 flex space-between"
               style={{ marginBottom: '1em' }}
             >
-              <Button skin="primary" onClick={() => this.closeModal()}>
+              <Button skin="primary" onClick={() => this.clickPayNow()}>
                 {'Close'}
               </Button>
               {status === 'OUTSTANDING' && (

@@ -30,18 +30,16 @@ export const getAccountOptions = memoize((myAccounts, myTokens) => {
     });
     options.push(
       ...myAccounts
-        .filter((acc) => acc.token_name === 'NXS')
+        .filter((acc) => acc.token === '0')
         .map((acc) => ({
-          value: acc.name || acc.address,
-          account: acc,
+          value: acc.address,
           display: `${acc.name || acc.address} (${acc.balance} ${
-            acc.token_name || 'Tokens'
+            acc.ticker || 'Tokens'
           })`,
           indent: true,
         }))
     );
   }
-
   return options;
 });
 

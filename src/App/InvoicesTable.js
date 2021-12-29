@@ -69,7 +69,7 @@ const tableColumns = [
   {
     id: 'reference',
     Header: __('Reference'),
-    accessor: 'reference',
+    accessor: 'json.reference',
   },
   {
     id: 'address',
