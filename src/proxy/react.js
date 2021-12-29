@@ -28,6 +28,7 @@ const {
   useImperativeHandle,
   useLayoutEffect,
   useDebugValue,
+  createContext,
 } = React;
 
 export {
@@ -54,6 +55,7 @@ export {
   useImperativeHandle,
   useLayoutEffect,
   useDebugValue,
+  createContext,
 };
 
 export default React;
