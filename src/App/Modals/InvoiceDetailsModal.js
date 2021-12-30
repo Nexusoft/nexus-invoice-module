@@ -384,7 +384,7 @@ class InvoiceDetailsModal extends Component {
               className="mt2 flex space-between"
               style={{ marginBottom: '1em' }}
             >
-              <Button skin="primary" onClick={() => this.clickPayNow()}>
+              <Button skin="primary" onClick={() => this.closeModal()}>
                 {'Close'}
               </Button>
               {status === 'OUTSTANDING' && (
