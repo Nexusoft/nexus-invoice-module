@@ -3,6 +3,7 @@
 const {
   libraries: {
     emotion: { styled },
+    React: { useState, useRef, useEffect },
   },
   components: { Tooltip },
 } = NEXUS;
@@ -22,32 +23,25 @@ const ErrorMessage = styled(Tooltip)(
     whiteSpace: 'normal',
     textAlign: 'left',
   },
-  ({ focus }) =>
-    focus && {
+  ({ shown }) =>
+    shown && {
       opacity: 1,
       visibility: 'visible',
     }
 );
 
-const TextFieldComponent = styled.div(
+const PickerComponent = styled.div(
   {
     position: 'relative',
     height: inputHeightEm + 'em',
     alignItems: 'center',
-
-    '&:hover': {
-      [ErrorMessage]: {
-        opacity: 1,
-        visibility: 'visible',
-      },
-    },
   },
 
   ({ size }) => ({
     display: size ? 'inline-flex' : 'flex',
   }),
 
-  ({ skin, focus, error, theme }) => {
+  ({ skin, focused, error, theme }) => {
     switch (skin) {
       case 'underline':
         return {
@@ -74,7 +68,7 @@ const TextFieldComponent = styled.div(
                 : theme.mixer(0.75),
             },
           },
-          ...(focus
+          ...(focused
             ? {
                 '&&::after': {
                   background: theme.raise(
@@ -96,7 +90,7 @@ const TextFieldComponent = styled.div(
           '&:hover': {
             background: theme.foreground,
           },
-          ...(focus
+          ...(focused
             ? {
                 background: theme.foreground,
               }
@@ -118,7 +112,7 @@ const TextFieldComponent = styled.div(
           '&:hover': {
             borderColor: theme.mixer(0.25),
           },
-          ...(focus
+          ...(focused
             ? {
                 '&, &:hover': {
                   borderColor: theme.primary,
@@ -203,7 +197,8 @@ export default function DateTimePicker({
   time,
   ...rest
 }) {
-  const [focus, setFocus] = useState(false);
+  const [focused, setFocused] = useState(false);
+  const [hovering, setHovering] = useState(false);
   const inputRef = useRef();
 
   useEffect(() => {
@@ -217,19 +212,21 @@ export default function DateTimePicker({
   }, []);
 
   const handleFocus = (e) => {
-    setFocus(true);
+    setFocused(true);
     onFocus?.(e);
   };
 
   const handleBlur = (e) => {
-    setFocus(false);
+    setFocused(false);
     onBlur?.(e);
   };
 
   return (
-    <TextFieldComponent
+    <PickerComponent
       {...{ className, style, skin, size, error, multiline }}
-      focus={!readOnly && focus}
+      focused={!readOnly && focused}
+      onMouseOver={() => setHovering(true)}
+      onMouseOut={() => setHovering(false)}
     >
       {left}
 
@@ -255,11 +252,11 @@ export default function DateTimePicker({
           skin="error"
           position="bottom"
           align="start"
-          focus={focus}
+          shown={focused || hovering}
         >
           {error}
         </ErrorMessage>
       )}
-    </TextFieldComponent>
+    </PickerComponent>
   );
 }
