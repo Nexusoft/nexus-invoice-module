@@ -4,8 +4,22 @@ const {
   libraries: { ReactDOM },
 } = NEXUS;
 
-const { unstable_batchedUpdates } = ReactDOM;
+const {
+  render,
+  hydrate,
+  unmountComponentAtNode,
+  findDOMNode,
+  createPortal,
+  unstable_batchedUpdates,
+} = ReactDOM;
+
+export {
+  render,
+  hydrate,
+  unmountComponentAtNode,
+  findDOMNode,
+  createPortal,
+  unstable_batchedUpdates,
+};
 
 export default ReactDOM;
-
-export { unstable_batchedUpdates };

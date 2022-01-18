@@ -5,23 +5,55 @@ const {
 } = NEXUS;
 
 const {
-  useMemo,
+  Component,
+  PureComponent,
+  memo,
+  createElement,
+  createFactory,
+  cloneElement,
+  isValidElement,
+  Children,
+  Fragment,
+  createRef,
+  forwardRef,
+  lazy,
+  Suspense,
+  useState,
+  useEffect,
   useContext,
   useReducer,
+  useCallback,
+  useMemo,
   useRef,
-  useEffect,
+  useImperativeHandle,
   useLayoutEffect,
   useDebugValue,
 } = React;
 
-export default React;
-
 export {
-  useMemo,
+  Component,
+  PureComponent,
+  memo,
+  createElement,
+  createFactory,
+  cloneElement,
+  isValidElement,
+  Children,
+  Fragment,
+  createRef,
+  forwardRef,
+  lazy,
+  Suspense,
+  useState,
+  useEffect,
   useContext,
   useReducer,
+  useCallback,
+  useMemo,
   useRef,
-  useEffect,
+  useImperativeHandle,
   useLayoutEffect,
   useDebugValue,
 };
+
+export default React;
