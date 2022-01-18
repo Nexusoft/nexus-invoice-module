@@ -1,10 +1,11 @@
+import { INITIALIZE } from 'nexus-module';
 import * as TYPE from 'actions/types';
 
 const initialState = '';
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case TYPE.INITIALIZE: {
+    case INITIALIZE: {
       const { inputValue } = action.payload.moduleState || {};
       return inputValue !== undefined ? inputValue : state;
     }
