@@ -1,28 +1,26 @@
+import { useState } from 'react';
+import styled from '@emotion/styled';
 import { useSelector, useDispatch } from 'react-redux';
+import {
+  GlobalStyles,
+  Panel,
+  Switch,
+  Tooltip,
+  TextField,
+  Button,
+  FieldSet,
+  Link,
+  confirm,
+  apiCall,
+  showErrorDialog,
+  showSuccessDialog,
+} from 'nexus-module';
 
 import {
   showConnections,
   hideConnections,
   updateInput,
 } from 'actions/actionCreators';
-
-const {
-  libraries: {
-    React,
-    emotion: { styled },
-  },
-  components: {
-    GlobalStyles,
-    Panel,
-    Switch,
-    Tooltip,
-    TextField,
-    Button,
-    FieldSet,
-    Link,
-  },
-  utilities: { confirm, apiCall, showErrorDialog, showSuccessDialog },
-} = NEXUS;
 
 const DemoTextField = styled(TextField)({
   maxWidth: 400,
@@ -53,7 +51,7 @@ export default function Main() {
   const handleChange = (e) => {
     dispatch(updateInput(e.target.value));
   };
-  const [checkingMetrics, setCheckingMetrics] = React.useState(false);
+  const [checkingMetrics, setCheckingMetrics] = useState(false);
   const viewMetrics = async () => {
     try {
       setCheckingMetrics(true);

@@ -1,17 +1,9 @@
+import createCache from '@emotion/cache';
+import { CacheProvider } from '@emotion/core';
 import { useSelector } from 'react-redux';
+import { ThemeController } from 'nexus-module';
 
 import Main from './Main';
-
-const {
-  libraries: {
-    React,
-    emotion: {
-      createCache,
-      core: { CacheProvider },
-    },
-  },
-  components: { ThemeController },
-} = NEXUS;
 
 const emotionCache = createCache({ container: document.head, key: 'emotion' });
 

@@ -1,3 +1,4 @@
+import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { listenToWalletData } from 'nexus-module';
 
@@ -7,7 +8,7 @@ import App from './App';
 const store = configureStore();
 listenToWalletData(store);
 
-ReactDOM.render(
+render(
   <Provider store={store}>
     <App />
   </Provider>,
