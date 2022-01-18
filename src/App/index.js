@@ -16,8 +16,8 @@ const {
 const emotionCache = createCache({ container: document.head, key: 'emotion' });
 
 export default function App() {
-  const initialized = useSelector((state) => state.initialized);
-  const theme = useSelector((state) => state.theme);
+  const initialized = useSelector((state) => state.nexus.initialized);
+  const theme = useSelector((state) => state.nexus.theme);
   if (!initialized) return null;
 
   return (

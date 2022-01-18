@@ -29,8 +29,8 @@ const DemoTextField = styled(TextField)({
 });
 
 export default function Main() {
-  const coreInfo = useSelector((state) => state.coreInfo);
-  const userStatus = useSelector((state) => state.user);
+  const coreInfo = useSelector((state) => state.nexus.coreInfo);
+  const userStatus = useSelector((state) => state.nexus.userStatus);
   const showingConnections = useSelector(
     (state) => state.settings.showingConnections
   );
