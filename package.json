@@ -25,6 +25,7 @@
     "dev": "cross-env NODE_ENV=development webpack serve --config webpack-dev.config.babel.js"
   },
   "dependencies": {
+    "nexus-module": "^1.0.0-alpha.4",
     "react-redux": "^7.2.6",
     "redux": "^4.1.2"
   }
