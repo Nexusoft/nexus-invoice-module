@@ -24,11 +24,6 @@ export const hideConnections = () => ({
   type: TYPE.HIDE_CONNECTIONS,
 });
 
-export const updateInput = (inputValue) => ({
-  type: TYPE.UPDATE_INPUT,
-  payload: inputValue,
-});
-
 export const createModal = (name, props) => ({
   type: TYPE.CREATE_POP_UP,
   payload: {
