@@ -1,4 +1,5 @@
 import path from 'path';
+import { webpackAliases } from 'nexus-module';
 
 export default {
   mode: process.env.NODE_ENV,
@@ -24,14 +25,6 @@ export default {
     ],
   },
   resolve: {
-    alias: {
-      react$: path.resolve(__dirname, 'src/proxy/react.js'),
-      'react-dom$': path.resolve(__dirname, 'src/proxy/react-dom.js'),
-      'react/jsx-runtime$': path.resolve(__dirname, 'src/proxy/jsxRuntime.js'),
-      'react/jsx-dev-runtime$': path.resolve(
-        __dirname,
-        'src/proxy/jsxDevRuntime.js'
-      ),
-    },
+    alias: webpackAliases,
   },
 };

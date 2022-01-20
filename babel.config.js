@@ -1,3 +1,5 @@
+const browserslistQuery = require('nexus-module').browserslistQuery;
+
 const reactOptimizePreset = [
   '@babel/plugin-transform-react-constant-elements',
   '@babel/plugin-transform-react-inline-elements',
@@ -15,13 +17,7 @@ module.exports = function (api) {
 
   return {
     presets: [
-      [
-        '@babel/preset-env',
-        {
-          // Replace this with the Electron version that your target Nexus Wallet version uses
-          targets: { electron: '13.0.1' },
-        },
-      ],
+      ['@babel/preset-env', { targets: browserslistQuery }],
       ['@babel/preset-react', { development, runtime: 'automatic' }],
     ],
     plugins: [

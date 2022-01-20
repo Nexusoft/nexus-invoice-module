@@ -1,9 +1,7 @@
 import { createStore, compose, applyMiddleware } from 'redux';
 
 import createReducer from './reducers';
-import storageMiddleware from './middlewares/storageMiddleware';
-import stateMiddleware from './middlewares/stateMiddleware';
-import thunk from 'redux-thunk';
+import { storageMiddleware, stateMiddleware } from 'nexus-module';
 
 const getPersistedState = (() => {
   let cache = null;
@@ -25,10 +23,11 @@ const getPersistedState = (() => {
 })();
 
 export default function configureStore() {
+  //Middlewares will automatically save when the state as changed,
+  //ie state.settings will be stored on disk and will save every time state.settings is changed.
   const middlewares = [
-    storageMiddleware((state) => state.invoiceDrafts),
-    stateMiddleware(getPersistedState),
-    thunk,
+    storageMiddleware((state) => state.settings), //Data saved to disk
+    stateMiddleware(getPersistedState), //Data saved to session
   ];
   const enhancers = [applyMiddleware(...middlewares)];
 
