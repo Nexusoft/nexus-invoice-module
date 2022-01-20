@@ -6,7 +6,7 @@ import ui from './ui';
 import invoiceDrafts from './invoiceDrafts';
 import invoices from './invoices';
 import modals from './modals';
-import user from './user';
+import userAccounts from './userAccounts';
 import form from './form';
 
 export default function createReducer() {
@@ -16,7 +16,7 @@ export default function createReducer() {
     invoiceDrafts,
     invoices,
     modals,
-    user,
+    userAccounts,
     form,
     nexus: walletDataReducer,
   });
