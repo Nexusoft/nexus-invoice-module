@@ -120,7 +120,10 @@ class AccountAsk extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return { accounts: state.user.accounts || [], username: state.user.username };
+  return {
+    accounts: state.userAccounts || [],
+    username: state.nexus.userStatus?.username,
+  };
 };
 
 export default connect(mapStateToProps, { loadInvoices, CloseModal })(

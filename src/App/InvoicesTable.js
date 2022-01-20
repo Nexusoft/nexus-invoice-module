@@ -161,7 +161,7 @@ const selectDrafts = memoize((invoiceDrafts, username) =>
 export default function InvoicesTable() {
   const dispatch = useDispatch();
   const invoices = useSelector((state) => state.invoices);
-  const blocks = useSelector((state) => state.coreInfo.blocks);
+  const blocks = useSelector((state) => state.nexus.coreInfo?.blocks);
   const {
     referenceQuery,
     status,
@@ -171,9 +171,9 @@ export default function InvoicesTable() {
     payableQuery,
     recipientQuery,
   } = useSelector((state) => state.ui.invoices);
-  const genesis = useSelector((state) => state.user.genesis);
-  const username = useSelector((state) => state.user.username);
-  const accounts = useSelector((state) => state.accounts || []);
+  const genesis = useSelector((state) => state.nexus.userStatus?.genesis);
+  const username = useSelector((state) => state.nexus.userStatus?.username);
+  const accounts = useSelector((state) => state.userAccounts || []);
   const drafts = useSelector((state) =>
     selectDrafts(state.invoiceDrafts, username)
   );

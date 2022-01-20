@@ -412,7 +412,7 @@ class InvoiceDetailsModal extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  return { username: state.user.username };
+  return { username: state.nexus.userStatus?.username };
 };
 
 export default connect(mapStateToProps, {

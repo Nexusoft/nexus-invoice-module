@@ -110,7 +110,7 @@ const TotalField = styled.strong(({ theme }) => ({
 
 function RecipientField({ input, meta, change }) {
   const suggestions = useSelector((state) =>
-    getRecipientSuggestions(state.addressBook, state.user.accounts)
+    getRecipientSuggestions(state.addressBook, state.userAccounts)
   );
   const handleSelect = (element) => {
     change(input.name, element);
@@ -141,7 +141,7 @@ function AddEditInvoiceForm({
   const dispatch = useDispatch();
   const valueSelector = formValueSelector('InvoiceForm');
   const accountOptions = useSelector((state) =>
-    getAccountOptions(state.user.accounts)
+    getAccountOptions(state.userAccounts)
   );
   const fiatCurrency = useSelector((state) => state.settings.fiatCurrency);
   const items = useSelector((state) => valueSelector(state, 'items') || []);
@@ -394,7 +394,7 @@ const reduxFormOptions = {
 AddEditInvoiceForm = reduxForm(reduxFormOptions)(AddEditInvoiceForm);
 
 export default function AddEditInvoiceFormWrapper() {
-  const username = useSelector((state) => state.user.username);
+  const username = useSelector((state) => state.nexus.userStatus?.username);
   const initialValues = useSelector(
     (state) => state.ui.draftEdit || formInitialValues
   );
