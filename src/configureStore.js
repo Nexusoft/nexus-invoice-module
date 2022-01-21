@@ -22,11 +22,28 @@ const getPersistedState = (() => {
   };
 })();
 
+const getStorageData = (() => {
+  let cache = null;
+  return (state) => {
+    if (state) {
+      const { settings, invoiceDrafts } = state;
+      if (
+        !cache ||
+        cache.settings !== settings ||
+        cache.invoiceDrafts !== invoiceDrafts
+      ) {
+        cache = { settings, invoiceDrafts };
+      }
+    }
+    return cache;
+  };
+})();
+
 export default function configureStore() {
   //Middlewares will automatically save when the state as changed,
   //ie state.settings will be stored on disk and will save every time state.settings is changed.
   const middlewares = [
-    storageMiddleware((state) => state.settings), //Data saved to disk
+    storageMiddleware(getStorageData), //Data saved to disk
     stateMiddleware(getPersistedState), //Data saved to session
   ];
   const enhancers = [applyMiddleware(...middlewares)];
