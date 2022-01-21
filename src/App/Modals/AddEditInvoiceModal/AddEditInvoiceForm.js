@@ -143,7 +143,9 @@ function AddEditInvoiceForm({
   const accountOptions = useSelector((state) =>
     getAccountOptions(state.userAccounts)
   );
-  const fiatCurrency = useSelector((state) => state.settings.fiatCurrency);
+  const fiatCurrency = useSelector(
+    (state) => state.nexus.settings?.fiatCurrency
+  );
   const items = useSelector((state) => valueSelector(state, 'items') || []);
   const exchangeRate = useSelector((state) => state.settings.exchangeRate);
 
