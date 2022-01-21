@@ -1,8 +1,5 @@
+import { INITIALIZE } from 'nexus-module';
 import * as TYPE from 'actions/types';
-
-const {
-  utilities: { updateStorage },
-} = NEXUS;
 
 const initialState = [];
 
@@ -15,8 +12,8 @@ function fromArray(contacts) {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case TYPE.INITIALIZE: {
-      return action.payload.storageData;
+    case INITIALIZE: {
+      return action.payload.storageData?.invoicedrafts || state;
     }
     case TYPE.LOAD_INVOICE_DRAFTS: {
       return action.payload;
