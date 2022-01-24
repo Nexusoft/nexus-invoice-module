@@ -1,4 +1,5 @@
 import { createStore, compose, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 
 import createReducer from './reducers';
 import { storageMiddleware, stateMiddleware } from 'nexus-module';
@@ -45,6 +46,7 @@ export default function configureStore() {
   const middlewares = [
     storageMiddleware(getStorageData), //Data saved to disk
     stateMiddleware(getPersistedState), //Data saved to session
+    thunk,
   ];
   const enhancers = [applyMiddleware(...middlewares)];
 
