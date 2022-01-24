@@ -2,7 +2,6 @@ import { useState } from 'react';
 import styled from '@emotion/styled';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  GlobalStyles,
   Panel,
   Switch,
   Tooltip,
@@ -72,7 +71,6 @@ export default function Main() {
 
   return (
     <Panel title="React Redux Module" icon={{ url: 'react.svg', id: 'icon' }}>
-      <GlobalStyles />
       <div className="text-center">
         Check out{' '}
         <Link
