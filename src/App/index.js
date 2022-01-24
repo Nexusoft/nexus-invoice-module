@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { ThemeController } from 'nexus-module';
 
 import Main from './Main';
+import Modals from './Modals';
 
 const emotionCache = createCache({ container: document.head, key: 'emotion' });
 
