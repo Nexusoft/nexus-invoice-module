@@ -30,7 +30,7 @@
     "repo_info.json"
   ],
   "dependencies": {
-    "nexus-module": "^1.0.0-alpha.7",
+    "nexus-module": "^1.0.0-alpha.8",
     "react-redux": "^7.2.6",
     "react-table": "^6.11.5",
     "redux": "^4.1.2",
