@@ -1,6 +1,6 @@
 {
-  "name": "_dev_nexus_interface_invoice_module",
-  "displayName": "Nexus Invoice System",
+  "name": "_dev_nexus-invoice",
+  "displayName": "Nexus Invoice",
   "type": "app",
   "entry": "http://localhost:24011/dev.html",
   "icon": "dist/icons/invoice.svg"
