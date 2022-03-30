@@ -1,9 +1,9 @@
 {
-  "name": "nexus_interface_invoice_module",
-  "displayName": "Nexus Invoice System",
+  "name": "nexus-invoice",
+  "displayName": "Nexus Invoice",
   "version": "1.1.0",
   "targetWalletVersion": "3.1.0",
-  "description": "Use Case for the Invoice System",
+  "description": "Send, pay, and manage invoices on Nexus blockchain",
   "type": "app",
   "entry": "dist/index.html",
   "icon": "dist/icons/invoice.svg",
