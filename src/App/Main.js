@@ -8,7 +8,6 @@ import {
   TextField,
   Button,
   FieldSet,
-  Link,
   confirm,
   apiCall,
   showErrorDialog,
@@ -73,12 +72,13 @@ export default function Main() {
     <Panel title="React Redux Module" icon={{ url: 'react.svg', id: 'icon' }}>
       <div className="text-center">
         Check out{' '}
-        <Link
+        <Button
+          skin="hyperlink"
           as="a"
           href="https://github.com/Nexusoft/NexusInterface/tree/master/docs/Modules"
         >
           Developer's guide to Nexus Wallet Module
-        </Link>{' '}
+        </Button>{' '}
         for documentation and API reference.
       </div>
 
@@ -91,12 +91,13 @@ export default function Main() {
           </p>
           <p>
             The on/off state of the switch below will be saved to a file using{' '}
-            <Link
+            <Button
+              skin="hyperlink"
               as="a"
               href="https://github.com/Nexusoft/NexusInterface/blob/master/docs/Modules/nexus-global-variable.md#updatestorage"
             >
               updateStorage
-            </Link>{' '}
+            </Button>{' '}
             utility function. Try switching it and restart your wallet to see if
             the switch state is retained.
           </p>
@@ -122,12 +123,13 @@ export default function Main() {
           <p>
             The content of the textbox below will be saved to base wallet's
             state using{' '}
-            <Link
+            <Button
+              skin="hyperlink"
               as="a"
               href="https://github.com/Nexusoft/NexusInterface/blob/master/docs/Modules/nexus-global-variable.md#updatestate"
             >
               updateState
-            </Link>{' '}
+            </Button>{' '}
             utility function. Try filling it out then switch to Overview and
             switch back to see if the content is still there.
           </p>
@@ -161,12 +163,13 @@ export default function Main() {
         <FieldSet legend="API calls">
           <p>
             You can make API calls from your module to the Nexus Core using{' '}
-            <Link
+            <Button
+              skin="hyperlink"
               as="a"
               href="https://github.com/Nexusoft/NexusInterface/blob/master/docs/Modules/nexus-global-variable.md#apicall"
             >
               apiCall
-            </Link>{' '}
+            </Button>{' '}
             utility function. Click the button below to view blockchain metrics.
           </p>
           <Button onClick={viewMetrics} disabled={checkingMetrics}>
