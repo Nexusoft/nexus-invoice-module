@@ -1,5 +1,5 @@
 {
-  "name": "nexus-invoice",
+  "name": "nexus_interface_invoice_module",
   "displayName": "Nexus Invoice",
   "version": "1.1.0",
   "targetWalletVersion": "3.1.0",
