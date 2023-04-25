@@ -93,8 +93,8 @@ export const OpenModal = (name, props) => async (dispatch) => {
 };
 
 export const LoadAccounts = () => async (dispatch) => {
-  const results = await apiCall('finance/list/all', {
-    where: 'object.token=0',
+  const results = await apiCall('finance/list/any', {
+    where: 'results.token=0',
   });
   dispatch({
     type: TYPE.SET_USER_ACCOUNTS,
