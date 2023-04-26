@@ -148,10 +148,14 @@ export default function Main() {
             settings will be fed into your module when your module is
             initialized and when those data are changed.
           </p>
-          <div className="mt1">
-            Core connections:{' '}
-            <strong>{coreInfo ? coreInfo.connections : 'Not connected'}</strong>
-          </div>
+          {!!showingConnections && (
+            <div className="mt1">
+              Core connections:{' '}
+              <strong>
+                {coreInfo ? coreInfo.connections : 'Not connected'}
+              </strong>
+            </div>
+          )}
           <div>
             User status:{' '}
             <strong>{userStatus ? 'Logged in' : 'Not logged in'}</strong>
