@@ -111,7 +111,7 @@ export const CloseModal = () => async (dispatch) => {
 
 export const UpdateExchangeRate = () => async (dispatch, getState) => {
   try {
-    const fiat = getState().settings.fiatCurrency;
+    const fiat = getState().nexus.settings.fiatCurrency;
     const result = await proxyRequest(
       `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=NXS&tsyms=${fiat}`,
       {}
