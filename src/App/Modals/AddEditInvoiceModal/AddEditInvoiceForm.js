@@ -117,14 +117,13 @@ function RecipientField({ input, meta, change }) {
   };
 
   return (
-    <RF
-      as={AutoSuggest}
-      input={input}
-      meta={meta}
-      onSelect={handleSelect}
+    <AutoSuggest
       inputProps={{
+        ...input,
+        error: meta.touched && meta.error,
         placeholder: __('Recipient Genesis/UserName'),
       }}
+      onSelect={handleSelect}
       suggestions={suggestions}
     />
   );
@@ -245,7 +244,6 @@ function AddEditInvoiceForm({
               component={RecipientField}
               name="recipientAddress"
               change={change}
-              placeholder="Recipient Address"
             />
           </FormField>
           <FormField label={__('Recipient Details')}>
@@ -291,11 +289,7 @@ function AddEditInvoiceForm({
             (1 NXS Fee)
           </a>
         </>
-        <Button
-          skin="primary"
-          onClick={() => saveAsDraft()}
-          disabled={submitting}
-        >
+        <Button skin="primary" onClick={saveAsDraft} disabled={submitting}>
           {__('Save As Draft')}
         </Button>
         <TotalField style={{ marginLeft: 'auto' }}>
