@@ -176,7 +176,18 @@ export default function InvoicesTable() {
   const drafts = useSelector((state) =>
     selectDrafts(state.invoiceDrafts, genesis)
   );
-  const tempInvoices = [...invoices, ...drafts];
+  const tempInvoices = [
+    ...invoices,
+    ...drafts.map((draft) => ({
+      ...draft,
+      json: {
+        status: draft.status,
+        reference: draft.reference,
+        account: draft.sendFrom,
+        recipient: draft.recipientAddress,
+      },
+    })),
+  ];
   const filteredInvoices = memorizedFilters(
     tempInvoices,
     referenceQuery,
