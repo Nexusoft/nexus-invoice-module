@@ -150,11 +150,11 @@ const memorizedFilters = memoize(
     })
 );
 
-const selectDrafts = memoize((invoiceDrafts, username) =>
+const selectDrafts = memoize((invoiceDrafts, genesis) =>
   Object.keys(invoiceDrafts)
     .map((e) => invoiceDrafts[e])
     .filter(
-      (e) => e && (e.draftOwner === undefined || e.draftOwner === username)
+      (e) => e && (e.draftOwner === undefined || e.draftOwner === genesis)
     )
 );
 
@@ -172,10 +172,9 @@ export default function InvoicesTable() {
     recipientQuery,
   } = useSelector((state) => state.ui.invoices);
   const genesis = useSelector((state) => state.nexus.userStatus?.genesis);
-  const username = useSelector((state) => state.nexus.userStatus?.username);
   const accounts = useSelector((state) => state.userAccounts || []);
   const drafts = useSelector((state) =>
-    selectDrafts(state.invoiceDrafts, username)
+    selectDrafts(state.invoiceDrafts, genesis)
   );
   const tempInvoices = [...invoices, ...drafts];
   const filteredInvoices = memorizedFilters(

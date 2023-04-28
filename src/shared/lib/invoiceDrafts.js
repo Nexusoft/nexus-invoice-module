@@ -26,7 +26,7 @@ export const addNewDraft = (draft) => async (dispatch, getState) => {
     type: TYPE.ADD_NEW_INVOICE_DRAFT,
     payload: {
       ...getState().form['InvoiceForm'].values,
-      draftOwner: getState().user.username,
+      draftOwner: getState().nexus.userStatus.genesis,
     },
   });
 };
