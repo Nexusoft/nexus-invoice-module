@@ -1,6 +1,6 @@
 import * as TYPE from 'actions/types';
 
-const initialState = [];
+const initialState = {};
 
 function fromArray(contacts) {
   return contacts.reduce(
@@ -15,13 +15,17 @@ export default (state = initialState, action) => {
       return action.payload;
     }
     case TYPE.ADD_NEW_INVOICE_DRAFT: {
+      const data = action.payload;
+      const { draftTimeStamp } = data;
       //Created === Last time edited
-      if (state[action.payload.draftTimeStamp]) {
-        state[action.payload.draftTimeStamp] = {
-          ...action.payload,
-          created: new Date().getTime() / 1000,
+      if (state[draftTimeStamp]) {
+        return {
+          ...state,
+          [draftTimeStamp]: {
+            ...action.payload,
+            created: new Date().getTime() / 1000,
+          },
         };
-        return state;
       } else {
         const payload = {
           ...action.payload,
