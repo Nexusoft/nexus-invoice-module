@@ -395,12 +395,16 @@ const reduxFormOptions = {
 
 AddEditInvoiceForm = reduxForm(reduxFormOptions)(AddEditInvoiceForm);
 
-export default function AddEditInvoiceFormWrapper() {
+export default function AddEditInvoiceFormWrapper({ removeModal }) {
   const username = useSelector((state) => state.nexus.userStatus?.username);
   const initialValues = useSelector(
     (state) => state.ui.draftEdit || formInitialValues
   );
   return (
-    <AddEditInvoiceForm username={username} initialValues={initialValues} />
+    <AddEditInvoiceForm
+      username={username}
+      initialValues={initialValues}
+      removeModal={removeModal}
+    />
   );
 }
