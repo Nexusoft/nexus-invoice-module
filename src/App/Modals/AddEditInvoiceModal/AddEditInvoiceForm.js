@@ -350,17 +350,10 @@ const reduxFormOptions = {
       };
     });
 
-    const isSendAddress = await apiCall('system/validate/address', {
-      address: sendFrom,
-    });
     const params = {
       items: convertedItems,
+      account: sendFrom,
     };
-    isSendAddress.is_valid
-      ? (params.account = sendFrom)
-      : (params.account = props.accountOptions.filter(
-          (e) => e.value === sendFrom
-        )[0].account.address);
 
     if (recipientAddress.startsWith('a') && recipientAddress.length === 64) {
       params.recipient = recipientAddress;
