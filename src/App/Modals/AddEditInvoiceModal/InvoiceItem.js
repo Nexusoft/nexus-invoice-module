@@ -49,7 +49,7 @@ class InvoiceItem extends Component {
     const total = input.value && input.value.unitPrice * input.value.units;
 
     return (
-      <ItemLine input={input} meta={meta} key={`${input.name}item-key`}>
+      <ItemLine input={input} meta={meta}>
         {' '}
         {child}
         <FormField>

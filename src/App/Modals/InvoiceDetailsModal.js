@@ -209,7 +209,11 @@ const MoreOpenButton = (moreOpen, moreOpenToggle, children) => (
 
 //Allow support any addtional key/values that may be attached to the invoice
 const AdditionalKeyValues = (addValues) =>
-  addValues.map((e) => <Field label={e.key}>{e.value}</Field>);
+  addValues.map((e, i) => (
+    <Field key={i} label={e.key}>
+      {e.value}
+    </Field>
+  ));
 const testhh = () => <div>test</div>;
 
 class InvoiceDetailsModal extends Component {

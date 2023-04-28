@@ -88,9 +88,9 @@ class InvoiceItems extends React.Component {
       <>
         {this.returnHeader()}
         {fields.map((fieldName, i) => (
-          <div key={i}>
+          <div key={fieldName}>
             <Field
-              name={`items[${i}]`}
+              name={fieldName}
               component={InvoiceItem}
               change={change}
               child={
