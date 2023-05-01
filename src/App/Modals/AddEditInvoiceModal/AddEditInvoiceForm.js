@@ -346,13 +346,13 @@ const reduxFormOptions = {
       return {
         description: e.description,
         units: e.units,
-        unit_amount: e.unitPrice,
+        amount: e.unitPrice,
       };
     });
 
     const params = {
       items: convertedItems,
-      account: sendFrom,
+      to: sendFrom,
     };
 
     if (recipientAddress.startsWith('a') && recipientAddress.length === 64) {
