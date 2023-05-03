@@ -352,14 +352,10 @@ const reduxFormOptions = {
 
     const params = {
       items: convertedItems,
-      to: sendFrom,
+      recipient: recipientAddress, // invoice's recipient
+      to: sendFrom, // account that will receive the payment
     };
 
-    if (recipientAddress.startsWith('a') && recipientAddress.length === 64) {
-      params.recipient = recipientAddress;
-    } else {
-      params.recipient_username = recipientAddress;
-    }
     if (invoiceReference) params.reference = invoiceReference;
     if (invoiceDescription) params.description = invoiceDescription;
     if (invoiceNumber) params.number = invoiceNumber;
