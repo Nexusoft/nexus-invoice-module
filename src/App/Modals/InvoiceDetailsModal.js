@@ -110,8 +110,8 @@ const InvoiceItems = ({ items }) => {
         <TableHeaderText padding={1} border={'none'}>
           {'Description'}
         </TableHeaderText>
-        <TableHeaderText padding={2}>{'Price'}</TableHeaderText>
-        <TableHeaderText padding={2}>{'Quantity'}</TableHeaderText>
+        <TableHeaderText padding={2}>{'Unit cost'}</TableHeaderText>
+        <TableHeaderText padding={2}>{'Units'}</TableHeaderText>
         <TableHeaderText padding={0}>{'Total'}</TableHeaderText>
         {items.map((e, i) => (
           <InvoiceItem
