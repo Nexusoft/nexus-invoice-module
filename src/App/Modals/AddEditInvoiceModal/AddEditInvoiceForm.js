@@ -159,7 +159,7 @@ function AddEditInvoiceForm({
   };
 
   const total = items.reduce(
-    (total, element) => total + element.units * element.unitPrice,
+    (total, element) => total + element.units * element.amount,
     0
   );
 
@@ -167,7 +167,7 @@ function AddEditInvoiceForm({
     array.push('items', {
       description: '',
       units: 1,
-      unitPrice: 0,
+      amount: 0,
     });
   };
 
@@ -346,7 +346,7 @@ const reduxFormOptions = {
       return {
         description: e.description,
         units: e.units,
-        amount: e.unitPrice,
+        amount: e.amount,
       };
     });
 

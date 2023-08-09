@@ -46,7 +46,7 @@ class InvoiceItem extends Component {
    */
   render() {
     const { input, meta, child } = this.props;
-    const total = input.value && input.value.unitPrice * input.value.units;
+    const total = input.value && input.value.amount * input.value.units;
 
     return (
       <ItemLine input={input} meta={meta}>
@@ -64,7 +64,7 @@ class InvoiceItem extends Component {
           <Field
             component={RF}
             as={TextField}
-            name={`${input.name}.unitPrice`}
+            name={`${input.name}.amount`}
             type="number"
             placeholder="Unit Costs"
           />
