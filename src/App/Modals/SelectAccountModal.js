@@ -50,7 +50,7 @@ class AccountAsk extends Component {
   }
   calculateTotal = (items) =>
     items.reduce((total, element) => {
-      return total + element.units * element.unit_amount;
+      return total + element.units * (element.amount || element.unit_amount);
     }, 0);
 
   async openConfirm() {

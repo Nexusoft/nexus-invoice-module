@@ -27,10 +27,6 @@ const timeFormatOptions = {
 
 const ModalInternal = styled(Modal)({ maxHeight: '90%' });
 
-const HeaderSubtext = styled.div({
-  fontSize: '75%',
-});
-
 const Row = styled.div({
   display: 'grid',
   gridTemplateAreas: '"label value"',
@@ -93,10 +89,16 @@ const ItemsContainter = styled.div(({ theme }) => ({
   borderRadius: '5px',
   backgroundColor: color.darken(theme.background, 0.5),
 }));
-const InvoiceItem = ({ description, unit_amount, units, itemTotal }) => (
+const InvoiceItem = ({
+  description,
+  unit_amount,
+  amount,
+  units,
+  itemTotal,
+}) => (
   <>
     <div>{description}</div>
-    <LeftBorderDiv>{unit_amount}</LeftBorderDiv>
+    <LeftBorderDiv>{amount || unit_amount}</LeftBorderDiv>
     <LeftBorderDiv>{units}</LeftBorderDiv>
     <LeftBorderDiv>{itemTotal}</LeftBorderDiv>
   </>
@@ -117,9 +119,9 @@ const InvoiceItems = ({ items }) => {
           <InvoiceItem
             key={i}
             description={e.description}
-            unit_amount={e.unit_amount}
+            unit_amount={e.amount || e.unit_amount}
             units={e.units}
-            itemTotal={e.unit_amount * e.units}
+            itemTotal={(e.amount || e.unit_amount) * e.units}
           />
         ))}
       </TableHeader>
