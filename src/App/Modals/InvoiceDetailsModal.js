@@ -214,7 +214,6 @@ const AdditionalKeyValues = (addValues) =>
       {e.value}
     </Field>
   ));
-const testhh = () => <div>test</div>;
 
 class InvoiceDetailsModal extends Component {
   constructor(props) {
@@ -223,13 +222,6 @@ class InvoiceDetailsModal extends Component {
       moreOpen: false,
     };
   }
-
-  componentDidMount() {}
-
-  calculateTotal = (items) =>
-    items.reduce((total, element) => {
-      return total + element.units * element.unit_amount;
-    }, 0);
 
   clickPayNow = async (e) => {
     this.props.OpenModal('SelectAccount', { invoice: this.props.invoice });
@@ -300,14 +292,9 @@ class InvoiceDetailsModal extends Component {
       },
       address,
       paidOn,
-      modified,
-      owner,
-      version,
-      type,
     } = this.props.invoice;
     const { isMine } = this.props;
     const pastDue = this.isPastDue();
-    this.calculateTotal(items);
     return (
       <ModalInternal
         visible={true}
