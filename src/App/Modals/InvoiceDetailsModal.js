@@ -358,29 +358,19 @@ class InvoiceDetailsModal extends Component {
           {items && <InvoiceItems items={items} />}
         </Modal.Body>
         <Modal.Footer>
-          {isMine ? (
-            <div
-              className="mt2 flex space-between"
-              style={{ marginBottom: '1em' }}
-            >
-              <Button skin="primary" onClick={() => this.closeModal()}>
-                {'Close'}
-              </Button>
-              {status === 'OUTSTANDING' && (
+          <div
+            className="mt2 flex space-between"
+            style={{ marginBottom: '1em' }}
+          >
+            <Button skin="primary" onClick={() => this.closeModal()}>
+              {'Close'}
+            </Button>
+            {status === 'OUTSTANDING' &&
+              (isMine ? (
                 <Button skin="primary" onClick={this.clickPayNow}>
                   {'Pay'}
                 </Button>
-              )}
-            </div>
-          ) : (
-            <div
-              className="mt2 flex space-between"
-              style={{ marginBottom: '1em' }}
-            >
-              <Button skin="primary" onClick={() => this.closeModal()}>
-                {'Close'}
-              </Button>
-              {status === 'OUTSTANDING' && (
+              ) : (
                 <Tooltip.Trigger
                   tooltip={__(
                     'Cancel this invoice, preventing the recipient from paying it.'
@@ -391,14 +381,13 @@ class InvoiceDetailsModal extends Component {
                     {'Cancel'}
                   </Button>
                 </Tooltip.Trigger>
-              )}
-              {status === 'Draft' && (
-                <Button skin="danger" onClick={this.deleteDraft}>
-                  {'Delete Draft'}
-                </Button>
-              )}
-            </div>
-          )}
+              ))}
+            {status === 'Draft' && (
+              <Button skin="danger" onClick={this.deleteDraft}>
+                {'Delete Draft'}
+              </Button>
+            )}
+          </div>
         </Modal.Footer>
       </ModalInternal>
     );
