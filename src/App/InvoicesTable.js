@@ -224,18 +224,20 @@ export default function InvoicesTable() {
         return {
           onClick: invoice
             ? () => {
-                invoice.status === 'DRAFT'
-                  ? openDraftToEdit(invoice)
-                  : dispatch(
-                      createModal('InvoiceDetails', {
-                        invoice,
-                        isMine: isMyAddress(
-                          accounts,
-                          genesis,
-                          invoice.recipient
-                        ),
-                      })
-                    );
+                if (invoice.status === 'DRAFT') {
+                  openDraftToEdit(invoice);
+                } else {
+                  dispatch(
+                    createModal('InvoiceDetails', {
+                      invoice,
+                      isMine: isMyAddress(
+                        accounts,
+                        genesis,
+                        invoice.json?.recipient
+                      ),
+                    })
+                  );
+                }
               }
             : undefined,
           style: {
