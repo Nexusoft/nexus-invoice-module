@@ -85,13 +85,6 @@ export const resetForm = (formName) => {
   return reset(formName);
 };
 
-export const OpenModal = (name, props) => async (dispatch) => {
-  dispatch({
-    type: TYPE.SET_POP_UP,
-    payload: { name, props },
-  });
-};
-
 export const LoadAccounts = () => async (dispatch) => {
   const results = await apiCall('finance/list/any', {
     where: 'results.token=0',
@@ -99,13 +92,6 @@ export const LoadAccounts = () => async (dispatch) => {
   dispatch({
     type: TYPE.SET_USER_ACCOUNTS,
     payload: results,
-  });
-};
-
-export const CloseModal = () => async (dispatch) => {
-  dispatch({
-    type: TYPE.CLOSE_POP_UP,
-    payload: null,
   });
 };
 

@@ -130,7 +130,7 @@ function RecipientField({ input, meta, change }) {
 }
 
 function AddEditInvoiceForm({
-  removeModal,
+  closeModal,
   reset,
   array,
   change,
@@ -155,7 +155,7 @@ function AddEditInvoiceForm({
   const saveAsDraft = () => {
     dispatch(addNewDraft(null));
     reset('InvoiceForm');
-    removeModal();
+    closeModal();
   };
 
   const total = items.reduce(
@@ -371,14 +371,14 @@ const reduxFormOptions = {
     showSuccessDialog({ message: 'Invoice Sent' });
     loadInvoices();
     dispatch(reset('InvoiceForm'));
-    props.removeModal();
+    props.closeModal();
   },
   onSubmitFail: errorHandler(__('Error sending NXS')),
 };
 
 AddEditInvoiceForm = reduxForm(reduxFormOptions)(AddEditInvoiceForm);
 
-export default function AddEditInvoiceFormWrapper({ removeModal }) {
+export default function AddEditInvoiceFormWrapper({ closeModal }) {
   const username = useSelector((state) => state.nexus.userStatus?.username);
   const initialValues = useSelector(
     (state) => state.ui.draftEdit || formInitialValues
@@ -387,7 +387,7 @@ export default function AddEditInvoiceFormWrapper({ removeModal }) {
     <AddEditInvoiceForm
       username={username}
       initialValues={initialValues}
-      removeModal={removeModal}
+      closeModal={closeModal}
     />
   );
 }

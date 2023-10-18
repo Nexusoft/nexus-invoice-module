@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeDraftToEdit, deleteDraft } from 'lib/invoiceDrafts';
 
@@ -18,7 +19,8 @@ const DangerButtonStyle = {
   boxShadow: 'none',
 };
 
-export default function AddEditInvoiceModal({ removeModal }) {
+export default function AddEditInvoiceModal({ visible, removeModal }) {
+  const closeModalRef = useRef(() => {});
   const draftToEditBool = useSelector((state) => !!state.ui.draftEdit);
   const dispatch = useDispatch();
   const [isDraft, setIsDraft] = useState(false);
@@ -41,8 +43,9 @@ export default function AddEditInvoiceModal({ removeModal }) {
 
   return (
     <Modal
-      visible={true}
+      visible={visible}
       removeModal={removeModal}
+      assignClose={(closeModal) => (closeModalRef.current = closeModal)}
       style={{
         width: '90%',
         maxHeight: '90%',
@@ -64,7 +67,9 @@ export default function AddEditInvoiceModal({ removeModal }) {
           <Button
             skin={'plain'}
             style={DangerButtonStyle}
-            onClick={removeModal}
+            onClick={() => {
+              closeModalRef.current?.();
+            }}
           >
             ×
           </Button>
@@ -103,7 +108,12 @@ export default function AddEditInvoiceModal({ removeModal }) {
         )}
       </Modal.Header>
       <Modal.Body>
-        <AddEditInvoiceForm removeModal={removeModal} formInitialValues />
+        <AddEditInvoiceForm
+          closeModal={() => {
+            closeModalRef.current?.();
+          }}
+          formInitialValues
+        />
       </Modal.Body>
     </Modal>
   );

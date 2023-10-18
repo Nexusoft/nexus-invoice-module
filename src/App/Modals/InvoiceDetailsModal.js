@@ -2,7 +2,8 @@
 import { connect } from 'react-redux';
 import { formatDateTime } from 'gui/intl';
 
-import { loadInvoices, OpenModal, CloseModal } from 'lib/ui';
+import { loadInvoices } from 'lib/ui';
+import { createModal, removeModal } from 'actions/actionCreators';
 
 const {
   libraries: {
@@ -226,7 +227,8 @@ class InvoiceDetailsModal extends Component {
   }
 
   clickPayNow = async (e) => {
-    this.props.OpenModal('SelectAccount', { invoice: this.props.invoice });
+    console.log(this.props.OpenModal);
+    this.props.createModal('SelectAccount', { invoice: this.props.invoice });
   };
 
   clickCancel = async (e) => {
@@ -244,7 +246,7 @@ class InvoiceDetailsModal extends Component {
         const result = await secureApiCall('invoices/cancel/invoice', params);
         if (result) {
           this.props.loadInvoices();
-          this.props.CloseModal();
+          this.closeModal();
         }
       } catch (error) {
         //show error
@@ -295,12 +297,12 @@ class InvoiceDetailsModal extends Component {
       address,
       paidOn,
     } = this.props.invoice;
-    const { isMine } = this.props;
+    const { isMine, visible, removeModal } = this.props;
     const pastDue = this.isPastDue();
     return (
       <ModalInternal
-        visible={true}
-        removeModal={this.props.removeModal}
+        visible={visible}
+        removeModal={removeModal}
         assignClose={(closeModal) => (this.closeModal = closeModal)}
       >
         <StatusTag status={status}>
@@ -399,6 +401,5 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
   loadInvoices,
-  CloseModal,
-  OpenModal,
+  createModal,
 })(InvoiceDetailsModal);

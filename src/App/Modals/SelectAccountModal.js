@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
-import { loadInvoices, CloseModal } from 'lib/ui';
+import { loadInvoices } from 'lib/ui';
+import { removeModal } from 'actions/actionCreators';
 const {
   libraries: {
     React,
@@ -74,7 +75,7 @@ class AccountAsk extends Component {
         const apiResult = await secureApiCall('invoices/pay/invoice', params);
         if (apiResult) {
           this.props.loadInvoices();
-          this.props.CloseModal();
+          this.closeModal();
           showSuccessDialog({ message: 'Invoice Paid' });
         }
       } catch (error) {
@@ -87,10 +88,12 @@ class AccountAsk extends Component {
   }
 
   render() {
+    const { visible, removeModal } = this.props;
+
     return (
       <ModalInternal
-        visible={true}
-        removeModal={this.props.removeModal}
+        visible={visible}
+        removeModal={removeModal}
         assignClose={(closeModal) => (this.closeModal = closeModal)}
       >
         <Modal.Header>Select Payment Account</Modal.Header>
@@ -106,7 +109,7 @@ class AccountAsk extends Component {
             className="mt2 flex space-between"
             style={{ marginBottom: '1em' }}
           >
-            <Button skin="danger" onClick={() => this.props.CloseModal()}>
+            <Button skin="danger" onClick={() => this.closeModal()}>
               {'Cancel'}
             </Button>
             <Button onClick={() => this.openConfirm()}>
@@ -126,6 +129,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { loadInvoices, CloseModal })(
-  AccountAsk
-);
+export default connect(mapStateToProps, { loadInvoices })(AccountAsk);
