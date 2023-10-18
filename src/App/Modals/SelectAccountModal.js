@@ -26,8 +26,7 @@ class AccountAsk extends Component {
 
   componentDidMount() {
     this.setState({
-      account: this.props.accounts.filter((e) => e.name === '~default')[0]
-        ?.address,
+      account: this.props.accounts?.[0]?.address || null,
     });
   }
 
