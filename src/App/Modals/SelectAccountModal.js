@@ -75,6 +75,7 @@ class AccountAsk extends Component {
         if (apiResult) {
           this.props.loadInvoices();
           this.closeModal();
+          this.props.closeInvoiceDetails();
           showSuccessDialog({ message: 'Invoice Paid' });
         }
       } catch (error) {

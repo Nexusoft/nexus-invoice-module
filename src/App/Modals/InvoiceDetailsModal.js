@@ -227,8 +227,10 @@ class InvoiceDetailsModal extends Component {
   }
 
   clickPayNow = async (e) => {
-    console.log(this.props.OpenModal);
-    this.props.createModal('SelectAccount', { invoice: this.props.invoice });
+    this.props.createModal('SelectAccount', {
+      invoice: this.props.invoice,
+      closeInvoiceDetails: this.closeModal,
+    });
   };
 
   clickCancel = async (e) => {
