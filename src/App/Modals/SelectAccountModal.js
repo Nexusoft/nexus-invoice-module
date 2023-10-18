@@ -54,7 +54,7 @@ class AccountAsk extends Component {
     }, 0);
 
   async openConfirm() {
-    const total = this.calculateTotal(this.props.invoice.items);
+    const total = this.calculateTotal(this.props.invoice.json.items);
     const account =
       this.props.accounts.filter((e) => e.address === this.state.account)[0] ||
       this.state.account;
@@ -68,7 +68,7 @@ class AccountAsk extends Component {
       try {
         const params = {
           address: this.props.invoice.address,
-          amount: this.calculateTotal(this.props.invoice.items),
+          amount: total,
           address_from: account.address,
         };
         const apiResult = await secureApiCall('invoices/pay/invoice', params);
