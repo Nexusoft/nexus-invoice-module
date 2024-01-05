@@ -98,13 +98,13 @@ export const LoadAccounts = () => async (dispatch) => {
 export const UpdateExchangeRate = () => async (dispatch, getState) => {
   try {
     const fiat = getState().nexus.settings.fiatCurrency;
-    const result = await proxyRequest(
-      `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=NXS&tsyms=${fiat}`,
+    const { data } = await proxyRequest(
+      `https://nexus-wallet-server-nndj.onrender.com/market-price?base_currency=${fiat}`,
       {}
     );
     dispatch({
       type: TYPE.UPDATE_EXCHANGE_RATE,
-      payload: result.data['RAW']['NXS'][fiat].PRICE,
+      payload: data?.price || null,
     });
   } catch (error) {
     console.error(error);
