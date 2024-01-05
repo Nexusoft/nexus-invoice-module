@@ -46,7 +46,7 @@ class InvoiceItem extends Component {
    */
   render() {
     const { input, meta, child } = this.props;
-    const total = input.value && input.value.amount * input.value.units;
+    const total = input.value?.amount * input.value?.units || 0;
 
     return (
       <ItemLine input={input} meta={meta}>
