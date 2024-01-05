@@ -159,7 +159,7 @@ function AddEditInvoiceForm({
   };
 
   const total = items.reduce(
-    (total, element) => total + element.units * element.amount,
+    (total, element) => total + (element.units * element.amount || 0),
     0
   );
 
