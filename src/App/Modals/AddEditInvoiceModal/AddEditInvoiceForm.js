@@ -4,6 +4,7 @@ import {
   Field,
   FieldArray,
   formValueSelector,
+  getFormSyncErrors,
   getFormValues,
   reset,
 } from 'redux-form';
@@ -129,6 +130,18 @@ function RecipientField({ input, meta, change }) {
   );
 }
 
+function ConditionalTooltip({ error, children }) {
+  if (error) {
+    return (
+      <Tooltip.Trigger position={'top'} tooltip={error}>
+        {children}
+      </Tooltip.Trigger>
+    );
+  } else {
+    return <>{children}</>;
+  }
+}
+
 function AddEditInvoiceForm({
   closeModal,
   reset,
@@ -147,6 +160,10 @@ function AddEditInvoiceForm({
   );
   const items = useSelector((state) => valueSelector(state, 'items') || []);
   const exchangeRate = useSelector((state) => state.settings.exchangeRate);
+
+  const itemBoxError = useSelector(
+    (state) => getFormSyncErrors('InvoiceForm')(state)
+  )?.items;
 
   useEffect(() => {
     dispatch(UpdateExchangeRate());
@@ -257,19 +274,21 @@ function AddEditInvoiceForm({
           </FormField>
         </ToSection>
       </div>
-      <ItemListSection legend={__('Items')}>
-        <FieldArray
-          component={InvoiceItems}
-          validate={(value, allValues, props) => {
-            if (value && value.length == 0) return 'Error!';
-            return null;
-          }}
-          name="items"
-          change={change}
-          addInvoiceItem={addInvoiceItem}
-        ></FieldArray>
-      </ItemListSection>
-
+      <ConditionalTooltip
+        error={typeof itemBoxError == 'string' ? itemBoxError : null /** TODO: This Could Be Better */}
+      >
+        <ItemListSection
+          error={typeof itemBoxError == 'string' ? itemBoxError : null}
+          legend={__('Items')}
+        >
+          <FieldArray
+            component={InvoiceItems}
+            name="items"
+            change={change}
+            addInvoiceItem={addInvoiceItem}
+          ></FieldArray>
+        </ItemListSection>
+      </ConditionalTooltip>
       <Footer
         style={{ display: 'grid', gridTemplateColumns: '6em .9fr auto 1fr' }}
       >
@@ -304,6 +323,23 @@ function AddEditInvoiceForm({
   );
 }
 
+const validateItemValues = (items) => {
+  if (!items || items.length == 0) return {};
+  const errors = {};
+  items.forEach((e, i) => {
+    if (e.amount > 0 && e.amount.toString().split(".")[1]?.length > 6) {
+      errors[`${i}`] = { amount: __('Exceeds 6 decimal places!') };
+    }
+    if (e.units > 0 && e.units.toString().split(".")[1]?.length > 6) {
+      errors[`${i}`] = { units: __('Exceeds 6 decimal places!') };
+    }
+    if (e.amount < 0) errors[`${i}`] = { amount: __('Cannot be negative') };
+    if (e.units < 0) errors[`${i}`] = { units: __('Cannot be negative') };
+    //TODO: Should nexus invoices allow 0 ?
+  });
+  return errors;
+};
+
 const reduxFormOptions = {
   form: 'InvoiceForm',
   destroyOnUnmount: true,
@@ -323,7 +359,10 @@ const reduxFormOptions = {
     } = values;
     if (!sendFrom) errors.sendFrom = __('Account Payable Needed');
     if (!recipientAddress) errors.recipientAddress = __('Recipient Needed');
-    if (items && items.length == 0) errors.items = __('Items Needed');
+    if (items) {
+      if (items.length == 0) errors.items = __('Items Needed');
+      if (items.length > 0) errors.items = validateItemValues(items);
+    }
     return errors;
   },
   onSubmit: async (
