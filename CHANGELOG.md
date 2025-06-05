@@ -1,3 +1,60 @@
+# 1.1.5 (2025.1.17)
+
+[Release Link](https://github.com/Nexusoft/Nexus-Interface-Invoice-Module/releases/tag/v1.1.5)
+
+#### Additions
+
+- Added errors for each item if Amounts/Units drop below 0 or exceedes the maximum nexus decimal percison point. 
+- Updated price source 
+
+#### Fixes
+
+- Fixed "No Items" error not showing up
+- Fixed items becoming NaN
+
+# 1.1.4 (2023.10.17)
+
+[Release Link](https://github.com/Nexusoft/Nexus-Interface-Invoice-Module/releases/tag/v1.1.4)
+
+#### Fixes
+
+- Fixed several UI glitches.
+
+# 1.1.3 (2023.8.15)
+
+[Release Link](https://github.com/Nexusoft/Nexus-Interface-Invoice-Module/releases/tag/v1.1.3)
+
+#### Fixes
+
+- Fixed paybutton not showing up 
+- Fixed several UI glitches
+
+# 1.1.2 (2023.5.03)
+
+[Release Link](https://github.com/Nexusoft/Nexus-Interface-Invoice-Module/releases/tag/v1.1.2)
+
+#### Adjustments
+
+- Changed API calls to match new Nexus Core Api. 
+
+# 1.1.1 (2023.4.28)
+
+[Release Link](https://github.com/Nexusoft/Nexus-Interface-Invoice-Module/releases/tag/v1.1.1)
+
+#### Fixes
+
+- Fixed several saving issues. 
+- Fixed several crashing bugs.
+
+# 1.1.0 (2023.4.25)
+
+[Release Link](https://github.com/Nexusoft/Nexus-Interface-Invoice-Module/releases/tag/v1.1.0)
+
+#### Additons
+
+- Breaking: Now requires Nexus Interface 3.1.0
+- Complete overhaul of codebase.
+
 # 1.0.6 (2021.11.27)
 
 [Release Link](https://github.com/Nexusoft/Nexus-Interface-Invoice-Module/releases/tag/v1.0.6)
